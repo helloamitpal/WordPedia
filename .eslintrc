@@ -1,0 +1,37 @@
+{
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "env": {
+      "browser": true,
+      "node": true,
+      "jest": true
+    },
+    "globals": {
+      "__BROWSER__": false,
+      "__APP_ENV__": false,
+      "__LOCAL__": false
+    },
+    "rules": {
+      "arrow-parens": ["error", "always"],
+      "arrow-body-style": ["off"],
+      "max-len": ["error", { "code": 200 }],
+      "react/prefer-stateless-function": ["off"],
+      "import/prefer-default-export": ["off"],
+      "function-paren-newline": ["error", "consistent"],
+      "comma-dangle": ["error", "never"],
+      "no-confusing-arrow": ["off"],
+      "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],
+      "no-underscore-dangle": ["off"],
+      "object-curly-newline": ["error", { "consistent": true }],
+      "prefer-promise-reject-errors": ["off"],
+      "import/no-named-default": ["off"],
+      "jsx-a11y/anchor-is-valid": ["off"],
+      "jsx-a11y/click-events-have-key-events": ["off"],
+      "jsx-a11y/label-has-for": ["error", { "required": { "every": ["id"] }, "allowChildren": true }],
+      "jsx-a11y/no-noninteractive-element-interactions": ["off"],
+      "jsx-a11y/no-static-element-interactions": ["off"],
+      "react/forbid-prop-types": ["error", { "forbid": ["any"] }],
+      "react/jsx-filename-extension": ["error", { "extensions": [".js"] }],
+      "react/require-default-props": ["off"]
+    }
+}

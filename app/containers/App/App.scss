@@ -1,0 +1,12 @@
+@import '../../styles/colors.scss';
+
+.app-wrapper {
+  max-width: calc(768px + 16px * 2);
+  margin: 0 auto;
+  display: flex;
+  min-height: 100%;  
+  flex-direction: column;
+  flex: 1;
+  background: $app-background;
+  color: $font-color;
+}

@@ -1,0 +1,13 @@
+@import '../../styles/colors.scss';
+
+.icon {
+  cursor: pointer;
+  background-color: $icon-color;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+
+  &:hover {
+    background-color: $icon-hover-color !important;
+  }
+}

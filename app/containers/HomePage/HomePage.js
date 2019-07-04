@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Search from '../../components/Search';
 import FooterMenu from '../../components/FooterMenu';
 import Icon from '../../components/Icon';
-import { selectWordAction, searchWordAction } from '../../actions/wordActions';
+import { selectWordAction, searchWordAction } from './wordActions';
 
 import bookmarksIcon from '../../images/SVG/212-bookmarks.svg';
 import cogsIcon from '../../images/SVG/149-cog.svg';

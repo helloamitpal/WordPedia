@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
-import { getWords } from '../Api/api';
-import * as types from '../constants/actionTypes';
+import { getWords } from './api';
+import * as types from './actionTypes';
 
 export default function* searchWordSaga({ payload }) {
   try {

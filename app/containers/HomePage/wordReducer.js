@@ -1,7 +1,8 @@
-import initialState from './initialState';
-import * as types from '../constants/actionTypes';
+import * as types from './actionTypes';
 
-export default function (state = initialState.words, action) {
+const initialWords = [];
+
+export default function (state = initialWords, action) {
   switch (action.type) {
     case types.WORDS_SUCCESS:
       return action.words;

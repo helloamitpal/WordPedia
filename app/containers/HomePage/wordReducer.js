@@ -1,14 +1,43 @@
-import * as types from './actionTypes';
+import { handle } from 'redux-pack';
+import * as actionTypes from './actionTypes';
 
-const initialWords = [];
+const initialState = {
+  words: [],
+  isError: false
+};
 
-export default function (state = initialWords, action) {
-  switch (action.type) {
-    case types.WORDS_SUCCESS:
-      return action.words;
-    case types.SELECTED_WORD:
-      return { ...state, selectedWord: action.word };
+// reducer function to synthesize data if required
+const wordReducer = (state = initialState, action = '') => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case actionTypes.SEARCH_WORD:
+      return handle(state, action, {
+        start: (defaultState) => ({
+          ...defaultState,
+          isError: false,
+          searchText: payload.searchText
+        }),
+        success: (defaultState) => {
+          const { searchText } = defaultState;
+          let filteredData = payload;
+          if (searchText) {
+            filteredData = payload.filter(({ name }) => (name.toLowerCase().includes(searchText.toLowerCase())));
+          }
+          return {
+            ...defaultState,
+            words: filteredData
+          };
+        },
+        failure: (defaultState) => ({
+          ...defaultState,
+          isError: true
+        })
+      });
+
     default:
       return state;
   }
-}
+};
+
+export default wordReducer;

@@ -11,7 +11,7 @@ const FooterMenu = ({ className, menus }) => {
   ));
 
   return (
-    <div className={`${className} footer-menu-container`}>{menuList}</div>
+    <div className={`${className} gradient-background footer-menu-container`}>{menuList}</div>
   );
 };
 

@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Search from '../../components/Search';
 import FooterMenu from '../../components/FooterMenu';
 import Icon from '../../components/Icon';
-import { selectWordAction, searchWordAction } from './wordActions';
+import * as wordActionCreator from './wordActionCreator';
 
 import bookmarksIcon from '../../images/SVG/212-bookmarks.svg';
 import cogsIcon from '../../images/SVG/149-cog.svg';
@@ -17,7 +18,8 @@ class HomePage extends React.Component {
   constructor() {
     super();
     this.state = {
-      searchText: ''
+      searchText: '',
+      selectedWord: null
     };
     this.menuList = [{
       icon: <Icon path={bookmarksIcon} />,
@@ -32,15 +34,15 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(searchWordAction());
+    const { wordActions } = this.props;
+    wordActions.searchWordAction('');
   }
 
   onChangeSearch = ({ target }) => {
     const { value } = target;
-    const { dispatch } = this.props;
+    const { wordActions } = this.props;
     this.setState({ searchText: value });
-    dispatch(searchWordAction(value));
+    wordActions.searchWordAction(value);
   }
 
   onClickAddNew = () => {
@@ -56,13 +58,20 @@ class HomePage extends React.Component {
   }
 
   onSelectWord = (selectedWord) => {
-    const { dispatch } = this.props;
-    dispatch(selectWordAction(selectedWord));
+    this.setState({ selectedWord });
+  }
+
+  getListOfWords = (words, selectedWord) => {
+    const list = words.map((item) => (
+      <div key={item.name} className={`list-item ${selectedWord && selectedWord.name === item.name ? 'selected' : ''}`} onClick={() => this.onSelectWord(item)}>{item.name}</div>
+    ));
+
+    return (list.length) ? list : <div className="data-not-found">No records found</div>;
   }
 
   render() {
-    const { searchText } = this.state;
-    const { words, selectedWord } = this.props;
+    const { searchText, selectedWord } = this.state;
+    const { wordState: { words, isError } } = this.props;
 
     return (
       <div className="home-page">
@@ -70,15 +79,11 @@ class HomePage extends React.Component {
           <title>Home</title>
           <meta name="description" content="Application homepage" />
         </Helmet>
-        <div className="search-section-container">
+        <div className="search-section-container gradient-background">
           <Search onChange={this.onChangeSearch} value={searchText} />
         </div>
         <div className="list-container">
-          {
-            words && words.map((item) => (
-              <h1 key={item.name} className={`${selectedWord && selectedWord.name === item.name ? 'selected' : ''}`} onClick={() => this.onSelectWord(item)}>{item.name}</h1>
-            ))
-          }
+          { isError ? <div className="error">Error occurred</div> : this.getListOfWords(words, selectedWord) }
         </div>
         <div className="menu-container">
           <FooterMenu menus={this.menuList} />
@@ -88,15 +93,17 @@ class HomePage extends React.Component {
   }
 }
 
-HomePage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  words: PropTypes.array,
-  selectedWord: PropTypes.object
-};
-
-const mapStateToProps = ({ words }) => ({
-  words,
-  selectedWord: words.selectedWord
+const mapDispatchToProps = (dispatch) => ({
+  wordActions: bindActionCreators(wordActionCreator, dispatch)
 });
 
-export default connect(mapStateToProps)(HomePage);
+const mapStateToProps = (state) => ({
+  wordState: state.words
+});
+
+HomePage.propTypes = {
+  wordState: PropTypes.object,
+  wordActions: PropTypes.object
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

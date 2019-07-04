@@ -7,7 +7,7 @@
     "url": "git://github.com/flexdinesh/react-redux-boilerplate.git"
   },
   "license": "MIT",
-  "author": "Dinesh Pandiyan",
+  "author": "Amit Pal",
   "scripts": {
     "prebuild": "npm run build:clean",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "axios": "^0.19.0",
     "chalk": "^2.3.2",
     "compression": "1.7.3",
     "cross-env": "5.2.0",
@@ -46,8 +47,10 @@
     "react-router-redux": "5.0.0-alpha.6",
     "redux": "3.7.2",
     "redux-immutable": "4.0.0",
+    "redux-pack": "^0.1.5",
     "redux-persist": "5.10.0",
     "redux-saga": "0.16.2",
+    "redux-thunk": "^2.3.0",
     "reselect": "4.0.0",
     "sanitize.css": "8.0.0",
     "warning": "^4.0.1",

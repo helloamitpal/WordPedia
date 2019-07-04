@@ -1,13 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from '../HomePage/Loadable';
-import FeaturePage from '../FeaturePage/Loadable';
-import NotFoundPage from '../NotFoundPage/Loadable';
+import HomePage from '../containers/HomePage/Loadable';
+import FeaturePage from '../containers/FeaturePage/Loadable';
+import NotFoundPage from '../containers/NotFoundPage/Loadable';
 
-import './App.scss';
+import './Router.scss';
 
-const App = () => (
+const Router = () => (
   <div className="app-wrapper">
     <Switch>
       <Route exact path="/" component={HomePage} />
@@ -17,4 +17,4 @@ const App = () => (
   </div>
 );
 
-export default App;
+export default Router;

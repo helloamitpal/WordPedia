@@ -1,0 +1,10 @@
+@import '../../styles/colors.scss';
+
+.card-list-container {
+  .card-item {
+    box-shadow: 0 0px 5px 0 rgba(0,0,0,0.35);
+    border-radius: 5px;
+    margin: 10px 0;
+    cursor: pointer;    
+  }
+}

@@ -1,5 +1,4 @@
 /* eslint-disable global-require */
-
 /**
  * Front-end middleware
  */

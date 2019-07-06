@@ -8,6 +8,7 @@ import Search from '../../components/Search';
 import FooterMenu from '../../components/FooterMenu';
 import Icon from '../../components/Icon';
 import * as wordActionCreator from './wordActionCreator';
+import CardList from '../../components/CardList';
 
 import bookmarksIcon from '../../images/SVG/212-bookmarks.svg';
 import cogsIcon from '../../images/SVG/149-cog.svg';
@@ -18,8 +19,7 @@ class HomePage extends React.Component {
   constructor() {
     super();
     this.state = {
-      searchText: '',
-      selectedWord: null
+      searchText: ''
     };
     this.menuList = [{
       icon: <Icon path={bookmarksIcon} />,
@@ -57,20 +57,8 @@ class HomePage extends React.Component {
 
   }
 
-  onSelectWord = (selectedWord) => {
-    this.setState({ selectedWord });
-  }
-
-  getListOfWords = (words, selectedWord) => {
-    const list = words.map((item) => (
-      <div key={item.name} className={`list-item ${selectedWord && selectedWord.name === item.name ? 'selected' : ''}`} onClick={() => this.onSelectWord(item)}>{item.name}</div>
-    ));
-
-    return (list.length) ? list : <div className="data-not-found">No records found</div>;
-  }
-
   render() {
-    const { searchText, selectedWord } = this.state;
+    const { searchText } = this.state;
     const { wordState: { words, isError } } = this.props;
 
     return (
@@ -83,7 +71,8 @@ class HomePage extends React.Component {
           <Search onChange={this.onChangeSearch} value={searchText} />
         </div>
         <div className="list-container">
-          { isError ? <div className="error">Error occurred</div> : this.getListOfWords(words, selectedWord) }
+          { isError ? <div className="error">Error occurred</div> : null}
+          {(words && words.length) ? <CardList list={words} /> : <div className="data-not-found">No records found</div>}
         </div>
         <div className="menu-container">
           <FooterMenu menus={this.menuList} />

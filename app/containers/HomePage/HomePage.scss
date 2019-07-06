@@ -3,32 +3,22 @@
 .home-page {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  height: 100%;
 
   .list-container {
-    flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 16px;
-
-    .list-item {
-      box-shadow: 0 0px 5px 0 rgba(0,0,0,0.35);
-      border-radius: 5px;
-      padding: 10px;
-      margin: 10px 0;
-      cursor: pointer;
-    }
-
-    .list-item.selected,
-    .list-item:hover {
-      background: #dfdfdf;
-      background: $icon-hover-color;
-      color: $alternate-font-color;
-    }
+    flex: 1 1 auto;    
   }
 
   .search-section-container {
     padding: 16px;
-    box-shadow: 0 0px 5px 0 rgba(0,0,0,0.75);    
+    box-shadow: 0 0px 5px 0 rgba(0,0,0,0.75);
+    flex: 0 0 auto;
+  }
+
+  .menu-container {
+    flex: 0 0 auto;
   }
 }

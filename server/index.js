@@ -5,7 +5,7 @@ const { resolve } = require('path');
 const logger = require('./util//logger');
 
 const argv = require('./util/argv');
-const port = require('./util//port');
+const port = require('./util/port');
 const setup = require('./middlewares/frontendMiddleware');
 
 const app = express();
@@ -16,7 +16,7 @@ const app = express();
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),
-  publicPath: '/',
+  publicPath: '/'
 });
 
 // get the intended host and port number, use localhost and port 3000 if not provided

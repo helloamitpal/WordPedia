@@ -1,5 +1,6 @@
 import { handle } from 'redux-pack';
 import * as actionTypes from './actionTypes';
+import * as WordService from './wordService';
 
 const initialState = {
   words: [],
@@ -20,13 +21,10 @@ const wordReducer = (state = initialState, action = '') => {
         }),
         success: (defaultState) => {
           const { searchText } = defaultState;
-          let filteredData = payload;
-          if (searchText) {
-            filteredData = payload.filter(({ name }) => (name.toLowerCase().includes(searchText.toLowerCase())));
-          }
+
           return {
             ...defaultState,
-            words: filteredData
+            words: WordService.filterWords(payload, searchText)
           };
         },
         failure: (defaultState) => ({

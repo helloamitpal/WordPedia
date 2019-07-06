@@ -15,22 +15,9 @@ const fireRequest = async (method, fullUrl, data) => {
     }
   };
   try {
-    // const res = axiosInstance(fullUrl, options);
-    // let response = {};
-    // const fullResponse = await res;
-    // response = fullResponse.data;
-    // response.statusCode = fullResponse.status;
-    // return response;
-    return new Promise((resolve) => {
-      resolve({
-        data: [{
-          name: 'Amit'
-        }, {
-          name: 'Soumya'
-        }],
-        statusCode: 200
-      });
-    });
+    const res = axiosInstance(fullUrl, options);
+    const fullResponse = await res;
+    return fullResponse;
   } catch (error) {
     return Promise.reject(error);
   }

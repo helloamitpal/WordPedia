@@ -1,3 +1,3 @@
 export default {
-  apiUrl: 'https://www.google.com'
+  apiUrl: 'http://localhost:7009'
 };

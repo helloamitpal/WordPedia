@@ -1,6 +1,8 @@
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
+const ApiRouter = require('../Api/ApiRouter');
+const config = require('../util/config');
 
 module.exports = function addProdMiddlewares(app, options) {
   const publicPath = options.publicPath || '/';
@@ -12,5 +14,7 @@ module.exports = function addProdMiddlewares(app, options) {
   app.use(compression());
   app.use(publicPath, express.static(outputPath));
 
-  app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
+  app.get('/', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
+
+  app.get(`${config.API_BASE}/*`, ApiRouter);
 };

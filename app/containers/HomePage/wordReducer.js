@@ -1,32 +1,42 @@
 import { handle } from 'redux-pack';
 import * as actionTypes from './actionTypes';
-import * as WordService from './wordService';
+// import * as WordService from './wordService';
 
 const initialState = {
   words: [],
   isError: false
 };
 
-// reducer function to synthesize data if required
 const wordReducer = (state = initialState, action = '') => {
   const { type, payload } = action;
 
   switch (type) {
+    case actionTypes.LOAD_WORDS:
+      return handle(state, action, {
+        start: (defaultState) => ({
+          ...defaultState,
+          isError: false
+        }),
+        success: (defaultState) => ({
+          ...defaultState,
+          words: payload
+        }),
+        failure: (defaultState) => ({
+          ...defaultState,
+          isError: true
+        })
+      });
+
     case actionTypes.SEARCH_WORD:
       return handle(state, action, {
         start: (defaultState) => ({
           ...defaultState,
-          isError: false,
-          searchText: payload.searchText
+          isError: false
         }),
-        success: (defaultState) => {
-          const { searchText } = defaultState;
-
-          return {
-            ...defaultState,
-            words: WordService.filterWords(payload, searchText)
-          };
-        },
+        success: (defaultState) => ({
+          ...defaultState,
+          words: payload
+        }),
         failure: (defaultState) => ({
           ...defaultState,
           isError: true

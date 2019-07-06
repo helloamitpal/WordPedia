@@ -1,14 +1,14 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import './style.scss';
+import './BookmarksPage.scss';
 
 const FeaturePage = () => (
-  <div className="feature-page">
+  <div className="bookmarks-page">
     <Helmet>
-      <title>Feature Page</title>
+      <title>Bookmarks</title>
       <meta
         name="description"
-        content="Feature page of React.js Boilerplate application"
+        content="Bookmarks page"
       />
     </Helmet>
     <h1>Features</h1>

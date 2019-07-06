@@ -8,9 +8,15 @@ class WordController {
     };
   }
 
-  getAllWords(req, res) {
+  getAllWords(req, res, offset) {
     logger.info('WordController | getAllWords');
-    const data = WordService.getAllWords();
+    const data = WordService.getAllWords(offset);
+    res.send(data);
+  }
+
+  searchWord(req, res, searchText) {
+    logger.info('WordController | searchWord');
+    const data = WordService.searchWord(searchText);
     res.send(data);
   }
 }

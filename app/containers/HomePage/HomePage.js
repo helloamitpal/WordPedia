@@ -9,6 +9,7 @@ import FooterMenu from '../../components/FooterMenu';
 import Icon from '../../components/Icon';
 import * as wordActionCreator from './wordActionCreator';
 import CardList from '../../components/CardList';
+import Message from '../../components/Message';
 
 import bookmarksIcon from '../../images/SVG/212-bookmarks.svg';
 import cogsIcon from '../../images/SVG/149-cog.svg';
@@ -35,14 +36,19 @@ class HomePage extends React.Component {
 
   componentDidMount() {
     const { wordActions } = this.props;
-    wordActions.searchWordAction('');
+    wordActions.loadWordAction();
   }
 
   onChangeSearch = ({ target }) => {
     const { value } = target;
     const { wordActions } = this.props;
+
     this.setState({ searchText: value });
-    wordActions.searchWordAction(value);
+    if (value) {
+      wordActions.searchWordAction(value);
+    } else {
+      wordActions.loadWordAction();
+    }
   }
 
   onClickAddNew = () => {
@@ -71,8 +77,8 @@ class HomePage extends React.Component {
           <Search onChange={this.onChangeSearch} value={searchText} />
         </div>
         <div className="list-container">
-          { isError ? <div className="error">Error occurred</div> : null}
-          {(words && words.length) ? <CardList list={words} /> : <div className="data-not-found">No records found</div>}
+          { isError ? <Message type="error" text="Error occurred" /> : null}
+          {(words && words.length) ? <CardList list={words} /> : <Message text="No records found" />}
         </div>
         <div className="menu-container">
           <FooterMenu menus={this.menuList} />

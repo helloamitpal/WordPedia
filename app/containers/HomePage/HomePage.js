@@ -9,9 +9,9 @@ import FooterMenu from '../../components/FooterMenu';
 import Icon from '../../components/Icon';
 import * as wordActionCreator from './wordActionCreator';
 import CardList from '../../components/CardList';
+import Card from '../../components/Card';
 import Message from '../../components/Message';
 
-import bookmarksIcon from '../../images/SVG/212-bookmarks.svg';
 import cogsIcon from '../../images/SVG/149-cog.svg';
 import addIcon from '../../images/SVG/267-plus.svg';
 import './HomePage.scss';
@@ -23,9 +23,6 @@ class HomePage extends React.Component {
       searchText: ''
     };
     this.menuList = [{
-      icon: <Icon path={bookmarksIcon} />,
-      onClick: this.onClickBookmarks
-    }, {
       icon: <Icon path={addIcon} />,
       onClick: this.onClickAddNew
     }, {
@@ -35,12 +32,13 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    const { wordActions } = this.props;
-    wordActions.loadWordAction();
+    const { wordActions, wordState: { words } } = this.props;
+    if (!words || !words.length) {
+      wordActions.loadWordAction();
+    }
   }
 
-  onChangeSearch = ({ target }) => {
-    const { value } = target;
+  onChangeSearch = ({ target: { value } }) => {
     const { wordActions } = this.props;
 
     this.setState({ searchText: value });
@@ -59,8 +57,21 @@ class HomePage extends React.Component {
 
   }
 
-  onClickBookmarks = () => {
+  getWebSearchedResults = () => {
+    const { searchText } = this.state;
+    const { wordState: { wordsOnWeb } } = this.props;
+    const message = `'${searchText}' is not added to your bookmark. ${wordsOnWeb.length ? 'Following words are found on the web. Please bookmark if required.' : 'Nothing found on the web as well.'}`;
 
+    return (
+      <div className="web-search-result-container">
+        <Message text={message} />
+        {
+          wordsOnWeb.map((item) => (
+            <Card details={item} />
+          ))
+        }
+      </div>
+    );
   }
 
   render() {
@@ -77,8 +88,8 @@ class HomePage extends React.Component {
           <Search onChange={this.onChangeSearch} value={searchText} />
         </div>
         <div className="list-container">
-          { isError ? <Message type="error" text="Error occurred" /> : null}
-          {(words && words.length) ? <CardList list={words} /> : <Message text="No records found" />}
+          { isError ? <Message type="error" text="Something went wrong. Please try again." /> : null}
+          {(words && words.length) ? <CardList cards={words} /> : this.getWebSearchedResults()}
         </div>
         <div className="menu-container">
           <FooterMenu menus={this.menuList} />

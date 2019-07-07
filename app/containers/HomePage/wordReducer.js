@@ -4,6 +4,7 @@ import * as actionTypes from './actionTypes';
 
 const initialState = {
   words: [],
+  wordsOnWeb: [],
   isError: false
 };
 
@@ -35,7 +36,8 @@ const wordReducer = (state = initialState, action = '') => {
         }),
         success: (defaultState) => ({
           ...defaultState,
-          words: payload
+          words: payload.bookmarkedWords,
+          wordsOnWeb: payload.wordsOnWeb
         }),
         failure: (defaultState) => ({
           ...defaultState,

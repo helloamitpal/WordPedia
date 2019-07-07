@@ -16,8 +16,10 @@ class Card extends React.Component {
   }
 
   toggleExpand = () => {
+    const { onAction, details } = this.props;
     const { showAll } = this.state;
     this.setState({ showAll: !showAll });
+    onAction(details.word);
   }
 
   render() {
@@ -91,6 +93,7 @@ Card.defaultProps = {
 
 Card.propTypes = {
   className: PropTypes.string,
+  onAction: PropTypes.func,
   details: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired
 };
 

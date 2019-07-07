@@ -4,7 +4,6 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from '../containers/HomePage/Loadable';
 import AddWordPage from '../containers/AddWordPage/Loadable';
 import SettingsPage from '../containers/SettingsPage/Loadable';
-import BookmarksPage from '../containers/BookmarksPage/Loadable';
 import NotFoundPage from '../containers/NotFoundPage/Loadable';
 
 import './Router.scss';
@@ -15,7 +14,6 @@ const Router = () => (
       <Route exact path="/" component={HomePage} />
       <Route path="/addWord" component={AddWordPage} />
       <Route path="/settings" component={SettingsPage} />
-      <Route path="/booksmarks" component={BookmarksPage} />
       <Route path="" component={NotFoundPage} />
     </Switch>
   </div>

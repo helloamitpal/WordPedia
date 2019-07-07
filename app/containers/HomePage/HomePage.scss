@@ -6,10 +6,8 @@
   height: 100%;
 
   .list-container {
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 16px;
-    flex: 1 1 auto;    
+    overflow: hidden;
+    flex: 1 1 auto;
   }
 
   .search-section-container {

@@ -8,16 +8,20 @@ class WordController {
     };
   }
 
-  getAllWords(req, res, offset) {
+  getAllWords(req, res) {
     logger.info('WordController | getAllWords');
-    const data = WordService.getAllWords(offset);
+    const data = WordService.getAllWords();
     res.send(data);
   }
 
   searchWord(req, res, searchText) {
     logger.info('WordController | searchWord');
     const data = WordService.searchWord(searchText);
-    res.send(data);
+    if (data) {
+      res.send(data);
+    } else {
+      res.status(500).send('Failed to search word on the web.');
+    }
   }
 }
 

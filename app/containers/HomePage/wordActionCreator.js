@@ -8,10 +8,10 @@ export const searchWordAction = (word) => (dispatch, getState, { api }) => {
   });
 };
 
-export const loadWordAction = (offset) => (dispatch, getState, { api }) => {
+export const loadWordAction = () => (dispatch, getState, { api }) => {
   dispatch({
     type: actionTypes.LOAD_WORDS,
     payload: {},
-    promise: api.get(`/api/getAllWords/${offset}`).then((res) => res.data)
+    promise: api.get('/api/getAllWords').then((res) => res.data)
   });
 };

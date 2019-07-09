@@ -1,19 +1,22 @@
 @import '../../styles/colors.scss';
 
 .card {
+  box-shadow: 0 0px 5px 0 rgba(0,0,0,0.35);
+  border-radius: 5px;
+  margin: 10px 0;
+  cursor: pointer;
+
   .card-header {
-    padding: 1em;
+    padding: 0.5em 0.8em;
     padding-bottom: 0;
   }
 
-  &.selected .card-header,
-  &:hover .card-header {
+  &.selected .card-header {
     background: $icon-hover-color;
     color: $alternate-font-color;
-    padding-bottom: 1em;
+    padding-bottom: 0.8em;
   }
 
-  &:hover .icon,
   &.selected .icon {
     background-color: $alternate-font-color;
   }
@@ -42,7 +45,7 @@
   ul {
     list-style-type: disc;
     margin: 1em 0;
-    padding-left: 40px;
+    padding: 0 0.5em 0 2em;
 
     li {
       margin: 1em 0;

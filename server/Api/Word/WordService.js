@@ -4,14 +4,16 @@ const mockData = require('../../mock-data/wordList.json');
 const WordModel = require('./WordModel');
 const helper = require('../../util/helper');
 
-const synthesizeWordSuggestions = (resp) => {
+const synthesizeWordSuggestions = (searchText, resp) => {
   const arr = [];
+  let exactMatch = false;
   resp.forEach(({ defs, score, word }) => {
-    if (defs && defs.length && parseInt(score, 10) >= 1000) {
+    if (!exactMatch && defs && defs.length && parseInt(score, 10) >= 1000) {
       arr.push(new WordModel({
         word,
         shortDefinitions: helper.replaceChars(defs, '\t')
       }));
+      exactMatch = (searchText === word);
     }
   });
   return arr;
@@ -55,16 +57,16 @@ const getAllWords = () => {
 };
 
 const searchWord = (searchText, searchType) => (new Promise((resolve, reject) => {
-  const text = (searchText && decodeURI(searchText).toLowerCase()) || null;
+  const text = (searchText && decodeURI(searchText).toLowerCase()) || '';
 
   if (searchType === 'bookmark') {
     const bookmarkedWords = mockData.filter(({ word }) => (word.includes(text)));
 
-    if (bookmarkedWords.length === 0 && searchText.length > 1) {
+    if (bookmarkedWords.length === 0 && text.length > 1) {
       logger.info('WordService | searchWord | searched word is not found in the bookmarked list. Searching on the web is initiated');
-      axios.get(`https://api.datamuse.com/words?sp=${searchText}&max=5&md=d`).then(({ data }) => {
+      axios.get(`https://api.datamuse.com/words?sp=${text}&max=5&md=d`).then(({ data }) => {
         logger.success('Word search api have found the defeinition');
-        const webResult = synthesizeWordSuggestions(data);
+        const webResult = synthesizeWordSuggestions(text, data);
         resolve({
           bookmarkedWords: [],
           wordsOnWeb: webResult
@@ -82,7 +84,7 @@ const searchWord = (searchText, searchType) => (new Promise((resolve, reject) =>
     }
   } else if (searchType === 'web') {
     logger.info('WordService | searchWord | searching word definition on the web');
-    axios.get(`https://googledictionaryapi.eu-gb.mybluemix.net?define=${searchText}`).then(({ data }) => {
+    axios.get(`https://googledictionaryapi.eu-gb.mybluemix.net?define=${text}`).then(({ data }) => {
       logger.success('WordService | searchWord | searched word definition is found successfully');
       resolve({
         bookmarkedWords: [],

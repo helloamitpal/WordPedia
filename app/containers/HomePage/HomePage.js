@@ -23,7 +23,7 @@ class HomePage extends React.Component {
     this.state = {
       searchText: ''
     };
-    this.debouncedSearch = _.debounce(this.searchAPICall, 50);
+    this.debouncedSearch = _.debounce(this.searchAPICall, 20);
     this.menuList = [{
       icon: <Icon path={addIcon} />,
       onClick: this.onClickAddNew
@@ -64,12 +64,6 @@ class HomePage extends React.Component {
 
   }
 
-  // searchOnWeb = (word) => {
-  //   const { wordActions } = this.props;
-  //   wordActions.searchWordAction(word, config.SEARCH_TYPE_WEB);
-  //   this.setState({ searchText: word });
-  // }
-
   onCardAction = (word, actionType) => {
     const { wordActions, wordState: { wordsOnWeb } } = this.props;
 
@@ -88,9 +82,9 @@ class HomePage extends React.Component {
       data = words;
     } else if (wordsOnWeb && wordsOnWeb.length) {
       data = wordsOnWeb;
-      subInfo = 'Following words are found on the web.';
+      subInfo = 'Following defeinitions are found.';
     } else {
-      subInfo = 'Nothing has been found on the web. Please recheck.';
+      subInfo = 'No definitions found for this word. Please recheck.';
     }
 
     return (

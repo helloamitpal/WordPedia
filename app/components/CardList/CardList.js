@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { debounce } from 'lodash';
 
 import Card from '../Card';
 import LoadingIndicator from '../LoadingIndicator';
@@ -12,7 +12,7 @@ class CardList extends React.Component {
   constructor(props) {
     super(props);
     this.containerRef = React.createRef();
-    this.deboucedScroll = _.debounce(this.updateScrollState, 200);
+    this.deboucedScroll = debounce(this.updateScrollState, 200);
     this.state = {
       selectedCard: null,
       offset: 0,
@@ -57,7 +57,7 @@ class CardList extends React.Component {
   }
 
   updateScrollState = () => {
-    const { onScroll, cards } = this.props;
+    const { cards } = this.props;
     const { offset, loading, list } = this.state;
 
     if (loading) {
@@ -66,10 +66,6 @@ class CardList extends React.Component {
         list: list.concat(nextList),
         loading: false
       });
-
-      if (onScroll) {
-        onScroll.call(null);
-      }
     }
   }
 
@@ -84,7 +80,7 @@ class CardList extends React.Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, button } = this.props;
     const { selectedCard, list, loading } = this.state;
 
     return (
@@ -92,7 +88,7 @@ class CardList extends React.Component {
         {
           list.map((item) => (
             <div id={`card-${item.word}`} key={item.word}>
-              <Card onAction={this.onFocusAction} details={item} className={selectedCard === item.word ? 'selected' : ''} />
+              <Card onAction={this.onFocusAction} button={button} details={item} className={selectedCard === item.word ? 'selected' : ''} />
             </div>
           ))
         }
@@ -103,14 +99,15 @@ class CardList extends React.Component {
 }
 
 CardList.defaultProps = {
-  className: ''
+  className: '',
+  button: ''
 };
 
 CardList.propTypes = {
   cards: PropTypes.array.isRequired,
   className: PropTypes.string,
-  onScroll: PropTypes.func,
-  onAction: PropTypes.func
+  onAction: PropTypes.func,
+  button: PropTypes.string
 };
 
 export default CardList;

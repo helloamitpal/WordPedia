@@ -10,14 +10,10 @@
     padding: 10px;
     display: flex;
     justify-content: center;
-    transform: scale(1.2);
+    background-color: transparent;
 
-    &:hover {
-      transform: scale(2);
-    }
-
-    .icon:hover {
-      background-color: $icon-color !important;
+    .icon {
+      background-color: $icon-color;
     }
   }
 }

@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Button from '../Button';
 import './FooterMenu.scss';
 
 const FooterMenu = ({ className, menus }) => {
   const menuList = menus.map(({ label, onClick, icon }, index) => (
-    <div key={`menu-item-${index.toString()}`} className={`menu-item ${icon ? 'menu-icon' : ''}`} onClick={onClick}>
-      {icon || label}
-    </div>
+    <Button key={`menu-item-${index.toString()}`} className="menu-item" onClick={onClick} icon={icon} label={label} />
   ));
 
   return (

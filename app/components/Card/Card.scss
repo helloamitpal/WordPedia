@@ -7,39 +7,50 @@
   cursor: pointer;
 
   .card-header {
-    padding: 0.5em 0.8em;
+    padding: 0.8em;
     padding-bottom: 0;
   }
 
-  &.selected .card-header {
-    background: $icon-hover-color;
-    color: $alternate-font-color;
-    padding-bottom: 0.8em;
-  }
+  &.selected {
+    .card-header {
+      background: $icon-hover-color;
+      color: $alternate-font-color;
+      padding-bottom: 0.8em;
+    }
 
-  &.selected .icon {
-    background-color: $alternate-font-color;
+    .card-button {
+      background-color: $icon-hover-color;
+
+      .icon {
+        background-color: $icon-color;
+      }
+    }
+
+    .icon {
+      background-color: $alternate-font-color;
+    }
   }
 
   .title {
     margin: 0;
-    font-size: 1.2em;
+    font-size: 1em;
     text-transform: capitalize;
+    padding-right: 10px;
   }
   .sub-title {
     font-size: 0.8em;
+    margin-top: 0.5em;
   }
 
   .speaker {
-    background-color: $icon-hover-color;
     margin-right: 10px;
-    cursor: pointer;
+    margin-top: 2px;
   }
 
   .row {
     display: flex;
-    align-items: center;
-    margin-bottom: 0.5em;
+    align-items: flex-start;
+    justify-content: space-between;
   }
 
   ul {
@@ -61,13 +72,18 @@
     border-bottom: 1px solid $border-color;
   }
 
+  .card-button {
+    .icon {
+      background-color: $icon-hover-color;
+    }
+  }
+
   .show-all-btn {
     display: flex;
     justify-content: center;
     width: 100%;
     padding: 10px;
     background: $card-btn-background;
-    border: 0;
     border-top: 1px solid $card-btn-background;
 
     .icon {

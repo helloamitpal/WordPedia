@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import _ from 'lodash';
+import { debounce } from 'lodash';
 
 import Search from '../../components/Search';
 import FooterMenu from '../../components/FooterMenu';
-import Icon from '../../components/Icon';
 import * as wordActionCreator from './wordActionCreator';
 import CardList from '../../components/CardList';
 import Message from '../../components/Message';
@@ -23,12 +22,12 @@ class HomePage extends React.Component {
     this.state = {
       searchText: ''
     };
-    this.debouncedSearch = _.debounce(this.searchAPICall, 20);
+    this.debouncedSearch = debounce(this.searchAPICall, 20);
     this.menuList = [{
-      icon: <Icon path={addIcon} />,
+      icon: addIcon,
       onClick: this.onClickAddNew
     }, {
-      icon: <Icon path={cogsIcon} />,
+      icon: cogsIcon,
       onClick: this.onClickSettings
     }];
   }
@@ -69,6 +68,10 @@ class HomePage extends React.Component {
 
     if (actionType.includes('expand') && wordsOnWeb.length && wordsOnWeb.filter((obj) => (obj.word === word)).length) {
       wordActions.searchWordAction(word, config.SEARCH_TYPE_WEB);
+    } else if (actionType.includes('add')) {
+      wordActions.addWordAction(word);
+    } else if (actionType.includes('delete')) {
+      wordActions.deleteWordAction(word);
     }
   }
 
@@ -99,7 +102,7 @@ class HomePage extends React.Component {
         <div className="list-container">
           { isError ? <Message type="error" text="Something went wrong. Please try again." /> : null}
           { words.length === 0 && <Message text={`'${searchText}' is not added to your bookmark.`} subInfo={subInfo} /> }
-          <CardList cards={data} onAction={this.onCardAction} />
+          <CardList cards={data} onAction={this.onCardAction} button="add" />
         </div>
         <div className="menu-container">
           <FooterMenu menus={this.menuList} />

@@ -1,16 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Icon from '../Icon';
 import LoadingIndicator from '../LoadingIndicator';
+import Button from '../Button';
+
 import speakerIcon from '../../images/SVG/296-volume-medium.svg';
 import arrowDown from '../../images/SVG/324-circle-down.svg';
 import arrowUp from '../../images/SVG/322-circle-up.svg';
+import addIcon from '../../images/SVG/267-plus.svg';
+import minusIcon from '../../images/SVG/268-minus.svg';
 import './Card.scss';
 
 class Card extends React.Component {
   constructor(props) {
     super();
+    this.icons = {
+      add: addIcon,
+      delete: minusIcon
+    };
     this.state = {
       showAll: false,
       details: { ...props.details }
@@ -23,28 +30,50 @@ class Card extends React.Component {
     this.setState({ details });
   }
 
-  toggleExpand = () => {
-    const { onAction, details } = this.props;
+  toggleExpand = (evt) => {
+    const { onAction, details: { word } } = this.props;
     const { showAll } = this.state;
     const actions = ['focus', (!showAll) ? 'expand' : 'close'];
 
+    evt.stopPropagation();
+    evt.nativeEvent.stopImmediatePropagation();
     this.setState({ showAll: !showAll });
-    onAction(details.word, actions);
+    onAction(word, actions);
+  }
+
+  onSelectCard = () => {
+    const { onAction, details: { word } } = this.props;
+    onAction(word, ['focus']);
+  }
+
+  textToSpeech = () => {
+
+  }
+
+  onCardAction = (evt) => {
+    const { button, onAction, details: { word } } = this.props;
+
+    evt.stopPropagation();
+    evt.nativeEvent.stopImmediatePropagation();
+    onAction(word, ['focus', button]);
   }
 
   render() {
-    const { className } = this.props;
+    const { className, button } = this.props;
     const { showAll, details } = this.state;
     const isDetailAvialable = (details.longDefinitions && details.longDefinitions.length) || (details.origins && details.origins.length);
 
     return (
-      <div className={`card ${className}`}>
+      <div className={`card ${className}`} onClick={this.onSelectCard}>
         <div className="card-header">
           <div className="row">
-            <Icon className="speaker" path={speakerIcon} />
-            <h3 className="title">{details.word}</h3>
+            <div className="row">
+              <Button className="speaker card-button" onClick={this.textToSpeech} icon={speakerIcon} />
+              <h3 className="title">{details.word}</h3>
+            </div>
+            {button && <Button className="card-button" onClick={this.onCardAction} icon={this.icons[button]} />}
           </div>
-          {details.phonetic && <span className="sub-title">{details.phonetic}</span>}
+          {details.phonetic && <div className="sub-title">{details.phonetic}</div>}
         </div>
         {details.shortDefinitions && details.shortDefinitions.length && (
           <ul>
@@ -55,11 +84,7 @@ class Card extends React.Component {
             }
           </ul>
         )}
-        {!showAll && (
-          <button type="button" className="show-all-btn" onClick={this.toggleExpand}>
-            <Icon className="arrowDown" path={arrowDown} />
-          </button>
-        )}
+        {!showAll && <Button className="show-all-btn" onClick={this.toggleExpand} icon={arrowDown} />}
         {(showAll && isDetailAvialable) ? (
           <div className="long-details mt-1">
             {details.origins && details.origins.length ? <section>Origin</section> : null}
@@ -90,11 +115,7 @@ class Card extends React.Component {
                 }
               </div>
             )}
-            {showAll && (
-              <button type="button" className="show-all-btn" onClick={this.toggleExpand}>
-                <Icon className="arrowUp" path={arrowUp} />
-              </button>
-            )}
+            {showAll && <Button className="show-all-btn" onClick={this.toggleExpand} icon={arrowUp} />}
           </div>
         ) : (showAll && <LoadingIndicator />)}
       </div>
@@ -103,13 +124,15 @@ class Card extends React.Component {
 }
 
 Card.defaultProps = {
-  className: ''
+  className: '',
+  button: ''
 };
 
 Card.propTypes = {
   className: PropTypes.string,
   onAction: PropTypes.func,
-  details: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired
+  details: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+  button: PropTypes.oneOf(['add', 'delete', ''])
 };
 
 export default Card;

@@ -15,3 +15,11 @@ export const loadWordAction = () => (dispatch, getState, { api }) => {
     promise: api.get('/api/getAllWords').then((res) => res.data)
   });
 };
+
+export const addWordAction = () => {
+
+};
+
+export const deleteWordAction = () => {
+
+};

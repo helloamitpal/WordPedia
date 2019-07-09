@@ -80,11 +80,14 @@ class HomePage extends React.Component {
     const { wordState: { words, isError, wordsOnWeb } } = this.props;
     let data = [];
     let subInfo = '';
+    let buttonType;
 
     if (words && words.length) {
       data = words;
+      buttonType = 'delete';
     } else if (wordsOnWeb && wordsOnWeb.length) {
       data = wordsOnWeb;
+      buttonType = 'add';
       subInfo = 'Following defeinitions are found.';
     } else {
       subInfo = 'No definitions found for this word. Please recheck.';
@@ -102,7 +105,7 @@ class HomePage extends React.Component {
         <div className="list-container">
           { isError ? <Message type="error" text="Something went wrong. Please try again." /> : null}
           { words.length === 0 && <Message text={`'${searchText}' is not added to your bookmark.`} subInfo={subInfo} /> }
-          <CardList cards={data} onAction={this.onCardAction} button="add" />
+          <CardList cards={data} onAction={this.onCardAction} button={buttonType} />
         </div>
         <div className="menu-container">
           <FooterMenu menus={this.menuList} />

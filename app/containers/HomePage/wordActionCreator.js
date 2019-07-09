@@ -16,10 +16,18 @@ export const loadWordAction = () => (dispatch, getState, { api }) => {
   });
 };
 
-export const addWordAction = () => {
-
+export const addWordAction = (wordDetails) => (dispatch, getState, { api }) => {
+  dispatch({
+    type: actionTypes.ADD_WORD,
+    payload: {},
+    promise: api.post('/api/addWord', wordDetails).then((res) => res.data)
+  });
 };
 
-export const deleteWordAction = () => {
-
+export const deleteWordAction = (word) => (dispatch, getState, { api }) => {
+  dispatch({
+    type: actionTypes.DELETE_WORD,
+    payload: {},
+    promise: api.get(`/api/deleteWord/${encodeURI(word)}`).then((res) => res.data)
+  });
 };

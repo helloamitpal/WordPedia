@@ -7,8 +7,8 @@ import Button from '../Button';
 import speakerIcon from '../../images/SVG/296-volume-medium.svg';
 import arrowDown from '../../images/SVG/324-circle-down.svg';
 import arrowUp from '../../images/SVG/322-circle-up.svg';
-import addIcon from '../../images/SVG/267-plus.svg';
-import minusIcon from '../../images/SVG/268-minus.svg';
+import addIcon from '../../images/SVG/050-folder-plus.svg';
+import deleteIcon from '../../images/SVG/174-bin2.svg';
 import './Card.scss';
 
 class Card extends React.Component {
@@ -16,7 +16,7 @@ class Card extends React.Component {
     super();
     this.icons = {
       add: addIcon,
-      delete: minusIcon
+      delete: deleteIcon
     };
     this.state = {
       showAll: false,

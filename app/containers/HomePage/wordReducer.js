@@ -1,6 +1,5 @@
 import { handle } from 'redux-pack';
 import * as actionTypes from './actionTypes';
-// import * as WordService from './wordService';
 
 const initialState = {
   words: [],

@@ -8,6 +8,8 @@
   .list-container {
     overflow: hidden;
     flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .search-section-container {
@@ -18,5 +20,41 @@
 
   .menu-container {
     flex: 0 0 auto;
+  }
+
+  .web-word-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .message-container {
+      flex: 0 0 auto;
+    }
+
+    .web-search-result-container {
+      padding: 0 1em;
+      overflow: auto;
+      flex: 1 1 auto;
+
+      .web-word {
+        margin: 1em 0;
+
+        a {
+          text-transform: capitalize;
+        }
+
+        .sub-title {
+          font-size: 0.8em;
+
+          li {
+            padding: 0.5em 0;
+          }
+        }
+
+        &:not(:last-child) {
+          border-bottom: 1px solid $border-color;
+        }
+      }
+    }
   }
 }

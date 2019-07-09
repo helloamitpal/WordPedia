@@ -1,10 +1,10 @@
 import * as actionTypes from './actionTypes';
 
-export const searchWordAction = (word) => (dispatch, getState, { api }) => {
+export const searchWordAction = (word, searchType) => (dispatch, getState, { api }) => {
   dispatch({
     type: actionTypes.SEARCH_WORD,
-    payload: { searchText: word },
-    promise: api.get(`/api/searchWord/${encodeURI(word)}`).then((res) => res.data)
+    payload: { searchText: word, searchType },
+    promise: api.get(`/api/searchWord/${encodeURI(word)}/${searchType}`).then((res) => res.data)
   });
 };
 

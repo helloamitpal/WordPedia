@@ -1,12 +1,16 @@
 @import '../../styles/colors.scss';
 
 .message-container {
-  font-size: 1em;
-  display: flex;
-  justify-content: center;
   width: 100%;
-  align-items: center;
   padding: 1em;
+  padding-bottom: 0;
+
+  .main-text-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+  }
 
   p {
     margin: 0 5px;
@@ -22,5 +26,11 @@
 
   &.success .icon {
     background-color: green;
+  }
+
+  .sub-info {
+    font-size: 0.8em;
+    text-align: center;
+    margin: 1em 0;
   }
 }

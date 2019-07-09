@@ -2,7 +2,7 @@
     {
         "word": "saga",
         "phonetic": "/ˈsɑːɡə/",
-        "origin": [
+        "origins": [
             "Early 18th century from Old Norse, literally ‘narrative’; related to saw."
         ],
         "shortDefinitions": [
@@ -48,7 +48,7 @@
     {
         "word": "acrobatic",
         "phonetic": "/akrəˈbatɪk/",
-        "origin": [],
+        "origins": [],
         "shortDefinitions": [
           "Performing, involving, or adept at spectacular gymnastic feats."
         ],
@@ -86,7 +86,7 @@
     {
         "word": "lunatic",
         "phonetic": "/ˈluːnətɪk/",
-        "origin": [
+        "origins": [
             "Middle English from Old French lunatique, from late Latin lunaticus, from Latin luna ‘moon’ (from the belief that changes of the moon caused intermittent insanity)."
         ],
         "shortDefinitions": [
@@ -132,7 +132,7 @@
     {
         "word": "philanthropic",
         "phonetic": "/ˌfɪlənˈθrɒpɪk/",
-        "origin": [
+        "origins": [
             "Late 18th century from French philanthropique, from Greek philanthrōpos ‘man-loving’ (see philanthrope)."
         ],
         "shortDefinitions": [
@@ -181,7 +181,7 @@
     {
         "word": "boo",
         "phonetic": "/buː/",
-        "origin": [
+        "origins": [
             "Early 19th century (in boo (sense 2 of the exclamation)): imitative of the lowing of oxen.",
             "1980s origin uncertain; probably an alteration of French beau ‘boyfriend, male admirer’."
         ],
@@ -264,7 +264,7 @@
     {
         "word": "catastrophic",
         "phonetic": "/katəˈstrɒfɪk/",
-        "origin": [],
+        "origins": [],
         "shortDefinitions": [
           "Involving or causing sudden great damage or suffering."
         ],
@@ -291,7 +291,7 @@
     {
         "word": "dungeon",
         "phonetic": "/ˈdʌn(d)ʒ(ə)n/",
-        "origin": [
+        "origins": [
             "Middle English (also with the sense ‘castle keep’): from Old French (perhaps originally with the sense ‘lord's tower’ or ‘mistress tower’), based on Latin dominus ‘lord, master’. Compare with donjon."
         ],
         "shortDefinitions": [
@@ -328,7 +328,7 @@
     {
         "word": "eggplant",
         "phonetic": "/ˈɛɡplɑːnt/",
-        "origin": [],
+        "origins": [],
         "shortDefinitions": [
           "The purple egg-shaped fruit of a tropical Old World plant, which is eaten as a vegetable; an aubergine.",
           "The large plant of the nightshade family which bears aubergines."
@@ -350,7 +350,7 @@
     {
         "word": "fragile",
         "phonetic": "/ˈfradʒʌɪl/",
-        "origin": [
+        "origins": [
             "Late 15th century (in the sense ‘morally weak’): from Latin fragilis, from frangere ‘to break’. The sense ‘liable to break’ dates from the mid 16th century."
         ],
         "shortDefinitions": [
@@ -386,7 +386,7 @@
     {
         "word": "gorgeous",
         "phonetic": "/ˈɡɔːdʒəs/",
-        "origin": [
+        "origins": [
             "Late 15th century (describing sumptuous clothing): from Old French gorgias ‘fine, elegant’, of unknown origin."
         ],
         "shortDefinitions": [
@@ -433,7 +433,7 @@
     {
         "word": "humble",
         "phonetic": "/ˈhʌmb(ə)l/",
-        "origin": [
+        "origins": [
             "Middle English from Old French, from Latin humilis ‘low, lowly’, from humus ‘ground’."
         ],
         "shortDefinitions": [
@@ -518,7 +518,7 @@
     {
         "word": "irrigation",
         "phonetic": "/ɪrɪˈɡeɪʃ(ə)n/",
-        "origin": [],
+        "origins": [],
         "shortDefinitions": [
           "The supply of water to land or crops to help growth, typically by means of channels.",
           "The process of washing out an organ or wound with a continuous flow of water or medication."
@@ -542,7 +542,7 @@
     {
         "word": "judicial",
         "phonetic": "/dʒuːˈdɪʃ(ə)l/",
-        "origin": [
+        "origins": [
             "Late Middle English from Latin judicialis, from judicium ‘judgement’, from judex (see judge)."
         ],
         "shortDefinitions": [
@@ -571,7 +571,7 @@
     {
         "word": "kudos",
         "phonetic": "/ˈkjuːdɒs/",
-        "origin": [
+        "origins": [
             "Late 18th century Greek."
         ],
         "shortDefinitions": [
@@ -608,7 +608,7 @@
     {
         "word": "lucrative",
         "phonetic": "/ˈluːkrətɪv/",
-        "origin": [
+        "origins": [
             "Late Middle English from Latin lucrativus, from lucrat- ‘gained’, from the verb lucrari, from lucrum (see lucre)."
         ],
         "shortDefinitions": [
@@ -642,7 +642,7 @@
     {
         "word": "murky",
         "phonetic": "/ˈməːki/",
-        "origin": [],
+        "origins": [],
         "shortDefinitions": [
           "Dark and gloomy, especially due to thick mist.",
           "Obscure or morally questionable."
@@ -698,7 +698,7 @@
     {
         "word": "nostalgic",
         "phonetic": "/nɒˈstaldʒɪk/",
-        "origin": [],
+        "origins": [],
         "shortDefinitions": [
           "Feeling, evoking, or characterized by nostalgia.",
           "A nostalgic person."
@@ -741,7 +741,7 @@
     {
         "word": "ostensibly",
         "phonetic": "/ɒˈstɛnsɪbli/",
-        "origin": [],
+        "origins": [],
         "shortDefinitions": [
           "As appears or is stated to be true, though not necessarily so; apparently."
         ],
@@ -774,7 +774,7 @@
     {
         "word": "picturesque",
         "phonetic": "/ˌpɪktʃəˈrɛsk/",
-        "origin": [
+        "origins": [
             "Early 18th century from French pittoresque, from Italian pittoresco, from pittore ‘painter’ (from Latin pictor). The change from -tt- to -ct- was due to association with picture."
         ],
         "shortDefinitions": [
@@ -807,7 +807,7 @@
     {
         "word": "tumblebug",
         "phonetic": "/ˈtʌmb(ə)lbʌɡ/",
-        "origin": [],
+        "origins": [],
         "shortDefinitions": [
           "A dung beetle that rolls balls of dung along the ground."
         ],
@@ -826,7 +826,7 @@
     {
         "word": "zodiac",
         "phonetic": "/ˈzəʊdɪak/",
-        "origin": [
+        "origins": [
             "Late Middle English from Old French zodiaque, via Latin from Greek zōidiakos, from zōidion ‘sculptured animal figure’, diminutive of zōion ‘animal’."
         ],
         "shortDefinitions": [

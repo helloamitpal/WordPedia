@@ -5,7 +5,8 @@ import * as actionTypes from './actionTypes';
 const initialState = {
   words: [],
   wordsOnWeb: [],
-  isError: false
+  isError: false,
+  searchType: ''
 };
 
 const wordReducer = (state = initialState, action = '') => {
@@ -32,13 +33,24 @@ const wordReducer = (state = initialState, action = '') => {
       return handle(state, action, {
         start: (defaultState) => ({
           ...defaultState,
-          isError: false
+          isError: false,
+          searchType: state.searchType
         }),
-        success: (defaultState) => ({
-          ...defaultState,
-          words: payload.bookmarkedWords,
-          wordsOnWeb: payload.wordsOnWeb
-        }),
+        success: (defaultState) => {
+          let wordsOnWeb;
+          if (payload.wordDetails) {
+            wordsOnWeb = [];
+            defaultState.wordsOnWeb.forEach((obj) => {
+              wordsOnWeb.push((obj.word === payload.wordDetails.word) ? payload.wordDetails : obj);
+            });
+          }
+
+          return {
+            ...defaultState,
+            words: payload.bookmarkedWords,
+            wordsOnWeb: wordsOnWeb || payload.wordsOnWeb
+          };
+        },
         failure: (defaultState) => ({
           ...defaultState,
           isError: true

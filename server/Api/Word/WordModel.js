@@ -1,8 +1,8 @@
 class WordModel {
-  constructor({ word, phonetic, origin, longDefinitions, shortDefinitions }) {
+  constructor({ word, phonetic, origins, longDefinitions, shortDefinitions }) {
     this.word = word || '';
     this.phonetic = phonetic || '';
-    this.origin = origin || [];
+    this.origins = origins || [];
     this.longDefinitions = longDefinitions || [];
     this.shortDefinitions = shortDefinitions || [];
   }

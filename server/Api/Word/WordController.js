@@ -14,14 +14,13 @@ class WordController {
     res.send(data);
   }
 
-  searchWord(req, res, searchText) {
+  searchWord(req, res, searchText, searchType) {
     logger.info('WordController | searchWord');
-    const data = WordService.searchWord(searchText);
-    if (data) {
+    WordService.searchWord(searchText, searchType).then((data) => {
       res.send(data);
-    } else {
+    }, () => {
       res.status(500).send('Failed to search word on the web.');
-    }
+    });
   }
 }
 

@@ -8,9 +8,9 @@ router.get(`${config.API_BASE}/getAllWords/`, (req, res) => {
   WordWiring.WordController().getAllWords(req, res);
 });
 
-router.get(`${config.API_BASE}/searchWord/:searchText`, (req, res) => {
+router.get(`${config.API_BASE}/searchWord/:searchText/:searchType`, (req, res) => {
   logger.info('/searchWord route found');
-  WordWiring.WordController().searchWord(req, res, req.params.searchText);
+  WordWiring.WordController().searchWord(req, res, req.params.searchText, req.params.searchType);
 });
 
 router.post(`${config.API_BASE}/addWord`, (req, res) => {

@@ -8,7 +8,7 @@ import errorIcon from '../../images/SVG/270-cancel-circle.svg';
 import checkIcon from '../../images/SVG/273-checkmark.svg';
 import './Message.scss';
 
-const Message = ({ className, text, type }) => {
+const Message = ({ className, text, type, subInfo }) => {
   const iconSet = {
     error: errorIcon,
     info: infoIcon,
@@ -16,8 +16,11 @@ const Message = ({ className, text, type }) => {
   };
   return (
     <div className={`message-container ${className} ${type}`}>
-      <Icon path={iconSet[type]} />
-      <p>{text}</p>
+      <div className="main-text-container">
+        <Icon path={iconSet[type]} />
+        <p>{text}</p>
+      </div>
+      <p className="sub-info">{subInfo}</p>
     </div>
   );
 };
@@ -25,12 +28,14 @@ const Message = ({ className, text, type }) => {
 Message.propTypes = {
   className: PropTypes.string,
   text: PropTypes.string.isRequired,
+  subInfo: PropTypes.string,
   type: PropTypes.oneOf(['info', 'success', 'error'])
 };
 
 Message.defaultProps = {
   className: '',
-  type: 'info'
+  type: 'info',
+  subInfo: ''
 };
 
 export default Message;

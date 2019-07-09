@@ -2,29 +2,40 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Icon from '../Icon';
+import LoadingIndicator from '../LoadingIndicator';
 import speakerIcon from '../../images/SVG/296-volume-medium.svg';
 import arrowDown from '../../images/SVG/324-circle-down.svg';
 import arrowUp from '../../images/SVG/322-circle-up.svg';
 import './Card.scss';
 
 class Card extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      showAll: false
+      showAll: false,
+      details: { ...props.details }
     };
+  }
+
+  componentWillReceiveProps(newProps) {
+    const { details } = this.state;
+    Object.assign(details, newProps.details);
+    this.setState({ details });
   }
 
   toggleExpand = () => {
     const { onAction, details } = this.props;
     const { showAll } = this.state;
+    const actions = ['focus', (!showAll) ? 'expand' : 'close'];
+
     this.setState({ showAll: !showAll });
-    onAction(details.word);
+    onAction(details.word, actions);
   }
 
   render() {
-    const { className, details } = this.props;
-    const { showAll } = this.state;
+    const { className } = this.props;
+    const { showAll, details } = this.state;
+    const isDetailAvialable = (details.longDefinitions && details.longDefinitions.length) || (details.origins && details.origins.length);
 
     return (
       <div className={`card ${className}`}>
@@ -33,55 +44,59 @@ class Card extends React.Component {
             <Icon className="speaker" path={speakerIcon} />
             <h3 className="title">{details.word}</h3>
           </div>
-          <span className="sub-title">{details.phonetic}</span>
+          {details.phonetic && <span className="sub-title">{details.phonetic}</span>}
         </div>
-        <ul>
-          {
-            details.shortDefinitions.map((shortDefinitionsObj, defIndex) => (
-              <li key={`short-def-${defIndex.toString()}`}>{shortDefinitionsObj}</li>
-            ))
-          }
-        </ul>
+        {details.shortDefinitions && details.shortDefinitions.length && (
+          <ul>
+            {
+              details.shortDefinitions.map((shortDef, defIndex) => (
+                <li key={`short-def-${defIndex.toString()}`}>{shortDef}</li>
+              ))
+            }
+          </ul>
+        )}
         {!showAll && (
           <button type="button" className="show-all-btn" onClick={this.toggleExpand}>
             <Icon className="arrowDown" path={arrowDown} />
           </button>
         )}
-        { showAll ? (
+        {(showAll && isDetailAvialable) ? (
           <div className="long-details mt-1">
-            {details.origin.length ? <section>Origin</section> : null}
+            {details.origins && details.origins.length ? <section>Origin</section> : null}
             <ul>
               {
-                details.origin.map((originText, index) => (
+                details.origins.map((originText, index) => (
                   <li key={`origin-${index.toString()}`}>{originText}</li>
                 ))
               }
             </ul>
-            <div className="examples-section">
-              {
-                details.longDefinitions.map((longDefinitionsObj, index) => (
-                  <div className="example" key={`example-${longDefinitionsObj.type}-${index.toString()}`}>
-                    <section>{longDefinitionsObj.type}</section>
-                    {
-                      longDefinitionsObj.examples.map((meaningObj, index1) => (
-                        <ul className="meaning-section" key={`meaning-section-${index1.toString()}`}>
-                          <li>{`Definition: ${meaningObj.definition}`}</li>
-                          <li>{`Example: ${meaningObj.example}`}</li>
-                          <li>{`Synonyms: ${meaningObj.synonyms}`}</li>
-                        </ul>
-                      ))
-                    }
-                  </div>
-                ))
-              }
-            </div>
+            {details.longDefinitions && (
+              <div className="examples-section">
+                {
+                  details.longDefinitions.map((longDefinitionsObj, index) => (
+                    <div className="example" key={`example-${longDefinitionsObj.type}-${index.toString()}`}>
+                      <section>{longDefinitionsObj.type}</section>
+                      {
+                        longDefinitionsObj.examples.map((meaningObj, index1) => (
+                          <ul className="meaning-section" key={`meaning-section-${index1.toString()}`}>
+                            {meaningObj.definition && <li>{`Definition: ${meaningObj.definition}`}</li>}
+                            {meaningObj.example && <li>{`Example: ${meaningObj.example}`}</li>}
+                            {meaningObj.synonyms && <li>{`Synonyms: ${meaningObj.synonyms}`}</li>}
+                          </ul>
+                        ))
+                      }
+                    </div>
+                  ))
+                }
+              </div>
+            )}
             {showAll && (
               <button type="button" className="show-all-btn" onClick={this.toggleExpand}>
                 <Icon className="arrowUp" path={arrowUp} />
               </button>
             )}
-          </div>) : null
-        }
+          </div>
+        ) : (showAll && <LoadingIndicator />)}
       </div>
     );
   }

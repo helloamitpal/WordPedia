@@ -28,6 +28,6 @@ export const deleteWordAction = (word) => (dispatch, getState, { api }) => {
   dispatch({
     type: actionTypes.DELETE_WORD,
     payload: {},
-    promise: api.get(`/api/deleteWord/${encodeURI(word)}`).then((res) => res.data)
+    promise: api.delete(`/api/deleteWord/${encodeURI(word)}`).then((res) => res.data)
   });
 };

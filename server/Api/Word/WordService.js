@@ -98,7 +98,17 @@ const searchWord = (searchText, searchType) => (new Promise((resolve, reject) =>
   }
 }));
 
+const addWord = (wordDetails) => {
+  return wordDetails;
+};
+
+const deleteWord = (word) => {
+  return word;
+};
+
 module.exports = {
   getAllWords,
-  searchWord
+  searchWord,
+  addWord,
+  deleteWord
 };

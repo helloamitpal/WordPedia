@@ -1,10 +1,10 @@
 {
   "name": "LearnNewWords",
   "version": "1.0.0",
-  "description": "A minimal react-redux boilerplate with all the best practices",
+  "description": "This is a learning app to improve the vocabulary.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/flexdinesh/react-redux-boilerplate.git"
+    "url": "https://github.com/amit040386/LearnNewWords.git"
   },
   "license": "MIT",
   "author": "Amit Pal",

@@ -1,6 +1,9 @@
 {
   "name": "LearnNewWords",
   "version": "1.0.0",
+  "engines": {
+    "node": "6.4.1"
+  },
   "description": "This is a learning app to improve the vocabulary.",
   "repository": {
     "type": "git",

@@ -25,7 +25,7 @@ Here are a few highlights to look out for in this boilerplate
 
 ## Quick start
 
-1. Clone this repo using `git clone https://github.com/amit040386/LearnNewWords`
+1. Clone this repo using `git clone https://github.com/amit040386/LearnNewWords.git`
 2. Move to the appropriate directory: `cd LearnNewWords`.<br />
 3. Run `yarn` or `npm install` to install dependencies.<br />
 4. Run `npm start` to see the example app at `http://localhost:7009`.

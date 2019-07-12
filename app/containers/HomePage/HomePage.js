@@ -10,6 +10,7 @@ import FooterMenu from '../../components/FooterMenu';
 import * as wordActionCreator from './wordActionCreator';
 import CardList from '../../components/CardList';
 import Message from '../../components/Message';
+import Button from '../../components/Button';
 import config from '../../config';
 
 import cogsIcon from '../../images/SVG/149-cog.svg';
@@ -104,7 +105,8 @@ class HomePage extends React.Component {
         </div>
         <div className="list-container">
           { isError ? <Message type="error" text="Something went wrong. Please try again." /> : null}
-          { words.length === 0 && <Message text={`'${searchText}' is not added to your bookmark.`} subInfo={subInfo} /> }
+          { !isError && words.length === 0 && searchText && <Message text={`'${searchText}' is not added to your bookmark.`} subInfo={subInfo} /> }
+          { !isError && words.length === 0 && !searchText && <Button label="Add Word" icon={addIcon} onClick={this.onClickAddNew} /> }
           <CardList cards={data} onAction={this.onCardAction} button={buttonType} />
         </div>
         <div className="menu-container">

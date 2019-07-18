@@ -1,5 +1,5 @@
 {
-  "name": "LearnNewWords",
+  "name": "WordPedia",
   "version": "1.0.0",
   "engines": {
     "node": ">=8.10.0",
@@ -8,7 +8,7 @@
   "description": "This is a learning app to improve the vocabulary.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/amit040386/LearnNewWords.git"
+    "url": "https://github.com/amit040386/WordPedia"
   },
   "license": "MIT",
   "author": "Amit Pal",

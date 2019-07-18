@@ -9,7 +9,7 @@ import rootReducer from './rootReducer';
 import api from '../api/apiInterceptor';
 
 const persistConfig = {
-  key: 'learnNewWordStoreKey',
+  key: 'WordPediaStoreKey',
   storage,
   stateReconciler: autoMergeLevel1
 };

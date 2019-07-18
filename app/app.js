@@ -30,7 +30,7 @@ class App extends React.Component {
     const { store, rehydrated } = this.state;
 
     const content = rehydrated ? (
-      <Provider store={store} key="learnNewWordStoreKey">
+      <Provider store={store} key="WordPediaStoreKey">
         <BrowserRouter>
           <Router />
         </BrowserRouter>

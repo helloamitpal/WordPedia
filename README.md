@@ -1,4 +1,4 @@
-<h1>LearnNewWords</h1>
+<h1>WordPedia</h1>
 
 <br />
 

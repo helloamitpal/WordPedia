@@ -1,0 +1,28 @@
+{
+	"name": "WordPedia",
+	"short_name": "WordPedia",
+	"description": "This is a learning app to improve the vocabulary.",
+	"start_url": "./app/index.html?utm=homescreen",
+	"display": "standalone",
+	"orientation": "portrait",
+	"background_color": "#f5f5f5",
+	"theme_color": "#29434d",
+	"icons": [
+		{
+			"src": "./app/images/logos/WordPedia-192x192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "./app/images/logos/WordPedia-512x512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"author": {
+		"name": "Amit Pal",
+		"website": "https://www.linkedin.com/in/amit-pal-0241423a/",
+		"github": "https://github.com/amit040386/WordPedia",
+		"source-repo": "https://github.com/amit040386/WordPedia"
+	}
+}

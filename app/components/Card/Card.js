@@ -9,6 +9,7 @@ import arrowDown from '../../images/SVG/324-circle-down.svg';
 import arrowUp from '../../images/SVG/322-circle-up.svg';
 import addIcon from '../../images/SVG/050-folder-plus.svg';
 import deleteIcon from '../../images/SVG/174-bin2.svg';
+import shareIcon from '../../images/SVG/387-share2.svg';
 import './Card.scss';
 
 class Card extends React.Component {
@@ -16,7 +17,8 @@ class Card extends React.Component {
     super();
     this.icons = {
       add: addIcon,
-      delete: deleteIcon
+      delete: deleteIcon,
+      share: shareIcon
     };
     this.state = {
       showAll: false,
@@ -58,6 +60,14 @@ class Card extends React.Component {
     onAction(word, ['focus', button]);
   }
 
+  getButtonList = (buttons, onCardAction) => (
+    <div className="card-button-set">
+      {
+        buttons.map((btn) => (<Button className="card-button" onClick={onCardAction} icon={this.icons[btn]} />))
+      }
+    </div>
+  );
+
   render() {
     const { className, button } = this.props;
     const { showAll, details } = this.state;
@@ -67,13 +77,13 @@ class Card extends React.Component {
       <div className={`card ${className}`} onClick={this.onSelectCard}>
         <div className="card-header">
           <div className="row">
-            <div className="row">
-              <Button className="speaker card-button" onClick={this.textToSpeech} icon={speakerIcon} />
-              <h3 className="title">{details.word}</h3>
-            </div>
-            {button && <Button className="card-button" onClick={this.onCardAction} icon={this.icons[button]} />}
+            <h3 className="title">{details.word}</h3>
+            {button && this.getButtonList(button, this.onCardAction)}
           </div>
-          {details.phonetic && <div className="sub-title">{details.phonetic}</div>}
+          <div className="row sub-title-section">
+            {details.phonetic && <div className="sub-title">{details.phonetic}</div>}
+            <Button className="speaker" onClick={this.textToSpeech} icon={speakerIcon} />
+          </div>
         </div>
         {details.shortDefinitions && details.shortDefinitions.length && (
           <ul>
@@ -125,14 +135,14 @@ class Card extends React.Component {
 
 Card.defaultProps = {
   className: '',
-  button: ''
+  button: []
 };
 
 Card.propTypes = {
   className: PropTypes.string,
   onAction: PropTypes.func,
   details: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
-  button: PropTypes.oneOf(['add', 'delete', ''])
+  button: PropTypes.arrayOf(PropTypes.oneOf(['add', 'delete', 'share']))
 };
 
 export default Card;

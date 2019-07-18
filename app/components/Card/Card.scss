@@ -18,7 +18,8 @@
       padding-bottom: 0.8em;
     }
 
-    .card-button {
+    .card-button,
+    .speaker {
       background-color: $icon-hover-color;
 
       .icon {
@@ -39,18 +40,22 @@
   }
   .sub-title {
     font-size: 0.8em;
-    margin-top: 0.5em;
   }
 
   .speaker {
-    margin-right: 10px;
-    margin-top: 2px;
+    margin-left: 10px;
+    margin-top: -1px;
   }
 
   .row {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+  }
+
+  .sub-title-section {
+    justify-content: flex-start;
+    margin-top: 0.5em;
   }
 
   ul {
@@ -73,6 +78,8 @@
   }
 
   .card-button {
+    margin-top: 2px;
+
     .icon {
       background-color: $icon-hover-color;
     }
@@ -89,5 +96,9 @@
     .icon {
       background-color: $icon-hover-color;
     }
+  }
+
+  .card-button-set .card-button:not(:first-child) {
+    margin-left: 1em;
   }
 }

@@ -100,14 +100,14 @@ class CardList extends React.Component {
 
 CardList.defaultProps = {
   className: '',
-  button: ''
+  button: []
 };
 
 CardList.propTypes = {
   cards: PropTypes.array.isRequired,
   className: PropTypes.string,
   onAction: PropTypes.func,
-  button: PropTypes.string
+  button: PropTypes.array
 };
 
 export default CardList;

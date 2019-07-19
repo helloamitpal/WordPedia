@@ -21,7 +21,7 @@ class App extends React.Component {
   constructor() {
     super();
     const { store } = configureStore()(this.onRehydrate);
-    this.deferredPrompt = null;
+    toast.success('app constructor');
     window.addEventListener('beforeinstallprompt', this.installCallback);
     this.state = {
       store,
@@ -39,18 +39,6 @@ class App extends React.Component {
       closeOnClick: true,
       containerId: '.app-wrapper'
     });
-
-    if (this.deferredPrompt) {
-      this.deferredPrompt.prompt();
-      this.deferredPrompt.userChoice.then((input) => {
-        if (input === 'accepted') {
-          EventTracker.raise(Events.INSTALLED);
-          toast.success('WordPedia has been installed successfully.');
-        } else {
-          EventTracker.raise(Events.INSTALL_REJECTED);
-        }
-      });
-    }
   }
 
   componentWillUnmount() {
@@ -60,8 +48,18 @@ class App extends React.Component {
 
   installCallback = (evt) => {
     evt.preventDefault();
-    // Stash the event so it can be triggered later.
-    this.deferredPrompt = evt;
+
+    const deferredPrompt = evt;
+    toast.success('install callback');
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((input) => {
+      if (input === 'accepted') {
+        EventTracker.raise(Events.INSTALLED);
+        toast.success('WordPedia has been installed successfully.');
+      } else {
+        EventTracker.raise(Events.INSTALL_REJECTED);
+      }
+    });
     return false;
   }
 

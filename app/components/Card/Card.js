@@ -97,7 +97,7 @@ class Card extends React.Component {
             }
           </ul>
         )}
-        {!showAll && <Button className="show-all-btn" onClick={this.toggleExpand} icon={arrowDown} />}
+        {!showAll && <Button className="show-all-btn" animation={false} onClick={this.toggleExpand} icon={arrowDown} />}
         {(showAll && isDetailAvialable) ? (
           <div className="long-details mt-1">
             {details.origins && details.origins.length ? <section>Origin</section> : null}
@@ -128,7 +128,7 @@ class Card extends React.Component {
                 }
               </div>
             )}
-            {showAll && <Button className="show-all-btn" onClick={this.toggleExpand} icon={arrowUp} />}
+            {showAll && <Button className="show-all-btn" animation={false} onClick={this.toggleExpand} icon={arrowUp} />}
           </div>
         ) : (showAll && <LoadingIndicator />)}
       </div>

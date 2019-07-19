@@ -11,9 +11,9 @@ import './Router.scss';
 const Router = () => (
   <div className="app-wrapper">
     <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route path="/addWord" component={AddWordPage} />
-      <Route path="/settings" component={SettingsPage} />
+      <Route exact path="/" render={(props) => <HomePage {...props} />} />
+      <Route path="/addWord" render={(props) => <AddWordPage {...props} />} />
+      <Route path="/settings" render={(props) => <SettingsPage {...props} />} />
       <Route path="" component={NotFoundPage} />
     </Switch>
   </div>

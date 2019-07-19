@@ -84,11 +84,13 @@ class HomePage extends React.Component {
   }
 
   gotoSettings = () => {
-
+    const { history } = this.props;
+    history.push('/settings');
   }
 
   gotoAddNewWord = () => {
-
+    const { history } = this.props;
+    history.push('/addWord');
   }
 
   onCardAction = (word, actionType, cardRef) => {
@@ -158,7 +160,8 @@ const mapStateToProps = (state) => ({
 
 HomePage.propTypes = {
   wordState: PropTypes.object,
-  wordActions: PropTypes.object
+  wordActions: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

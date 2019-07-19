@@ -52,6 +52,7 @@
     "react-redux": "5.0.7",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "5.0.0-alpha.6",
+    "react-toastify": "^5.3.2",
     "redux": "3.7.2",
     "redux-immutable": "4.0.0",
     "redux-pack": "^0.1.5",
@@ -64,7 +65,8 @@
     "webpack": "4.20.2",
     "webpack-dev-middleware": "3.4.0",
     "webpack-hot-middleware": "2.24.3",
-    "whatwg-fetch": "2.0.4"
+    "whatwg-fetch": "2.0.4",
+    "webpack-pwa-manifest": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.1.2",

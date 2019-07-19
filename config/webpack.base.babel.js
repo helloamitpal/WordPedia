@@ -4,6 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 process.noDeprecation = true;
 
@@ -76,6 +77,29 @@ module.exports = (options) => ({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       }
+    }),
+
+    new WebpackPwaManifest({
+      name: 'WordPedia',
+      short_name: 'WordPedia',
+      description: 'This is a learning app to improve the vocabulary.',
+      background_color: '#ffffff',
+      theme_color: '#ffffff',
+      crossorigin: 'use-credentials',
+      start_url: 'app/index.html?utm=homescreen',
+      display: 'standalone',
+      orientation: 'portrait',
+      author: {
+        name: 'Amit Pal',
+        website: 'https://www.linkedin.com/in/amit-pal-0241423a/',
+        github: 'https://github.com/amit040386/WordPedia'
+      },
+      icons: [
+        {
+          src: path.resolve('app/images/logos/WordPedia-512x512.png'),
+          sizes: [96, 128, 192, 256, 512]
+        }
+      ]
     })
   ]),
   resolve: {

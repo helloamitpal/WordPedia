@@ -10,6 +10,7 @@ import arrowUp from '../../images/SVG/322-circle-up.svg';
 import addIcon from '../../images/SVG/050-folder-plus.svg';
 import deleteIcon from '../../images/SVG/174-bin2.svg';
 import shareIcon from '../../images/SVG/387-share2.svg';
+import copyIcon from '../../images/SVG/039-file-text2.svg';
 import './Card.scss';
 
 class Card extends React.Component {
@@ -18,8 +19,10 @@ class Card extends React.Component {
     this.icons = {
       add: addIcon,
       delete: deleteIcon,
-      share: shareIcon
+      share: shareIcon,
+      copy: copyIcon
     };
+    this.cardRef = React.createRef();
     this.state = {
       showAll: false,
       details: { ...props.details }
@@ -52,18 +55,18 @@ class Card extends React.Component {
 
   }
 
-  onCardAction = (evt) => {
-    const { button, onAction, details: { word } } = this.props;
+  onCardAction = (evt, button) => {
+    const { onAction, details: { word } } = this.props;
 
     evt.stopPropagation();
     evt.nativeEvent.stopImmediatePropagation();
-    onAction(word, ['focus', button]);
+    onAction(word, ['focus', button], this.cardRef.current);
   }
 
-  getButtonList = (buttons, onCardAction) => (
+  getButtonList = (buttons) => (
     <div className="card-button-set">
       {
-        buttons.map((btn) => (<Button className="card-button" onClick={onCardAction} icon={this.icons[btn]} />))
+        buttons.map((btn, index) => (<Button key={`card-btn-${index.toString()}`} className="card-button" onClick={(evt) => this.onCardAction(evt, btn)} icon={this.icons[btn]} />))
       }
     </div>
   );
@@ -74,11 +77,11 @@ class Card extends React.Component {
     const isDetailAvialable = (details.longDefinitions && details.longDefinitions.length) || (details.origins && details.origins.length);
 
     return (
-      <div className={`card ${className}`} onClick={this.onSelectCard}>
+      <div className={`card ${className}`} onClick={this.onSelectCard} ref={this.cardRef}>
         <div className="card-header">
           <div className="row">
             <h3 className="title">{details.word}</h3>
-            {button && this.getButtonList(button, this.onCardAction)}
+            {button && this.getButtonList(button)}
           </div>
           <div className="row sub-title-section">
             {details.phonetic && <div className="sub-title">{details.phonetic}</div>}
@@ -142,7 +145,7 @@ Card.propTypes = {
   className: PropTypes.string,
   onAction: PropTypes.func,
   details: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
-  button: PropTypes.arrayOf(PropTypes.oneOf(['add', 'delete', 'share']))
+  button: PropTypes.arrayOf(PropTypes.oneOf(['add', 'delete', 'share', 'copy']))
 };
 
 export default Card;

@@ -79,6 +79,7 @@ module.exports = (options) => ({
       }
     }),
 
+    // PWA settings
     new WebpackPwaManifest({
       name: 'WordPedia',
       short_name: 'WordPedia',
@@ -97,7 +98,7 @@ module.exports = (options) => ({
       icons: [
         {
           src: path.resolve('app/images/logos/WordPedia-512x512.png'),
-          sizes: [96, 128, 192, 256, 512]
+          sizes: [96, 192, 512]
         }
       ]
     })

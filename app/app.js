@@ -9,10 +9,9 @@ import Router from './router/Router';
 import configureStore from './stores/configureStores';
 import EventTracker from './event-tracker';
 import Events from './event-tracker/events';
-import Features from './features';
+import Features from './util/features';
+import * as serviceWorker from './serviceWorker';
 
-import 'react-toastify/dist/ReactToastify.css';
-import 'sanitize.css/sanitize.css';
 import './styles/theme.scss';
 
 const MOUNT_NODE = document.getElementById('app');
@@ -21,7 +20,7 @@ class App extends React.Component {
   constructor() {
     super();
     const { store } = configureStore()(this.onRehydrate);
-    toast.success('app constructor');
+    this.deferredPrompt = null;
     window.addEventListener('beforeinstallprompt', this.installCallback);
     this.state = {
       store,
@@ -30,8 +29,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    Features.detect();
-
     toast.configure({
       draggable: false,
       autoClose: 3000,
@@ -48,23 +45,27 @@ class App extends React.Component {
 
   installCallback = (evt) => {
     evt.preventDefault();
-
-    const deferredPrompt = evt;
-    toast.success('install callback');
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((input) => {
-      if (input === 'accepted') {
-        EventTracker.raise(Events.INSTALLED);
-        toast.success('WordPedia has been installed successfully.');
-      } else {
-        EventTracker.raise(Events.INSTALL_REJECTED);
-      }
-    });
-    return false;
+    this.deferredPrompt = evt;
   }
 
   onRehydrate = () => {
     this.setState({ rehydrated: true });
+  }
+
+  async install() {
+    if (this.deferredPrompt) {
+      this.deferredPrompt.prompt();
+      this.deferredPrompt.userChoice.then((input) => {
+        this.deferredPrompt = null;
+
+        if (input === 'accepted') {
+          EventTracker.raise(Events.INSTALLED);
+          toast.success('WordPedia has been installed successfully.');
+        } else {
+          EventTracker.raise(Events.INSTALL_REJECTED);
+        }
+      });
+    }
   }
 
   render() {
@@ -86,4 +87,6 @@ const render = () => {
   ReactDOM.render(<App />, MOUNT_NODE);
 };
 
+Features.detect();
 render();
+serviceWorker.register();

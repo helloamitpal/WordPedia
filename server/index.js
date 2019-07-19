@@ -2,9 +2,11 @@
 
 const express = require('express');
 const { resolve } = require('path');
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const logger = require('./util//logger');
+const compression = require('compression');
 
+const logger = require('./util//logger');
 const argv = require('./util/argv');
 const port = require('./util/port');
 const setup = require('./middlewares/frontendMiddleware');
@@ -12,10 +14,20 @@ const setup = require('./middlewares/frontendMiddleware');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(helmet());
+app.disable('x-powered-by');
+app.use(compression());
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
+  res.header('X-Content-Type-Options', 'no sniff');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
+  res.set('Cache-Control', 'public, max-age=31557600');
+
+  if (req.secure || process.env.NODE_ENV !== 'production') {
+    next();
+  } else {
+    res.redirect(`https://${req.headers.host}${req.url}`);
+  }
 });
 
 // In production we need to pass these values in instead of relying on webpack

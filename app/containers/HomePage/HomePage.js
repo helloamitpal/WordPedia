@@ -15,7 +15,7 @@ import Button from '../../components/Button';
 import config from '../../config';
 import Events from '../../event-tracker/events';
 import EventTracker from '../../event-tracker';
-import Features from '../../features';
+import Features from '../../util/features';
 import * as helper from '../../util/helper';
 
 import cogsIcon from '../../images/SVG/149-cog.svg';

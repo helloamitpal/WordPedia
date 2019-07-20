@@ -23,11 +23,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.set('Cache-Control', 'public, max-age=31557600');
 
-  if (req.secure || process.env.NODE_ENV !== 'production') {
-    next();
-  } else {
-    res.redirect(`https://${req.headers.host}${req.url}`);
-  }
+  next();
 });
 
 // In production we need to pass these values in instead of relying on webpack

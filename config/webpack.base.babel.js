@@ -4,7 +4,8 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const WebpackPwaManifest = require('webpack-pwa-manifest');
+// const workboxPlugin = require('workbox-webpack-plugin');
+// const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 process.noDeprecation = true;
 
@@ -77,31 +78,37 @@ module.exports = (options) => ({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       }
-    }),
+    })
+
+    // new workboxPlugin.GenerateSW({
+    //   swDest: 'sw.js',
+    //   clientsClaim: true,
+    //   skipWaiting: true
+    // })
 
     // PWA settings
-    new WebpackPwaManifest({
-      name: 'WordPedia',
-      short_name: 'WordPedia',
-      description: 'This is a learning app to improve the vocabulary.',
-      background_color: '#ffffff',
-      theme_color: '#ffffff',
-      crossorigin: 'use-credentials',
-      start_url: 'app/index.html?utm=homescreen',
-      display: 'standalone',
-      orientation: 'portrait',
-      author: {
-        name: 'Amit Pal',
-        website: 'https://www.linkedin.com/in/amit-pal-0241423a/',
-        github: 'https://github.com/amit040386/WordPedia'
-      },
-      icons: [
-        {
-          src: path.resolve('app/images/logos/WordPedia-512x512.png'),
-          sizes: [96, 192, 512]
-        }
-      ]
-    })
+    // new WebpackPwaManifest({
+    //   name: 'WordPedia',
+    //   short_name: 'WordPedia',
+    //   description: 'This is a learning app to improve the vocabulary.',
+    //   background_color: '#ffffff',
+    //   theme_color: '#ffffff',
+    //   crossorigin: 'use-credentials',
+    //   start_url: 'app/index.html?utm=homescreen',
+    //   display: 'standalone',
+    //   orientation: 'portrait',
+    //   author: {
+    //     name: 'Amit Pal',
+    //     website: 'https://www.linkedin.com/in/amit-pal-0241423a/',
+    //     github: 'https://github.com/amit040386/WordPedia'
+    //   },
+    //   icons: [
+    //     {
+    //       src: path.resolve('app/images/logos/WordPedia-512x512.png'),
+    //       sizes: [96, 192, 512]
+    //     }
+    //   ]
+    // })
   ]),
   resolve: {
     modules: ['app', 'node_modules'],

@@ -10,7 +10,6 @@ import configureStore from './stores/configureStores';
 import EventTracker from './event-tracker';
 import Events from './event-tracker/events';
 import Features from './util/features';
-import * as serviceWorker from './serviceWorker';
 
 import './styles/theme.scss';
 
@@ -21,6 +20,7 @@ class App extends React.Component {
     super();
     const { store } = configureStore()(this.onRehydrate);
     this.deferredPrompt = null;
+    Features.detect();
     window.addEventListener('beforeinstallprompt', this.installCallback);
     this.state = {
       store,
@@ -52,7 +52,7 @@ class App extends React.Component {
     this.setState({ rehydrated: true });
   }
 
-  async install() {
+  async installPWA() {
     if (this.deferredPrompt) {
       this.deferredPrompt.prompt();
       this.deferredPrompt.userChoice.then((input) => {
@@ -87,6 +87,4 @@ const render = () => {
   ReactDOM.render(<App />, MOUNT_NODE);
 };
 
-Features.detect();
 render();
-serviceWorker.register();

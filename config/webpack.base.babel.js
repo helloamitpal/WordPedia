@@ -94,6 +94,9 @@ module.exports = (options) => ({
         dontCacheBustUrlsMatching: /\.\w{8}\./,
         filename: 'service-worker.js',
         minify: true,
+        staticFileGlobs: [
+          '/main.js'
+        ],
         navigateFallback: '/index.html',
         staticFileGlobsIgnorePatterns: [/\.map$/, /manifest\.json$/]
       }

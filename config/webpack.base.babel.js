@@ -94,10 +94,6 @@ module.exports = (options) => ({
         dontCacheBustUrlsMatching: /\.\w{8}\./,
         filename: 'service-worker.js',
         minify: true,
-        staticFileGlobs: [
-          '/main.js'
-        ],
-        mergeStaticsConfig: true,
         navigateFallback: '/index.html',
         staticFileGlobsIgnorePatterns: [/\.map$/, /manifest\.json$/]
       }
@@ -138,7 +134,7 @@ module.exports = (options) => ({
     namedModules: true,
     splitChunks: {
       name: 'vendor',
-      minChunks: 3
+      minChunks: 2
     }
   }
 });

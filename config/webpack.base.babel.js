@@ -93,8 +93,11 @@ module.exports = (options) => ({
         cacheId: 'WordPedia',
         dontCacheBustUrlsMatching: /\.\w{8}\./,
         filename: 'service-worker.js',
-        staticFileGlobs: ['build/*.{js,css}', '/'],
         minify: true,
+        staticFileGlobs: [
+          '/main.js'
+        ],
+        mergeStaticsConfig: true,
         navigateFallback: '/index.html',
         staticFileGlobsIgnorePatterns: [/\.map$/, /manifest\.json$/]
       }

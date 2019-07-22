@@ -5,7 +5,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-// const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
 const workboxPlugin = require('workbox-webpack-plugin');
 
@@ -94,17 +93,6 @@ module.exports = (options) => ({
       clientsClaim: true,
       skipWaiting: true
     }),
-
-    // new SWPrecacheWebpackPlugin(
-    //   {
-    //     cacheId: 'WordPedia',
-    //     dontCacheBustUrlsMatching: /\.\w{8}\./,
-    //     filename: 'service-worker.js',
-    //     minify: true,
-    //     navigateFallback: '/index.html',
-    //     staticFileGlobsIgnorePatterns: [/\.map$/, /manifest\.json$/]
-    //   }
-    // ),
 
     // PWA settings
     new WebpackPwaManifest({

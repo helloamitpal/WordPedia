@@ -94,7 +94,7 @@ module.exports = (options) => ({
         dontCacheBustUrlsMatching: /\.\w{8}\./,
         filename: 'service-worker.js',
         minify: true,
-        staticFileGlobs: [
+        importScripts: [
           '/main.js'
         ],
         mergeStaticsConfig: true,

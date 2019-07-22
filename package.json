@@ -69,11 +69,6 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.4",
-    "sw-precache-webpack-plugin": "^0.11.5",
-    "webpack": "4.20.2",
-    "webpack-dev-middleware": "3.4.0",
-    "webpack-hot-middleware": "2.24.3",
-    "webpack-pwa-manifest": "^4.0.0",
     "babel-plugin-dynamic-import-node": "2.2.0",
     "babel-plugin-lodash": "3.3.4",
     "babel-plugin-react-transform": "3.0.0",
@@ -105,8 +100,14 @@
     "sass-loader": "^7.0.1",
     "shelljs": "^0.8.1",
     "style-loader": "0.23.1",
+    "sw-precache-webpack-plugin": "^0.11.5",
     "url-loader": "1.1.2",
-    "webpack-cli": "^3.1.2"
+    "webpack": "4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-middleware": "3.4.0",
+    "webpack-hot-middleware": "2.24.3",
+    "webpack-pwa-manifest": "^4.0.0",
+    "workbox-webpack-plugin": "^4.3.1"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"

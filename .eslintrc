@@ -18,6 +18,7 @@
       "react/prefer-stateless-function": ["off"],
       "class-methods-use-this": ["off"],
       "no-script-url": ["off"],
+      "consistent-return": ["off"],
       "import/prefer-default-export": ["off"],
       "function-paren-newline": ["error", "consistent"],
       "comma-dangle": ["error", "never"],

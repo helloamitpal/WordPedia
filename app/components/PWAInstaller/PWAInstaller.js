@@ -11,9 +11,8 @@ class PWAInstaller extends React.Component {
   constructor() {
     super();
     this.state = {
-      show: false
+      deferredPrompt: false
     };
-    this.deferredPrompt = null;
   }
 
   componentDidMount() {
@@ -30,22 +29,22 @@ class PWAInstaller extends React.Component {
 
   installCallback = (evt) => {
     evt.preventDefault();
-    this.deferredPrompt = evt;
+    alert('install callback');
     if (Features.isAppInstalled) {
+      alert('already installed');
       return false;
     }
-    this.setState({ show: true });
-    return false;
+    this.setState({ deferredPrompt: evt });
   }
 
   addToHomeScreen = () => {
-    if (this.deferredPrompt) {
-      this.deferredPrompt.prompt();
-      this.deferredPrompt.userChoice.then((input) => {
-        this.deferredPrompt = null;
-        this.setState({ show: false });
-        console.log(input);
-        if (input === 'accepted') {
+    const { deferredPrompt } = this.state;
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(({ outcome }) => {
+        this.setState({ deferredPrompt: false });
+        alert(outcome);
+        if (outcome === 'accepted') {
           EventTracker.raise(Events.INSTALLED);
         } else {
           EventTracker.raise(Events.INSTALL_REJECTED);
@@ -64,8 +63,8 @@ class PWAInstaller extends React.Component {
   }
 
   render() {
-    const { show } = this.state;
-    return (show && <button type="button" onClick={this.addToHomeScreen} className="ad2hs-prompt hide">Install WordPedia App</button>);
+    const { deferredPrompt } = this.state;
+    return (deferredPrompt && <button type="button" onClick={this.addToHomeScreen} className="ad2hs-prompt hide">Install WordPedia App</button>);
   }
 }
 

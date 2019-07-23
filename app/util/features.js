@@ -3,7 +3,7 @@ class Features {
     Object.assign(Features.prototype, {
       sharable: ('share' in navigator),
       serviceWorker: ('serviceWorker' in navigator),
-      isAppInstalled: (window.matchMedia('(display-mode: standalone)').matches) && localStorage.getItem('installed'),
+      isAppInstalled: (window.matchMedia('(display-mode: standalone)').matches),
       online: true
     });
   }

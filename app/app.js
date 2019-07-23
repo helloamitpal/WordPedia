@@ -19,6 +19,7 @@ class App extends React.Component {
   constructor() {
     super();
     const { store } = configureStore()(this.onRehydrate);
+    this.installBtnRef = React.createRef();
     this.deferredPrompt = null;
     Features.detect();
     this.state = {
@@ -53,14 +54,11 @@ class App extends React.Component {
 
   installCallback = (evt) => {
     evt.preventDefault();
+    const { current } = this.installBtnRef;
     this.deferredPrompt = evt;
-    this.showAddToHomeScreen();
-  }
-
-  showAddToHomeScreen = () => {
-    const a2hsBtn = document.querySelector('.ad2hs-prompt');
-    a2hsBtn.style.display = 'block';
-    a2hsBtn.addEventListener('click', this.addToHomeScreen);
+    current.classList.remove('hide');
+    current.addEventListener('click', this.addToHomeScreen);
+    return false;
   }
 
   onRehydrate = () => {
@@ -72,22 +70,21 @@ class App extends React.Component {
     const isOnLine = navigator.onLine;
     Features.set('online', isOnLine);
     if (prevNetWorkState !== isOnLine) {
-      toast.info(isOnLine ? 'You are online again.' : 'Offline! There is not network.');
+      toast.info(isOnLine ? 'You are online again.' : 'Offline! There is not network.', { autoClose: false });
     }
   }
 
   addToHomeScreen = () => {
     if (this.deferredPrompt) {
-      const a2hsBtn = document.querySelector('.ad2hs-prompt');
-      a2hsBtn.style.display = 'none';
+      const { current } = this.installBtnRef;
+      current.classList.add('hide');
+
       this.deferredPrompt.prompt();
       this.deferredPrompt.userChoice.then((input) => {
         this.deferredPrompt = null;
-
+        console.log(input);
         if (input === 'accepted') {
           EventTracker.raise(Events.INSTALLED);
-          localStorage.setItem('installed', true);
-          toast.success('WordPedia has been installed successfully.');
         } else {
           EventTracker.raise(Events.INSTALL_REJECTED);
         }
@@ -102,6 +99,7 @@ class App extends React.Component {
       <Provider store={store} key="WordPediaStoreKey">
         <BrowserRouter>
           <Router />
+          <button type="button" ref={this.installBtnRef} className="ad2hs-prompt hide">Install WordPedia App</button>
         </BrowserRouter>
       </Provider>
     ) : null;

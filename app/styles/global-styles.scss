@@ -29,13 +29,16 @@ label {
 }
 
 .Toastify__toast {
-  min-height: 35px;
+  min-height: 45px;
+}
+
+.hide {
+  display: none;
 }
 
 .ad2hs-prompt {
   background-color: $icon-hover-color;
   border: none;
-  display: none;
   color: $icon-color;
   padding: 15px 32px;
   text-align: center;

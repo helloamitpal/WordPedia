@@ -10,7 +10,6 @@ import Search from '../../components/Search';
 import FooterMenu from '../../components/FooterMenu';
 import * as wordActionCreator from './wordActionCreator';
 import CardList from '../../components/CardList';
-// import Message from '../../components/Message';
 import Button from '../../components/Button';
 import config from '../../config';
 import Events from '../../event-tracker/events';
@@ -51,11 +50,11 @@ class HomePage extends React.Component {
     const { searchText } = this.state;
     const { wordState: { words, isError, wordsOnWeb } } = this.props;
 
-    if (isError && !Features.online) {
-      toast.error('Something went wrong. Please try again.');
-    } else if (!isError && words.length === 0 && searchText) {
+    if (isError && !Features.online && !toast.isActive('error')) {
+      toast.error('Something went wrong. Please try again.', { toastId: 'error' });
+    } else if (!isError && words.length === 0 && searchText && !toast.isActive('info')) {
       const subInfo = (wordsOnWeb && wordsOnWeb.length) ? 'Following defeinitions are found.' : 'No definitions found for this word. Please recheck.';
-      toast.info(`${searchText} is not added to your bookmark. ${subInfo}`);
+      toast.info(`${searchText} is not added to your bookmark. ${subInfo}`, { toastId: 'info' });
     }
   }
 

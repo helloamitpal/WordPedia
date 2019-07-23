@@ -32,10 +32,6 @@ class App extends React.Component {
       hideProgressBar: true,
       closeOnClick: true
     });
-
-    if (Features.isAppInstalled) {
-      toast.success('Welcome to the WordPedia.');
-    }
   }
 
   onRehydrate = () => {

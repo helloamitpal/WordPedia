@@ -4,14 +4,17 @@ import { toast } from 'react-toastify';
 import EventTracker from '../../event-tracker';
 import Events from '../../event-tracker/events';
 import Features from '../../util/features';
+import Button from '../Button';
 
+import logo from '../../images/logos/WordPedia-512x512.png';
+import closeIcon from '../../images/SVG/272-cross.svg';
 import './PWAInstaller.scss';
 
 class PWAInstaller extends React.Component {
   constructor() {
     super();
     this.state = {
-      deferredPrompt: false
+      deferredPrompt: true
     };
   }
 
@@ -29,9 +32,7 @@ class PWAInstaller extends React.Component {
 
   installCallback = (evt) => {
     evt.preventDefault();
-    alert('install callback');
     if (Features.isAppInstalled) {
-      alert('already installed');
       return false;
     }
     this.setState({ deferredPrompt: evt });
@@ -43,7 +44,6 @@ class PWAInstaller extends React.Component {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(({ outcome }) => {
         this.setState({ deferredPrompt: false });
-        alert(outcome);
         if (outcome === 'accepted') {
           EventTracker.raise(Events.INSTALLED);
         } else {
@@ -58,13 +58,34 @@ class PWAInstaller extends React.Component {
     const isOnLine = navigator.onLine;
     Features.set('online', isOnLine);
     if (prevNetWorkState !== isOnLine) {
-      toast.info(isOnLine ? 'You are online again.' : 'Offline! There is not network.', { autoClose: false });
+      if (isOnLine) {
+        toast.info('You are online again.');
+      } else {
+        toast.info('There is no network. Please check!', { autoClose: false });
+      }
     }
+  }
+
+  onClose = () => {
+    this.setState({ deferredPrompt: false });
+    EventTracker.raise(Events.INSTALL_REJECTED);
   }
 
   render() {
     const { deferredPrompt } = this.state;
-    return (deferredPrompt && <button type="button" onClick={this.addToHomeScreen} className="ad2hs-prompt hide">Install WordPedia App</button>);
+    return (deferredPrompt && (
+      <div className="ad2hs-container">
+        <div className="logo-text">
+          <img src={logo} alt="logo" />
+          <div>
+            <h2>WordPedia</h2>
+            <span>wordpedia.herokuapp.com</span>
+          </div>
+        </div>
+        <Button type="button" className="close-prompt" animation={false} onClick={this.onClose} icon={closeIcon} />
+        <button type="button" onClick={this.addToHomeScreen} className="ad2hs-prompt">Add to home screen</button>
+      </div>
+    ));
   }
 }
 

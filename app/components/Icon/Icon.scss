@@ -7,7 +7,7 @@
   height: 16px;
   display: inline-block;
 
-  &:hover {
+  &:not(.no-anim):hover {
     background-color: $icon-color;
   }
 }

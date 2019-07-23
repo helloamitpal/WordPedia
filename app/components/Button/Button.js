@@ -7,7 +7,7 @@ import './Button.scss';
 
 const Button = ({ icon, onClick, className, label, animation }) => (
   <button type="button" className={`button ${className} ${!animation ? 'no-anim' : ''}`} onClick={onClick}>
-    {icon && <Icon path={icon} />}
+    {icon && <Icon path={icon} animation={animation} />}
     {label}
   </button>
 );

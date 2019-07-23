@@ -99,8 +99,8 @@ class App extends React.Component {
       <Provider store={store} key="WordPediaStoreKey">
         <BrowserRouter>
           <Router />
-          <button type="button" ref={this.installBtnRef} className="ad2hs-prompt hide">Install WordPedia App</button>
         </BrowserRouter>
+        <button type="button" ref={this.installBtnRef} className="ad2hs-prompt hide">Install WordPedia App</button>
       </Provider>
     ) : null;
 

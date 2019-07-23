@@ -21,7 +21,6 @@ class App extends React.Component {
     const { store } = configureStore()(this.onRehydrate);
     this.deferredPrompt = null;
     Features.detect();
-    window.addEventListener('beforeinstallprompt', this.installCallback);
     this.state = {
       store,
       rehydrated: false
@@ -29,37 +28,65 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    window.addEventListener('beforeinstallprompt', this.installCallback);
+    window.addEventListener('online', this.networkListener);
+    window.addEventListener('offline', this.networkListener);
+
     toast.configure({
       draggable: false,
       autoClose: 3000,
       hideProgressBar: true,
-      closeOnClick: true,
-      containerId: '.app-wrapper'
+      closeOnClick: true
     });
+
+    if (Features.isAppInstalled) {
+      toast.success('Welcome to the WordPedia.');
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('beforeinstallprompt', this.installCallback);
+    window.removeEventListener('online', this.networkListener);
+    window.removeEventListener('offline', this.networkListener);
     this.deferredPrompt = null;
   }
 
   installCallback = (evt) => {
     evt.preventDefault();
     this.deferredPrompt = evt;
+    this.showAddToHomeScreen();
+  }
+
+  showAddToHomeScreen = () => {
+    const a2hsBtn = document.querySelector('.ad2hs-prompt');
+    a2hsBtn.style.display = 'block';
+    a2hsBtn.addEventListener('click', this.addToHomeScreen);
   }
 
   onRehydrate = () => {
     this.setState({ rehydrated: true });
   }
 
-  async installPWA() {
+  networkListener = () => {
+    const prevNetWorkState = Features.online;
+    const isOnLine = navigator.onLine;
+    Features.set('online', isOnLine);
+    if (prevNetWorkState !== isOnLine) {
+      toast.info(isOnLine ? 'You are online again.' : 'Offline! There is not network.');
+    }
+  }
+
+  addToHomeScreen = () => {
     if (this.deferredPrompt) {
+      const a2hsBtn = document.querySelector('.ad2hs-prompt');
+      a2hsBtn.style.display = 'none';
       this.deferredPrompt.prompt();
       this.deferredPrompt.userChoice.then((input) => {
         this.deferredPrompt = null;
 
         if (input === 'accepted') {
           EventTracker.raise(Events.INSTALLED);
+          localStorage.setItem('installed', true);
           toast.success('WordPedia has been installed successfully.');
         } else {
           EventTracker.raise(Events.INSTALL_REJECTED);

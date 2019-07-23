@@ -51,7 +51,7 @@ class HomePage extends React.Component {
     const { searchText } = this.state;
     const { wordState: { words, isError, wordsOnWeb } } = this.props;
 
-    if (isError) {
+    if (isError && !Features.online) {
       toast.error('Something went wrong. Please try again.');
     } else if (!isError && words.length === 0 && searchText) {
       const subInfo = (wordsOnWeb && wordsOnWeb.length) ? 'Following defeinitions are found.' : 'No definitions found for this word. Please recheck.';

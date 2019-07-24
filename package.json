@@ -21,11 +21,13 @@
     "lint": "npm run lint:js",
     "lint:eslint": "eslint --ignore-path .gitignore",
     "lint:js": "npm run lint:eslint -- . ",
-    "start": "# cross-env NODE_ENV=development node server",
-    "start": "npm run build && npm run start:prod",
+    "start": "npm run start:production",
     "start:prod": "cross-env NODE_ENV=production node server",
     "start:production": "npm run build && npm run start:prod",
     "pretest": "npm run lint"
+  },
+  "commented-scripts": {
+    "start": "cross-env NODE_ENV=development node server"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",

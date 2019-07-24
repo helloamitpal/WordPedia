@@ -60,8 +60,8 @@ const wordReducer = (state = initialState, action = '') => {
         start: (defaultState) => ({
           ...defaultState,
           isError: false,
-          isLoading: true,
-          searchType: state.searchType
+          isLoading: (payload.searchType !== 'web'),
+          searchType: payload.searchType
         }),
         success: (defaultState) => {
           let wordsOnWeb;

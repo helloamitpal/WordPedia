@@ -40,7 +40,7 @@ class PWAInstaller extends React.Component {
 
   addToHomeScreen = () => {
     const { deferredPrompt } = this.state;
-    if (typeof deferredPrompt === 'object') {
+    if (typeof deferredPrompt === 'object' && deferredPrompt.hasOwnProperty('prompt')) {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(({ outcome }) => {
         this.setState({ deferredPrompt: false });
@@ -60,10 +60,16 @@ class PWAInstaller extends React.Component {
     Features.set('online', isOnLine);
 
     if (prevNetWorkState !== isOnLine) {
-      if (isOnLine && !toast.isActive('online')) {
-        toast.info('You are online again.', { toastId: 'online' });
-      } else if (!isOnLine && !toast.isActive('offline')) {
-        toast.info('There is no network. Please check!', { autoClose: false, toastId: 'offline' });
+      const message = (isOnLine) ? 'You are online again.' : 'There is no network. Please check!';
+      const toastConfig = { autoClose: isOnLine };
+
+      if (toast.isActive('network')) {
+        toastConfig.render = message;
+        toastConfig.type = toast.TYPE.SUCCESS;
+        toast.update('network', toastConfig);
+      } else {
+        toastConfig.toastId = 'network';
+        toast.info(message, toastConfig);
       }
     }
   }

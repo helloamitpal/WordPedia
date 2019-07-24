@@ -45,12 +45,13 @@ const wordReducer = (state = initialState, action = '') => {
           ...defaultState,
           words: payload,
           isLoading: false,
-          isNoInitWords: !payload.length
+          isNoInitWords: !(payload && payload.length)
         }),
         failure: (defaultState) => ({
           ...defaultState,
           isError: true,
-          isLoading: false
+          isLoading: false,
+          isNoInitWords: true
         })
       });
 

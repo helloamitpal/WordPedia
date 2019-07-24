@@ -40,7 +40,7 @@ class PWAInstaller extends React.Component {
 
   addToHomeScreen = () => {
     const { deferredPrompt } = this.state;
-    if (deferredPrompt) {
+    if (typeof deferredPrompt === 'object') {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(({ outcome }) => {
         this.setState({ deferredPrompt: false });
@@ -56,12 +56,14 @@ class PWAInstaller extends React.Component {
   networkListener = () => {
     const prevNetWorkState = Features.online;
     const isOnLine = navigator.onLine;
+
     Features.set('online', isOnLine);
+
     if (prevNetWorkState !== isOnLine) {
-      if (isOnLine) {
-        toast.info('You are online again.');
-      } else {
-        toast.info('There is no network. Please check!', { autoClose: false });
+      if (isOnLine && !toast.isActive('online')) {
+        toast.info('You are online again.', { toastId: 'online' });
+      } else if (!isOnLine && !toast.isActive('offline')) {
+        toast.info('There is no network. Please check!', { autoClose: false, toastId: 'offline' });
       }
     }
   }
@@ -73,7 +75,7 @@ class PWAInstaller extends React.Component {
 
   render() {
     const { deferredPrompt } = this.state;
-    return (deferredPrompt && (
+    return (typeof deferredPrompt === 'object' && (
       <div className="ad2hs-container">
         <div className="logo-text">
           <img src={logo} alt="logo" />

@@ -40,7 +40,7 @@ class PWAInstaller extends React.Component {
 
   addToHomeScreen = () => {
     const { deferredPrompt } = this.state;
-    if (typeof deferredPrompt === 'object' && deferredPrompt.hasOwnProperty('prompt')) {
+    if (typeof deferredPrompt === 'object' && deferredPrompt.prototype.hasOwnProperty('prompt')) {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(({ outcome }) => {
         this.setState({ deferredPrompt: false });

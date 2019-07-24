@@ -6,7 +6,9 @@ const initialState = {
   wordsOnWeb: [],
   isError: false,
   searchType: '',
-  updated: false
+  updated: false,
+  isLoading: false,
+  isNoInitWords: false
 };
 
 const wordReducer = (state = initialState, action = '') => {
@@ -35,15 +37,20 @@ const wordReducer = (state = initialState, action = '') => {
       return handle(state, action, {
         start: (defaultState) => ({
           ...defaultState,
-          isError: false
+          isError: false,
+          isLoading: true,
+          isNoInitWords: false
         }),
         success: (defaultState) => ({
           ...defaultState,
-          words: payload
+          words: payload,
+          isLoading: false,
+          isNoInitWords: !payload.length
         }),
         failure: (defaultState) => ({
           ...defaultState,
-          isError: true
+          isError: true,
+          isLoading: false
         })
       });
 
@@ -52,6 +59,7 @@ const wordReducer = (state = initialState, action = '') => {
         start: (defaultState) => ({
           ...defaultState,
           isError: false,
+          isLoading: true,
           searchType: state.searchType
         }),
         success: (defaultState) => {
@@ -65,12 +73,14 @@ const wordReducer = (state = initialState, action = '') => {
 
           return {
             ...defaultState,
+            isLoading: false,
             words: payload.bookmarkedWords,
             wordsOnWeb: wordsOnWeb || payload.wordsOnWeb
           };
         },
         failure: (defaultState) => ({
           ...defaultState,
+          isLoading: false,
           isError: true
         })
       });

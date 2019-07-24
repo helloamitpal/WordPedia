@@ -7,6 +7,11 @@
   cursor: pointer;
   outline: 0 none;
 
+  span {
+    font-size: 1.3em;
+    margin-left: 0.5em;
+  }
+
   &:not(.no-anim):hover {
     animation: ripple 0.3s linear;
   }

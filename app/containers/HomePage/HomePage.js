@@ -4,13 +4,13 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { debounce } from 'lodash';
-import { toast } from 'react-toastify';
 
 import Search from '../../components/Search';
 import FooterMenu from '../../components/FooterMenu';
 import * as wordActionCreator from './wordActionCreator';
 import CardList from '../../components/CardList';
 import Button from '../../components/Button';
+import LoadingIndicator from '../../components/LoadingIndicator';
 import Message from '../../components/Message';
 import config from '../../config';
 import Events from '../../event-tracker/events';
@@ -29,7 +29,7 @@ class HomePage extends React.Component {
       searchText: ''
     };
     this.userFeature = Features.sharable ? 'share' : 'copy';
-    this.debouncedSearch = debounce(this.searchAPICall, 20);
+    this.debouncedSearch = debounce(this.searchAPICall, 300);
     this.menuList = [{
       icon: addIcon,
       onClick: this.gotoAddNewWord
@@ -44,14 +44,6 @@ class HomePage extends React.Component {
     EventTracker.raise(Events.HOME_PAGE);
     if (!words || !words.length) {
       wordActions.loadWordAction();
-    }
-  }
-
-  componentDidUpdate() {
-    const { wordState: { isError } } = this.props;
-
-    if (isError && !Features.online && !toast.isActive('error')) {
-      toast.error('Something went wrong. Please try again.', { toastId: 'error' });
     }
   }
 
@@ -111,7 +103,7 @@ class HomePage extends React.Component {
 
   render() {
     const { searchText } = this.state;
-    const { wordState: { words, isError, wordsOnWeb } } = this.props;
+    const { wordState: { words, isError, wordsOnWeb, isLoading, isNoInitWords } } = this.props;
     let data = [];
     let buttonType;
 
@@ -136,8 +128,9 @@ class HomePage extends React.Component {
           <Search onChange={this.onChangeSearch} value={searchText} />
         </div>
         <div className="list-container">
+          { isLoading && <LoadingIndicator /> }
           { !isError && words.length === 0 && searchText && <Message text={`${searchText} is not added to your bookmark.`} subInfo={subInfo} /> }
-          { !isError && words.length === 0 && !searchText && <Button label="Add Word" icon={addIcon} onClick={this.onClickAddNew} /> }
+          { isNoInitWords && <Button label="Add New Word" className="add-word-btn" icon={addIcon} onClick={this.onClickAddNew} /> }
           <CardList cards={data} onAction={this.onCardAction} button={buttons} />
         </div>
         <div className="menu-container">

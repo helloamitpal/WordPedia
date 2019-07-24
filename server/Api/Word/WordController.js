@@ -15,8 +15,9 @@ class WordController {
   }
 
   searchWord(req, res) {
-    logger.info('WordController | searchWord');
     const { searchText, searchType } = req.params;
+    logger.info(`WordController | searchWord | ${searchText}`);
+
     WordService.searchWord(searchText, searchType).then((data) => {
       logger.success('WordController | searchWord | Sending success response');
       res.send(data);

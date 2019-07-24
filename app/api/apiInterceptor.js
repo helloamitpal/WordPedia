@@ -10,7 +10,7 @@ const fireRequest = async (method, fullUrl, data) => {
     method,
     data: JSON.stringify(data),
     mode: 'same-origin',
-    timeout: 1000,
+    timeout: 2000,
     headers: {
       'Content-Type': 'application/json'
     }

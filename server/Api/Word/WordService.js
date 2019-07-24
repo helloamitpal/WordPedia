@@ -56,7 +56,7 @@ const getAllWords = () => {
   return mockData;
 };
 
-const searchWord = (searchText, searchType) => (new Promise((resolve, reject) => {
+const searchWord = (searchText, searchType) => (new Promise((resolve) => {
   const text = (searchText && decodeURI(searchText).toLowerCase()) || '';
 
   if (searchType === 'bookmark') {
@@ -73,7 +73,10 @@ const searchWord = (searchText, searchType) => (new Promise((resolve, reject) =>
         });
       }, () => {
         logger.error('Error occurred in word search api');
-        reject(false);
+        resolve({
+          bookmarkedWords: [],
+          wordsOnWeb: null
+        });
       });
     } else {
       logger.success('WordService | searchWord | searched word is found in the bookmarked list');
@@ -93,7 +96,11 @@ const searchWord = (searchText, searchType) => (new Promise((resolve, reject) =>
       });
     }, () => {
       logger.error('WordService | searchWord | searched word definition is not found');
-      reject(false);
+      resolve({
+        bookmarkedWords: [],
+        wordsOnWeb: [],
+        wordDetails: null
+      });
     });
   }
 }));

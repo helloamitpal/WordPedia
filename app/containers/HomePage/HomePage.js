@@ -11,6 +11,7 @@ import FooterMenu from '../../components/FooterMenu';
 import * as wordActionCreator from './wordActionCreator';
 import CardList from '../../components/CardList';
 import Button from '../../components/Button';
+import Message from '../../components/Message';
 import config from '../../config';
 import Events from '../../event-tracker/events';
 import EventTracker from '../../event-tracker';
@@ -47,14 +48,10 @@ class HomePage extends React.Component {
   }
 
   componentDidUpdate() {
-    const { searchText } = this.state;
-    const { wordState: { words, isError, wordsOnWeb } } = this.props;
+    const { wordState: { isError } } = this.props;
 
     if (isError && !Features.online && !toast.isActive('error')) {
       toast.error('Something went wrong. Please try again.', { toastId: 'error' });
-    } else if (!isError && words.length === 0 && searchText && !toast.isActive('info')) {
-      const subInfo = (wordsOnWeb && wordsOnWeb.length) ? 'Following defeinitions are found.' : 'No definitions found for this word. Please recheck.';
-      toast.info(`${searchText} is not added to your bookmark. ${subInfo}`, { toastId: 'info' });
     }
   }
 
@@ -127,6 +124,7 @@ class HomePage extends React.Component {
     }
 
     const buttons = [buttonType, this.userFeature];
+    const subInfo = (wordsOnWeb && wordsOnWeb.length) ? 'Following defeinitions are found.' : 'No definitions found for this word. Please recheck.';
 
     return (
       <div className="home-page">
@@ -138,6 +136,7 @@ class HomePage extends React.Component {
           <Search onChange={this.onChangeSearch} value={searchText} />
         </div>
         <div className="list-container">
+          { !isError && words.length === 0 && searchText && <Message text={`${searchText} is not added to your bookmark.`} subInfo={subInfo} /> }
           { !isError && words.length === 0 && !searchText && <Button label="Add Word" icon={addIcon} onClick={this.onClickAddNew} /> }
           <CardList cards={data} onAction={this.onCardAction} button={buttons} />
         </div>

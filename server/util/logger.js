@@ -26,10 +26,11 @@ const logger = {
     console.log(`Server started ! ${chalk.green('✓')}`);
 
     console.log(`
+        ${chalk.bold(`Mode: ${process.env.NODE_ENV}`)}${divider}
         ${chalk.bold('Access URLs:')}${divider}
         Localhost: ${chalk.magenta(`http://${host}:${port}`)}
         LAN: ${chalk.magenta(`http://${ip.address()}:${port}`)}${divider}
-        ${chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`)}
+        ${chalk.red(`Press ${chalk.italic('CTRL-C')} to stop`)}
     `);
   }
 };

@@ -14,7 +14,7 @@ class PWAInstaller extends React.Component {
   constructor() {
     super();
     this.state = {
-      deferredPrompt: true
+      deferredPrompt: false
     };
   }
 

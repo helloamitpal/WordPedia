@@ -85,7 +85,7 @@ class Card extends React.Component {
           </div>
           <div className="row sub-title-section">
             {details.phonetic && <div className="sub-title">{details.phonetic}</div>}
-            <Button className="speaker" onClick={this.textToSpeech} icon={speakerIcon} />
+            {details.phonetic && <Button className="speaker" onClick={this.textToSpeech} icon={speakerIcon} />}
           </div>
         </div>
         {details.shortDefinitions && details.shortDefinitions.length && (

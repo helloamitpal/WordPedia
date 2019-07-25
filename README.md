@@ -10,7 +10,7 @@
   <sub>Created by <a href="https://www.linkedin.com/in/amit-pal-0241423a/">Amit Pal</a></sub>
 </div>
 
-## Features
+## Tech-stack
 
 It includes all the latest tools and practices in the industry.
 
@@ -20,6 +20,10 @@ It includes all the latest tools and practices in the industry.
 - _Webpack_ - **Webpack 4**✨, Hot Reloading, Code Splitting, Optimized Prod Build and more
 - _Lint_ - ESlint
 - _Styles_ - SCSS Styling
+- _DB_ - MongoDB Atlas (https://cloud.mongodb.com/user#/atlas/login)
+- _Word definition and translation_  - WordsAPI (https://rapidapi.com/wordsapi/api/wordsapi)
+- _Cloud_ - AWS (Amazon web service : https://aws.amazon.com/)
+- _Analytics_ - Google analytics (https://analytics.google.com/analytics/web/)
 
 Here are a few highlights to look out for in this boilerplate
 

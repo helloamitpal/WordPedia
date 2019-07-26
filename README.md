@@ -1,5 +1,7 @@
 <h1>WordPedia</h1>
 
+<img src="app/images/logos/WordPedia-512x512.png" />
+
 <br />
 
 <div align="center">This is a learning app to improve the vocabulary.</div>

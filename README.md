@@ -1,6 +1,8 @@
 <h1>WordPedia</h1>
 
-<img src="app/images/logos/WordPedia-512x512.png" />
+<div align="center">
+  <img src="app/images/logos/WordPedia-512x512.png" />
+</div>
 
 <br />
 
@@ -17,8 +19,8 @@
 It includes all the latest tools and practices in the industry.
 
 - _React.js_ - **React 16**✨, React Router 5
-- _Redux.js_ - Redux saga, Redux immutable and Reselect
-- _Babel_ - ES6, ESNext, Airbnb and React/Recommended config
+- _Redux.js_ - Redux thunk, Redux persist and Redux pack
+- _Babel_ - ES6, ESNext, React/Recommended config
 - _Webpack_ - **Webpack 4**✨, Hot Reloading, Code Splitting, Optimized Prod Build and more
 - _Lint_ - ESlint
 - _Styles_ - SCSS Styling
@@ -38,6 +40,13 @@ hellowordpedia@gmail.com
 4. Run `sudo npm install workbox-cli -g`
 5. Run `npm start` to see the example app at `http://localhost:7009` in DEV mode.
 6. Run `npm start:production` to see the example app at `http://localhost:7009` in PROD mode.
+
+## Disabling service worker for localhost development ##
+
+1. Go to developer's toolbar
+2. Application tab, select Service worker
+3. Uncheck "Update on reload" and check "Bypass for network"
+4. Clear cache and refresh browser
 
 ## License
 

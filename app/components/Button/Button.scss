@@ -6,9 +6,18 @@
   background-color: $icon-color;
   cursor: pointer;
   outline: 0 none;
+  font-size: 1em;
+  display: flex;
+
+  &.raised {
+    align-items: center;
+    padding: 10px;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    box-shadow: 0 0px 5px 0 rgba(0,0,0,0.35);
+  }
 
   span {
-    font-size: 1.3em;
     margin-left: 0.5em;
   }
 

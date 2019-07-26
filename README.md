@@ -25,7 +25,8 @@ It includes all the latest tools and practices in the industry.
 - _Cloud_ - AWS (Amazon web service : https://aws.amazon.com/)
 - _Analytics_ - Google analytics (https://analytics.google.com/analytics/web/)
 
-Here are a few highlights to look out for in this boilerplate
+## Contact ##
+hellowordpedia@gmail.com
 
 ## Quick start
 

@@ -91,6 +91,9 @@ module.exports = (options) => ({
     new workboxPlugin.GenerateSW({
       swDest: 'service-worker.js',
       clientsClaim: true,
+      cacheId: 'WordPedia',
+      offlineGoogleAnalytics: true,
+      cleanupOutdatedCaches: true,
       skipWaiting: true
     }),
 

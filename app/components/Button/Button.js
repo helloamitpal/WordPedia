@@ -5,8 +5,8 @@ import Icon from '../Icon';
 
 import './Button.scss';
 
-const Button = ({ icon, onClick, className, label, animation }) => (
-  <button type="button" className={`button ${className} ${!animation ? 'no-anim' : ''}`} onClick={onClick}>
+const Button = ({ icon, onClick, className, label, animation, raisedButton }) => (
+  <button type="button" className={`button ${className} ${!animation ? 'no-anim' : ''} ${raisedButton ? 'raised' : ''}`} onClick={onClick}>
     {icon && <Icon path={icon} animation={animation} />}
     {label && <span>{label}</span>}
   </button>
@@ -15,7 +15,8 @@ const Button = ({ icon, onClick, className, label, animation }) => (
 Button.defaultProps = {
   icon: '',
   className: '',
-  animation: true
+  animation: true,
+  raisedButton: false
 };
 
 Button.propTypes = {
@@ -23,7 +24,8 @@ Button.propTypes = {
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
   label: PropTypes.string,
-  animation: PropTypes.bool
+  animation: PropTypes.bool,
+  raisedButton: PropTypes.bool
 };
 
 export default Button;

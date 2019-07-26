@@ -1,0 +1,41 @@
+@import '../../styles/colors.scss';
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+
+  .toggler {
+    font-size: 2rem;
+    color: $toggle-color;
+    width: 50px;
+    height: 20px;
+    background: $toggle-inactive;
+    border: 1px solid $toggle-box-shadow;
+    position: relative;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color background-color 0.3s;
+    margin: 10px;
+
+    &.active {
+      background: $toggle-active;
+      border-color: $border-color;
+    }
+
+    &.active .toggle-button {
+      right: -2px;
+    }
+
+    .toggle-button {
+      position: absolute;
+      top: -3px;
+      right: 50%;
+      height: 26px;
+      width: 26px;
+      background: $border-color;
+      box-shadow: 0 0 5px $toggle-box-shadow;
+      border-radius: 50%;
+      transition: right 0.3s;
+    }
+  }
+}

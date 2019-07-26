@@ -1,0 +1,10 @@
+.setting-page-container {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > button, & > div, & > select {
+    margin: 0.5em  0;
+  }
+}

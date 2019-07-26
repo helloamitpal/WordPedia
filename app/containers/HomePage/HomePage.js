@@ -130,7 +130,7 @@ class HomePage extends React.Component {
         <div className="list-container">
           { isLoading && <LoadingIndicator /> }
           { !isError && words.length === 0 && searchText && <Message text={`${searchText} is not added to your bookmark.`} subInfo={subInfo} /> }
-          { isNoInitWords && <Button label="Add New Word" className="add-word-btn" icon={addIcon} onClick={this.onClickAddNew} /> }
+          { isNoInitWords && <Button label="Add New Word" raisedButton className="add-word-btn" icon={addIcon} onClick={this.onClickAddNew} /> }
           <CardList cards={data} onAction={this.onCardAction} button={buttons} />
         </div>
         <div className="menu-container">

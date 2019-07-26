@@ -29,11 +29,18 @@ label {
 }
 
 .Toastify__toast {
-  min-height: 45px;
+  min-height: 30px;
+  font-size: 0.8em;
 }
 
 .hide {
   display: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .body-container {

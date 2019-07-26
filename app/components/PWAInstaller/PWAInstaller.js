@@ -1,5 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 import EventTracker from '../../event-tracker';
 import Events from '../../event-tracker/events';
@@ -13,6 +14,10 @@ import './PWAInstaller.scss';
 class PWAInstaller extends React.Component {
   constructor() {
     super();
+    this.message = {
+      online: 'You are online now.',
+      offline: 'There is no network. Please check!'
+    };
     this.state = {
       deferredPrompt: false
     };
@@ -22,6 +27,10 @@ class PWAInstaller extends React.Component {
     window.addEventListener('beforeinstallprompt', this.installCallback);
     window.addEventListener('online', this.networkListener);
     window.addEventListener('offline', this.networkListener);
+
+    if (!navigator.onLine) {
+      toast.info(this.message.offline, { toastId: 'network', autoClose: false });
+    }
   }
 
   componentWillUnmount() {
@@ -60,7 +69,7 @@ class PWAInstaller extends React.Component {
     Features.set('online', isOnLine);
 
     if (prevNetWorkState !== isOnLine) {
-      const message = (isOnLine) ? 'You are online again.' : 'There is no network. Please check!';
+      const message = (isOnLine) ? this.message.online : this.message.offline;
       const toastConfig = { autoClose: isOnLine };
 
       if (toast.isActive('network')) {
@@ -81,20 +90,44 @@ class PWAInstaller extends React.Component {
 
   render() {
     const { deferredPrompt } = this.state;
-    return (typeof deferredPrompt === 'object' && (
-      <div className="ad2hs-container">
-        <div className="logo-text">
-          <img src={logo} alt="logo" />
-          <div>
-            <h2>WordPedia</h2>
-            <span>wordpedia.herokuapp.com</span>
+    const { button, className } = this.props;
+    let component;
+
+    if ((typeof deferredPrompt === 'object' && button) || (!deferredPrompt && button)) {
+      component = (
+        <React.Fragment>
+          <Button disabled={!deferredPrompt} onClick={this.addToHomeScreen} raisedButton className="ad2hs-prompt" label="Add to home screen" />
+          <div className="added-pwa-message">It has already been added</div>
+        </React.Fragment>
+      );
+    } else if (typeof deferredPrompt === 'object' && !button) {
+      component = (
+        <React.Fragment>
+          <div className="logo-text">
+            <img src={logo} alt="logo" />
+            <div>
+              <h2>WordPedia</h2>
+              <span>wordpedia.herokuapp.com</span>
+            </div>
           </div>
-        </div>
-        <Button type="button" className="close-prompt" animation={false} onClick={this.onClose} icon={closeIcon} />
-        <button type="button" onClick={this.addToHomeScreen} className="ad2hs-prompt">Add to home screen</button>
-      </div>
-    ));
+          <Button className="close-prompt" animation={false} onClick={this.onClose} icon={closeIcon} />
+          <Button onClick={this.addToHomeScreen} raisedButton className="ad2hs-prompt" label="Add to home screen" />
+        </React.Fragment>
+      );
+    }
+
+    return <div className={`ad2hs-container ${className} ${button ? '' : 'popup'}`}>{component}</div>;
   }
 }
+
+PWAInstaller.defaultProps = {
+  button: false,
+  className: ''
+};
+
+PWAInstaller.propTypes = {
+  button: PropTypes.bool,
+  className: PropTypes.string
+};
 
 export default PWAInstaller;

@@ -17,12 +17,17 @@
     box-shadow: 0 0px 5px 0 rgba(0,0,0,0.35);
   }
 
-  span {
+  span:not(:only-child) {
     margin-left: 0.5em;
   }
 
   &:not(.no-anim):hover {
     animation: ripple 0.3s linear;
+  }
+
+  &:disabled {
+    background-color: $disabled-color !important;
+    pointer-events: none;
   }
 }
 

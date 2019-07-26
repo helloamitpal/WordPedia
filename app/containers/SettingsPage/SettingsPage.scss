@@ -7,14 +7,38 @@
     color: $icon-color;
   }
 
-  .setting-page-container {
+  .login-section {
+    width: 100%;
     padding: 1em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    color: $icon-color;
 
-    & > button, & > div, & > select {
-      margin: 0.5em  0;
+    h4 {
+      margin: 0;
+    }
+
+    p {
+      font-size: 0.8em;
+    }
+
+    button {
+      text-transform: uppercase;
+      background-color: $background;
+      color: $font-color;
+      font-size: 0.8em;
+
+      .icon {
+        background-color: $facebook-color;
+      }
+    }
+  }
+
+  .setting-page-container {
+    padding-top: 1em;
+    overflow: auto;
+
+    .ad2hs-container {
+      align-self: center;
+      margin-bottom: 1em;
     }
   }
 }

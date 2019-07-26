@@ -117,7 +117,7 @@ class HomePage extends React.Component {
     const subInfo = (wordsOnWeb && wordsOnWeb.length) ? 'Following defeinitions are found.' : 'No definitions found for this word. Please recheck.';
 
     return (
-      <div className="home-page">
+      <div className="home-page container">
         <Helmet>
           <title>WordPedia</title>
           <meta name="description" content="WordPedia homepage" />

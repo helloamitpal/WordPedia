@@ -1,0 +1,29 @@
+@import '../../styles/colors.scss';
+
+.section-container {
+  section {
+    padding: 0.5em 1em;
+    background-color: $card-btn-background;
+  }
+
+  .section-row-containers {
+    padding: 0.5em 1em;
+  }
+
+  .section-row {
+    display: flex;
+    align-items: center;
+    margin: 1em 0;
+
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+    }
+
+    & > div:not(:only-child) {
+      margin-left: 0.5em;
+    }
+  }
+}

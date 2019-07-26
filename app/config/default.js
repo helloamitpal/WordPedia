@@ -4,5 +4,6 @@ export default {
   PAGE_SIZE: 20,
   FB_APPID: 627352254438819,
   FB_FIELDS: 'name,email,picture',
-  VERSION: '1.0.0'
+  VERSION: '1.0.0',
+  IS_MOBILE: (window.innerWidth < 500)
 };

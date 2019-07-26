@@ -1,16 +1,28 @@
 @import '../../styles/colors.scss';
 
 .ad2hs-container {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  bottom: 0;
-  background: #ffffff;
-  padding: 1em;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  &.popup {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background: #ffffff;
+    padding: 1em;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .added-pwa-message {
+    font-size: 0.8em;
+    color: $disabled-color;
+    text-align: center;
+  }
 
   .close-prompt {
     position: absolute;

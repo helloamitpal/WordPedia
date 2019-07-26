@@ -1,0 +1,17 @@
+@import '../../styles/colors.scss';
+
+.header-container {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  box-shadow: 0 0px 5px 0 rgba(0,0,0,0.75);
+  flex: 0 0 auto;
+
+  .icon {
+    background-color: $icon-color;
+  }
+
+  .back-btn {
+    margin-left: 1em;
+  }
+}

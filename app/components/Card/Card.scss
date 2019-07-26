@@ -14,7 +14,7 @@
   &.selected {
     .card-header {
       background: $icon-hover-color;
-      color: $alternate-font-color;
+      color: $icon-color;
       padding-bottom: 0.8em;
     }
 
@@ -28,7 +28,7 @@
     }
 
     .icon {
-      background-color: $alternate-font-color;
+      background-color: $icon-color;
     }
   }
 

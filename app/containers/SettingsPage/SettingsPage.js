@@ -1,20 +1,20 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import PropTypes from 'prop-types';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
-import MenuHeader from '../../components/MenuHeader';
+import Header from '../../components/Header';
 import Button from '../../components/Button';
 import Toggle from '../../components/Toggle';
 import PWAInstaller from '../../components/PWAInstaller';
 import config from '../../config';
+
 import fbIcon from '../../images/SVG/402-facebook2.svg';
 import shareIcon from '../../images/SVG/387-share2.svg';
 import feedbackIcon from '../../images/SVG/390-mail3.svg';
 
 import './SettingsPage.scss';
 
-const FeaturePage = ({ history }) => {
+const FeaturePage = () => {
 
   const responseFacebook = (response) => {
     console.log(response);
@@ -42,8 +42,10 @@ const FeaturePage = ({ history }) => {
         <title>Settings</title>
         <meta name="description" content="Settings page" />
       </Helmet>
-      <MenuHeader history={history} label="Personalize" />
-      <div className="setting-page-container">
+      <Header>
+        <h2>Personalize</h2>
+      </Header>
+      <div className="setting-page-container body-container">
         <FacebookLogin
           appId={config.FB_APPID}
           autoLoad={false}
@@ -65,10 +67,6 @@ const FeaturePage = ({ history }) => {
       </div>
     </div>
   );
-};
-
-FeaturePage.propTypes = {
-  history: PropTypes.object
 };
 
 export default FeaturePage;

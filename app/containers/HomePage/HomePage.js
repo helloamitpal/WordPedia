@@ -6,11 +6,12 @@ import { bindActionCreators } from 'redux';
 import { debounce } from 'lodash';
 
 import Search from '../../components/Search';
-import FooterMenu from '../../components/FooterMenu';
+import Header from '../../components/Header';
 import * as wordActionCreator from './wordActionCreator';
 import CardList from '../../components/CardList';
 import Button from '../../components/Button';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import ToggleMenu from '../../components/ToggleMenu';
 import Message from '../../components/Message';
 import config from '../../config';
 import Events from '../../event-tracker/events';
@@ -18,8 +19,8 @@ import EventTracker from '../../event-tracker';
 import Features from '../../util/features';
 import * as helper from '../../util/helper';
 
-import cogsIcon from '../../images/SVG/149-cog.svg';
 import addIcon from '../../images/SVG/267-plus.svg';
+import verticalDotsIcon from '../../images/SVG/000-dots-vertical-triple.svg';
 import './HomePage.scss';
 
 class HomePage extends React.Component {
@@ -30,12 +31,9 @@ class HomePage extends React.Component {
     };
     this.userFeature = Features.sharable ? 'share' : 'copy';
     this.debouncedSearch = debounce(this.searchAPICall, 300);
-    this.menuList = [{
-      icon: addIcon,
-      onClick: this.gotoAddNewWord
-    }, {
-      icon: cogsIcon,
-      onClick: this.gotoSettings
+    this.menus = [{
+      label: 'Personalize',
+      path: config.SETTINGS_PAGE
     }];
   }
 
@@ -71,14 +69,14 @@ class HomePage extends React.Component {
     wordActions.addWordAction(word);
   }
 
-  gotoSettings = () => {
-    const { history } = this.props;
-    history.push('/settings');
-  }
-
   gotoAddNewWord = () => {
     const { history } = this.props;
-    history.push('/addWord');
+    history.push(config.ADD_WORD_PAGE);
+  }
+
+  onClickMenu = (path) => {
+    const { history } = this.props;
+    history.push(path);
   }
 
   onCardAction = (word, actionType, cardRef) => {
@@ -124,17 +122,18 @@ class HomePage extends React.Component {
           <title>WordPedia</title>
           <meta name="description" content="WordPedia homepage" />
         </Helmet>
-        <div className="search-section-container gradient-background">
-          <Search onChange={this.onChangeSearch} value={searchText} />
-        </div>
-        <div className="list-container">
+        <Header>
+          <div className="header-section">
+            <Search onChange={this.onChangeSearch} value={searchText} />
+            <Button icon={addIcon} className="add-word-btn" onClick={this.gotoAddNewWord} />
+            <ToggleMenu icon={verticalDotsIcon} className="menu-list-custom" menus={this.menus} onClick={this.onClickMenu} />
+          </div>
+        </Header>
+        <div className="body-container">
           { isLoading && <LoadingIndicator /> }
           { !isError && words.length === 0 && searchText && <Message text={`${searchText} is not added to your bookmark.`} subInfo={subInfo} /> }
           { isNoInitWords && <Button label="Add New Word" raisedButton className="add-word-btn" icon={addIcon} onClick={this.onClickAddNew} /> }
           <CardList cards={data} onAction={this.onCardAction} button={buttons} />
-        </div>
-        <div className="menu-container">
-          <FooterMenu menus={this.menuList} />
         </div>
       </div>
     );

@@ -94,7 +94,28 @@ module.exports = (options) => ({
       cacheId: 'WordPedia',
       offlineGoogleAnalytics: true,
       cleanupOutdatedCaches: true,
-      skipWaiting: true
+      skipWaiting: true,
+      runtimeCaching: [{
+        urlPattern: /\.svg$/,
+        handler: 'CacheFirst'
+      }, {
+        urlPattern: /.*/,
+        handler: 'NetworkFirst'
+      }, {
+        urlPattern: /api/,
+        handler: 'NetworkFirst',
+        options: {
+          networkTimeoutSeconds: 10,
+          cacheName: 'WordPedia-api-cache',
+          expiration: {
+            maxEntries: 5,
+            maxAgeSeconds: 60
+          },
+          cacheableResponse: {
+            statuses: [0, 200]
+          }
+        }
+      }]
     }),
 
     // PWA settings

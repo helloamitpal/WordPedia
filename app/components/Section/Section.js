@@ -10,8 +10,8 @@ const Section = ({ title, rows, className }) => (
     <section>{title}</section>
     <div className="section-row-containers">
       {
-        rows.map(({ icon, label, component }) => (
-          <div className="section-row">
+        rows.map(({ icon, label, component }, index) => (
+          <div key={`section-${index.toString()}`} className="section-row">
             {icon && <Icon path={icon} />}
             <div>
               {label && <span>{label}</span>}

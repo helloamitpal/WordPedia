@@ -41,7 +41,7 @@ Toggle.defaultProps = {
 
 Toggle.propTypes = {
   on: PropTypes.bool,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   className: PropTypes.string,
   onToggle: PropTypes.func.isRequired
 };

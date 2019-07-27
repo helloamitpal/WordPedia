@@ -10,7 +10,6 @@ import configureStore from './stores/configureStores';
 import Features from './util/features';
 import PWAInstaller from './components/PWAInstaller';
 import EventTracker from './event-tracker';
-import config from './config';
 
 import './styles/theme.scss';
 
@@ -34,7 +33,7 @@ class App extends React.Component {
       autoClose: 3000,
       hideProgressBar: true,
       closeOnClick: true,
-      position: (config.IS_MOBILE ? 'bottom-right' : 'top-right')
+      position: (Features.IS_MOBILE ? 'bottom-right' : 'top-right')
     });
   }
 

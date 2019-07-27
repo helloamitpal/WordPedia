@@ -1,0 +1,41 @@
+@import '../../styles/colors.scss';
+
+.input-container {
+  input {
+    font-size: 1em;
+  }
+
+  &.copy {
+    background-color: $card-btn-background;
+    padding: 0.5em;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    border-radius: 4px;
+
+    input {
+      background: transparent;
+      border: 0;
+      outline: 0 none;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    button {
+      font-size: 0.9em;
+      background: $icon-color;
+      border: 1px solid $border-color;
+      padding: 5px 10px;
+      margin-left: 5px;
+      border-radius: 4px;
+      outline: o none;
+    }
+  }
+
+  &:not(.copy) input {
+    border: 0 none;
+    border-bottom: 1px solid $border-color;
+  }
+}

@@ -7,7 +7,12 @@ import Button from '../../components/Button';
 import Toggle from '../../components/Toggle';
 import PWAInstaller from '../../components/PWAInstaller';
 import Section from '../../components/Section';
+import SelectBox from '../../components/SelectBox';
 import config from '../../config';
+import Features from '../../util/features';
+import EventTracker from '../../event-tracker';
+import Events from '../../event-tracker/events';
+import Input from '../../components/Input';
 
 import fbIcon from '../../images/SVG/402-facebook2.svg';
 import shareIcon from '../../images/SVG/387-share2.svg';
@@ -31,10 +36,21 @@ const FeaturePage = () => {
   };
 
   const shareApp = () => {
-
+    navigator.share({
+      title: 'WordPedia',
+      url: window.location.href
+    }).then(() => {
+      EventTracker.raise(Events.SHARE_APP);
+    }).catch((err) => {
+      EventTracker.raise(Events.SHARE_APP_FAILED, err.message);
+    });
   };
 
   const sendFeedback = () => {
+    window.location.href = `mailto:${config.CONTACT_EMAIL}?subject=${config.CONTACT_EMAIL_TITLE}`;
+  };
+
+  const onChangeLang = () => {
 
   };
 
@@ -45,12 +61,26 @@ const FeaturePage = () => {
   }, {
     icon: langIcon,
     label: 'Default language',
-    component: <select><option>language</option></select>
+    component: <SelectBox value="en" options={config.LANGUAGES} onChange={onChangeLang} />
   }];
 
-  const supportSections = [{
-    component: <Button label="Share" icon={shareIcon} onClick={shareApp} />
-  }, {
+  const copiedLink = () => {
+    EventTracker.raise(Events.COPIED_APP_LINK);
+  };
+
+  let section;
+  if (Features.shareable) {
+    section = {
+      component: <Button label="Share" icon={shareIcon} onClick={shareApp} />
+    };
+  } else {
+    section = {
+      icon: shareIcon,
+      component: <Input value={window.location.href} readOnly copy onClick={copiedLink} />
+    };
+  }
+
+  const supportSections = [section, {
     component: <Button label="Feedback" icon={feedbackIcon} onClick={sendFeedback} />
   }];
 

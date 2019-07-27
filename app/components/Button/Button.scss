@@ -8,6 +8,7 @@
   outline: 0 none;
   font-size: 1em;
   display: flex;
+  color: $font-color;
 
   &.raised {
     align-items: center;
@@ -15,6 +16,16 @@
     border: 1px solid $border-color;
     border-radius: 5px;
     box-shadow: 0 0px 5px 0 rgba(0,0,0,0.35);
+
+    &:disabled {
+      background-color: $disabled-color !important;
+      color: $icon-color;
+      pointer-events: none;
+
+      .icon {
+        background-color: $disabled-color !important;
+      }
+    }
   }
 
   span:not(:only-child) {
@@ -25,9 +36,13 @@
     animation: ripple 0.3s linear;
   }
 
-  &:disabled {
-    background-color: $disabled-color !important;
+  &:not(.raised):disabled {
+    color: $disabled-color !important;
     pointer-events: none;
+
+    .icon {
+      background-color: $disabled-color !important;
+    }
   }
 }
 

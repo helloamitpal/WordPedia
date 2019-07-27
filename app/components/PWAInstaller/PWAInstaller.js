@@ -74,7 +74,7 @@ class PWAInstaller extends React.Component {
 
       if (toast.isActive('network')) {
         toastConfig.render = message;
-        toastConfig.type = toast.TYPE.SUCCESS;
+        toastConfig.type = isOnLine ? toast.TYPE.SUCCESS : toast.TYPE.INFO;
         toast.update('network', toastConfig);
       } else {
         toastConfig.toastId = 'network';

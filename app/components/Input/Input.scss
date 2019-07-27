@@ -12,6 +12,7 @@
     max-width: 400px;
     display: flex;
     border-radius: 4px;
+    border: 1px solid $alternate-border-color;
 
     input {
       background: transparent;
@@ -26,11 +27,11 @@
     button {
       font-size: 0.9em;
       background: $icon-color;
-      border: 1px solid $border-color;
+      border: 1px solid $alternate-border-color;
       padding: 5px 10px;
       margin-left: 5px;
       border-radius: 4px;
-      outline: o none;
+      outline: 0 none;
     }
   }
 

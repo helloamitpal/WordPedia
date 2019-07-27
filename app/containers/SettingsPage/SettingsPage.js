@@ -1,13 +1,13 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import Select from 'react-select';
 
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import Toggle from '../../components/Toggle';
 import PWAInstaller from '../../components/PWAInstaller';
 import Section from '../../components/Section';
-import SelectBox from '../../components/SelectBox';
 import config from '../../config';
 import Features from '../../util/features';
 import EventTracker from '../../event-tracker';
@@ -50,7 +50,7 @@ const FeaturePage = () => {
     window.location.href = `mailto:${config.CONTACT_EMAIL}?subject=${config.CONTACT_EMAIL_TITLE}`;
   };
 
-  const onChangeLang = () => {
+  const onChangeLang = (val) => {
 
   };
 
@@ -61,7 +61,7 @@ const FeaturePage = () => {
   }, {
     icon: langIcon,
     label: 'Default language',
-    component: <SelectBox value="en" options={config.LANGUAGES} onChange={onChangeLang} />
+    component: <Select name="language" className="select-box" value={Features.user.language} options={config.LANGUAGES} onChange={onChangeLang} />
   }];
 
   const copiedLink = () => {

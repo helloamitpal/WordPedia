@@ -8,16 +8,16 @@ export default {
   CONTACT_EMAIL: 'hellowordpedia@gmail.com',
   CONTACT_EMAIL_TITLE: '!WordPedia Feedback!',
   LANGUAGES: [{
-    key: 'en',
+    value: 'en',
     label: 'English'
   }, {
-    key: 'ar',
+    value: 'ar',
     label: 'Arabic'
   }, {
-    key: 'cs',
+    value: 'cs',
     label: 'Czech'
   }, {
-    key: 'fr',
+    value: 'fr',
     label: 'French'
   }]
 };

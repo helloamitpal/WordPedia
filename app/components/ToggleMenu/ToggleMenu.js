@@ -23,12 +23,14 @@ class ToggleMenu extends React.Component {
   }
 
   handleClickOutside = (event) => {
-    if (!this.menuRef.contains(event.target)) {
-      this.toggleMenu();
+    if (this.menuRef && !this.menuRef.contains(event.target)) {
+      this.setState({ show: false });
     }
   }
 
-  toggleMenu = () => {
+  toggleMenu = (event) => {
+    event.stopPropagation();
+
     const { show } = this.state;
     this.setState({ show: !show });
   }

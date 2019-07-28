@@ -22,20 +22,66 @@ import langIcon from '../../images/SVG/275-spell-check.svg';
 
 import './SettingsPage.scss';
 
-const FeaturePage = () => {
-  const responseFacebook = (response) => {
-    console.log(response);
-  };
+class FeaturePage extends React.Component {
+  constructor() {
+    super();
+    this.setComponents();
+    this.state = {
+      userData: null
+    };
+  }
 
-  const onToggleQuiz = () => {
+  setComponents = () => {
+    this.personalizeSections = [{
+      icon: bookIcon,
+      label: 'Learning mode',
+      component: <Toggle onToggle={this.onToggleQuiz} />
+    }, {
+      icon: langIcon,
+      label: 'Default language',
+      component: <Select name="language" className="select-box" value={Features.user.language} options={config.LANGUAGES} onChange={this.onChangeLang} />
+    }];
 
-  };
+    let section;
+    if (Features.shareable) {
+      section = {
+        component: <Button label="Share" icon={shareIcon} onClick={this.shareApp} />
+      };
+    } else {
+      section = {
+        icon: shareIcon,
+        component: <Input value={window.location.href} readOnly copy onClick={this.copiedLink} />
+      };
+    }
 
-  const toggleAboutMe = () => {
+    this.supportSections = [section, {
+      component: <Button label="Feedback" icon={feedbackIcon} onClick={this.sendFeedback} />
+    }];
 
-  };
+    this.infoSections = [{
+      component: <Button label="About WordPedia" onClick={this.toggleAboutMe} />
+    }, {
+      component: <div>{`Version: ${config.VERSION}`}</div>
+    }];
+  }
 
-  const shareApp = () => {
+  copiedLink = () => {
+    EventTracker.raise(Events.COPIED_APP_LINK);
+  }
+
+  responseFacebook = (response) => {
+    this.setState({ userData: { ...response } });
+  }
+
+  onToggleQuiz = () => {
+
+  }
+
+  toggleAboutMe = () => {
+
+  }
+
+  shareApp = () => {
     navigator.share({
       title: 'WordPedia',
       url: window.location.href
@@ -44,82 +90,82 @@ const FeaturePage = () => {
     }).catch((err) => {
       EventTracker.raise(Events.SHARE_APP_FAILED, err.message);
     });
-  };
-
-  const sendFeedback = () => {
-    window.location.href = `mailto:${config.CONTACT_EMAIL}?subject=${config.CONTACT_EMAIL_TITLE}`;
-  };
-
-  const onChangeLang = (val) => {
-
-  };
-
-  const personalizeSections = [{
-    icon: bookIcon,
-    label: 'Learning mode',
-    component: <Toggle onToggle={onToggleQuiz} />
-  }, {
-    icon: langIcon,
-    label: 'Default language',
-    component: <Select name="language" className="select-box" value={Features.user.language} options={config.LANGUAGES} onChange={onChangeLang} />
-  }];
-
-  const copiedLink = () => {
-    EventTracker.raise(Events.COPIED_APP_LINK);
-  };
-
-  let section;
-  if (Features.shareable) {
-    section = {
-      component: <Button label="Share" icon={shareIcon} onClick={shareApp} />
-    };
-  } else {
-    section = {
-      icon: shareIcon,
-      component: <Input value={window.location.href} readOnly copy onClick={copiedLink} />
-    };
   }
 
-  const supportSections = [section, {
-    component: <Button label="Feedback" icon={feedbackIcon} onClick={sendFeedback} />
-  }];
+  sendFeedback = () => {
+    window.location.href = `mailto:${config.CONTACT_EMAIL}?subject=${config.CONTACT_EMAIL_TITLE}`;
+  }
 
-  const infoSections = [{
-    component: <Button label="About WordPedia" onClick={toggleAboutMe} />
-  }, {
-    component: <div>{`Version: ${config.VERSION}`}</div>
-  }];
+  onChangeLang = (val) => {
+    console.log(val);
+  }
 
-  return (
-    <div className="settings-page container">
-      <Helmet>
-        <title>Settings</title>
-        <meta name="description" content="Settings page" />
-      </Helmet>
-      <Header>
-        <h2>Personalize</h2>
-        <div className="login-section">
+  logoutFacebook = () => {
+    window.FB.logout();
+  }
+
+  getLoginComponent = (userData) => {
+    let component;
+
+    if (!userData) {
+      component = (
+        <React.Fragment>
           <h4>You are not signed in</h4>
           <p>Login to bookmark searched words and improve your vocabulary.</p>
-          <FacebookLogin
-            appId={config.FB_APPID}
-            autoLoad={false}
-            fields={config.FB_FIELDS}
-            callback={responseFacebook}
-            render={({ isProcessing, isSdkLoaded, onClick }) => (
-              <Button raisedButton isDisabled={isProcessing || !isSdkLoaded} label="Login or Register" icon={fbIcon} onClick={onClick} />
-            )}
-          />
+        </React.Fragment>
+      );
+    } else {
+      const { name, email, picture: { data: { url, height, width } } } = userData;
+
+      component = (
+        <div className="loggedin-user-details">
+          {url && <img src={url} width={width || 50} height={height || 50} alt="user profile" />}
+          <div>
+            {name && <h4>{name}</h4>}
+            {email && <p>{email}</p>}
+          </div>
         </div>
-      </Header>
-      <div className="setting-page-container body-container">
-        <PWAInstaller button />
-        <Section title="Personalize" rows={personalizeSections} />
-        <Section title="Support" rows={supportSections} />
-        <Section title="Information" rows={infoSections} />
+      );
+    }
+
+    return component;
+  }
+
+  render() {
+    const { userData } = this.state;
+
+    return (
+      <div className="settings-page container">
+        <Helmet>
+          <title>Settings</title>
+          <meta name="description" content="Settings page" />
+        </Helmet>
+        <Header>
+          <h2>Personalize</h2>
+          <div className="login-section">
+            {this.getLoginComponent(userData)}
+            <FacebookLogin
+              appId={config.FB_APPID}
+              autoLoad={false}
+              fields={config.FB_FIELDS}
+              callback={this.responseFacebook}
+              render={({ isProcessing, isSdkLoaded, onClick }) => (
+                userData
+                  ? <Button raisedButton label="Logout" icon={fbIcon} onClick={this.logoutFacebook} />
+                  : <Button raisedButton isDisabled={isProcessing || !isSdkLoaded} label="Login or Register" icon={fbIcon} onClick={onClick} />
+              )}
+            />
+          </div>
+        </Header>
+        <div className="setting-page-container body-container">
+          <PWAInstaller button />
+          <Section title="Personalize" rows={this.personalizeSections} />
+          <Section title="Support" rows={this.supportSections} />
+          <Section title="Information" rows={this.infoSections} />
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default FeaturePage;

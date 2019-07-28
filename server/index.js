@@ -5,6 +5,7 @@ const { resolve } = require('path');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const logger = require('./util//logger');
 const argv = require('./util/argv');
@@ -15,6 +16,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
+app.use(cors({
+  origin: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  exposedHeaders: ['x-auth-token']
+}));
 app.disable('x-powered-by');
 app.use(compression());
 app.use((req, res, next) => {

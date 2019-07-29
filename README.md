@@ -37,9 +37,13 @@ hellowordpedia@gmail.com
 1. Clone this repo using `git clone https://github.com/amit040386/LearnNewWords.git`
 2. Move to the appropriate directory: `cd LearnNewWords`.<br />
 3. Run `npm install` to install dependencies.<br />
-4. Run `sudo npm install workbox-cli -g`
-5. Run `npm start` to see the example app at `http://localhost:7009` in DEV mode.
-6. Run `npm start:production` to see the example app at `http://localhost:7009` in PROD mode.
+4. Create a .env file to the root folder and add these mapping to it. E.g.
+DB_USERNAME=xyz
+DB_PASSWORD=abc
+DB_NAME=blabla
+5. Run `sudo npm install workbox-cli -g`
+6. Run `npm start` to see the example app at `http://localhost:7009` in DEV mode.
+7. Run `npm start:production` to see the example app at `http://localhost:7009` in PROD mode.
 
 ## Disabling service worker for localhost development ##
 

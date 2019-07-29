@@ -2,16 +2,15 @@ const logger = require('../../util/logger');
 const WordService = require('./WordService');
 
 class WordController {
-  constructor() {
-    this.word = {
-      name: ''
-    };
-  }
-
   getAllWords(req, res) {
     logger.info('WordController | getAllWords');
-    const data = WordService.getAllWords();
-    res.send(data);
+    WordService.getAllWords().then((data) => {
+      logger.success('WordController | getAllWords | sending success response');
+      res.send(data);
+    }, () => {
+      logger.error('WordController | getAllWords | Sending error response');
+      res.status(500).send('Failed to get all words');
+    });
   }
 
   searchWord(req, res) {

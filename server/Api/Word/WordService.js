@@ -53,7 +53,7 @@ const synthesizeWordDefinition = (resp) => {
 
 const getAllWords = () => {
   logger.success('WordService | getAllWords | all bookmarked words are fetched successfully');
-  return mockData;
+  return WordModel.find({});
 };
 
 const searchWord = (searchText, searchType) => (new Promise((resolve) => {

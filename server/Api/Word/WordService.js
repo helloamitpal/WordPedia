@@ -52,8 +52,17 @@ const synthesizeWordDefinition = (resp) => {
 };
 
 const getAllWords = () => {
-  logger.success('WordService | getAllWords | all bookmarked words are fetched successfully');
-  return WordModel.find({});
+  return new Promise((resolve, reject) => {
+    WordModel.find({}, (error, words) => {
+      if (words) {
+        logger.success('WordService | getAllWords | all bookmarked words are fetched successfully');
+        resolve(words);
+      } else if (error) {
+        logger.error('WordService | getAllWords | Error occurred in fetching all bookmarked words');
+        reject(false);
+      }
+    });
+  });
 };
 
 const searchWord = (searchText, searchType) => (new Promise((resolve) => {

@@ -17,13 +17,17 @@ class WordController {
     const { searchText, searchType } = req.params;
     logger.info(`WordController | searchWord | Search text: "${searchText}"`);
 
-    WordService.searchWord(searchText, searchType).then((data) => {
-      logger.success(`WordController | searchWord | Sending success response | Search text: "${searchText}"`);
-      res.send(data);
-    }, () => {
-      logger.error(`WordController | searchWord | Sending error response | Search text: "${searchText}"`);
-      res.status(500).send('Failed to search given word');
-    });
+    if (searchText.trim()) {
+      WordService.searchWord(searchText, searchType).then((data) => {
+        logger.success(`WordController | searchWord | Sending success response | Search text: "${searchText}"`);
+        res.send(data);
+      }, () => {
+        logger.error(`WordController | searchWord | Sending error response | Search text: "${searchText}"`);
+        res.status(500).send('Failed to search given word');
+      });
+    } else {
+      this.getAllWords(req, res);
+    }
   }
 
   addWord(req, res) {
@@ -47,13 +51,19 @@ class WordController {
   deleteWord(req, res) {
     logger.info('WordController | deleteWord');
     const { word } = req.params;
-    WordService.deleteWord(word).then((data) => {
-      logger.success('WordController | deleteWord | Sending success response');
-      res.send(data);
-    }, () => {
-      logger.error('WordController | deleteWord | Sending error response');
+
+    if (word) {
+      WordService.deleteWord(word).then((data) => {
+        logger.success(`WordController | deleteWord | Sending success response | word: "${word}"`);
+        res.send(data);
+      }, () => {
+        logger.error(`WordController | deleteWord | Sending error response | word: "${word}"`);
+        res.status(500).send('Failed to delete word');
+      });
+    } else {
+      logger.error('WordController | addWord | Sending error response because invalid word found');
       res.status(500).send('Failed to delete word');
-    });
+    }
   }
 }
 

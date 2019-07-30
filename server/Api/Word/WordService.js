@@ -160,13 +160,13 @@ const addWord = (wordDetails) => {
               wordDetails: synthesizedData
             });
           } else {
-            logger.error(`WordService | searchWord | Failed to save word definition for "${text}"`);
+            logger.error(`WordService | addWord | Failed to save word definition for "${text}"`);
 
             reject(false);
           }
         });
       }, () => {
-        logger.error(`WordService | searchWord | word definition is not added for "${text}"`);
+        logger.error(`WordService | addWord | word definition is not added for "${text}"`);
 
         reject(false);
       });
@@ -175,7 +175,19 @@ const addWord = (wordDetails) => {
 };
 
 const deleteWord = (word) => {
-  return word;
+  return new Promise((resolve, reject) => {
+    WordModel.deleteOne({ word }, (error) => {
+      if (!error) {
+        logger.success(`WordService | deleteWord | word definition is deleted successfully for "${word}"`);
+
+        resolve(true);
+      } else {
+        logger.error(`WordService | deleteWord | word definition is not deleted for "${word}"`);
+
+        reject(false);
+      }
+    });
+  });
 };
 
 module.exports = {

@@ -35,7 +35,7 @@ export const addWordAction = (wordDetails) => (dispatch, getState, { api }) => {
 export const deleteWordAction = (word) => (dispatch, getState, { api }) => {
   dispatch({
     type: actionTypes.DELETE_WORD,
-    payload: {},
+    payload: { word },
     promise: api.delete(`/api/deleteWord/${encodeURI(word)}`).then((res) => {
       toast.success(`${word} has been removed from bookmark."`);
       return res.data;

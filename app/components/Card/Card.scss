@@ -11,6 +11,27 @@
     padding-bottom: 0;
   }
 
+  .synonym-container {
+    margin: 1em;
+
+    a {
+      margin: 0.1em;
+      display: inline-block;
+      word-break: break-all;
+      text-transform: capitalize;
+
+      &:not(:last-child)::after {
+        content: ',';
+      }
+
+      &.no-anchor {
+        text-decoration: none;
+        pointer-events: none;
+        color: $font-color;
+      }
+    }
+  }
+
   &.selected {
     .card-header {
       background: $icon-hover-color;

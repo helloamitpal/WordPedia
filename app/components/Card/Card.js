@@ -88,26 +88,42 @@ class Card extends React.Component {
             {details.phonetic && <Button className="speaker" onClick={this.textToSpeech} icon={speakerIcon} />}
           </div>
         </div>
-        {details.shortDefinitions && details.shortDefinitions.length && (
+        {details.shortDefinitions && !!details.shortDefinitions.length && (
           <ul>
             {
               details.shortDefinitions.map((shortDef, defIndex) => (
-                <li key={`short-def-${defIndex.toString()}`}>{shortDef}</li>
+                shortDef ? <li key={`short-def-${defIndex.toString()}`}>{shortDef}</li> : null
               ))
             }
           </ul>
         )}
+        {details.synonyms && !!details.synonyms.length && (
+          <React.Fragment>
+            <section>Synonyms</section>
+            <div className="synonym-container">
+              {
+                details.synonyms.map((synonym, synIndex) => (
+                  <a href="javascript:void(0)" className={`${synonym.includes(' ') ? 'no-anchor' : ''}`} key={`synonym-${synIndex.toString()}`}>{synonym}</a>
+                ))
+              }
+            </div>
+          </React.Fragment>
+        )}
         {!showAll && <Button className="show-all-btn" animation={false} onClick={this.toggleExpand} icon={arrowDown} />}
         {(showAll && isDetailAvialable) ? (
           <div className="long-details mt-1">
-            {details.origins && details.origins.length ? <section>Origin</section> : null}
-            <ul>
-              {
-                details.origins.map((originText, index) => (
-                  <li key={`origin-${index.toString()}`}>{originText}</li>
-                ))
-              }
-            </ul>
+            {details.origins && !!details.origins.length && (
+              <React.Fragment>
+                <section>Origin</section>
+                <ul>
+                  {
+                    details.origins.map((originText, index) => (
+                      <li key={`origin-${index.toString()}`}>{originText}</li>
+                    ))
+                  }
+                </ul>
+              </React.Fragment>
+            )}
             {details.longDefinitions && (
               <div className="examples-section">
                 {

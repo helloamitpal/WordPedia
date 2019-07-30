@@ -1,4 +1,6 @@
 import { handle } from 'redux-pack';
+import { remove } from 'lodash';
+
 import * as actionTypes from './actionTypes';
 
 const initialState = {
@@ -15,6 +17,30 @@ const wordReducer = (state = initialState, action = '') => {
 
   switch (type) {
     case actionTypes.DELETE_WORD:
+      return handle(state, action, {
+        start: (defaultState) => ({
+          ...defaultState,
+          isError: false,
+          isLoading: true,
+          word: payload.word
+        }),
+        success: (defaultState) => {
+          if (payload) {
+            remove(defaultState.words, { word: defaultState.word });
+          }
+
+          return {
+            ...defaultState,
+            isLoading: false
+          };
+        },
+        failure: (defaultState) => ({
+          ...defaultState,
+          isLoading: false,
+          isError: true
+        })
+      });
+
     case actionTypes.ADD_WORD:
       return handle(state, action, {
         start: (defaultState) => ({

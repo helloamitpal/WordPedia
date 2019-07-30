@@ -33,7 +33,7 @@ class App extends React.Component {
       autoClose: 3000,
       hideProgressBar: true,
       closeOnClick: true,
-      position: (Features.IS_MOBILE ? 'bottom-right' : 'top-right')
+      position: (Features.isMobile ? 'bottom-right' : 'top-right')
     });
   }
 

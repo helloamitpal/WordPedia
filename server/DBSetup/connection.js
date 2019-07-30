@@ -13,6 +13,7 @@ const initialize = () => {
 
   db.on('error', (err) => {
     logger.error('Error occurred in DB connection.', err);
+    throw Error('Error occurred in DB connection. Hence the build is broken.');
   });
 };
 

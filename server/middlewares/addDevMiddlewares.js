@@ -36,5 +36,5 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
     });
   });
 
-  app.get(`${config.API_BASE}/*`, ApiRouter);
+  app.all(`${config.API_BASE}/*`, ApiRouter);
 };

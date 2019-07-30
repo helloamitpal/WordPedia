@@ -62,11 +62,12 @@ class HomePage extends React.Component {
     this.debouncedSearch();
   }
 
-  onClickAddNew = (word) => {
+  onClickAddNew = (wordObj) => {
     const { wordActions } = this.props;
+    const { word } = wordObj;
 
     EventTracker.raise(Events.BOOKMARK_WORD, word);
-    wordActions.addWordAction(word);
+    wordActions.addWordAction(wordObj);
   }
 
   gotoAddNewWord = () => {
@@ -79,14 +80,15 @@ class HomePage extends React.Component {
     history.push(path);
   }
 
-  onCardAction = (word, actionType, cardRef) => {
+  onCardAction = (wordObj, actionType, cardRef) => {
     const { wordActions, wordState: { wordsOnWeb } } = this.props;
+    const { word } = wordObj;
 
     if (actionType.includes('expand') && wordsOnWeb.length && wordsOnWeb.filter((obj) => (obj.word === word)).length) {
       EventTracker.raise(Events.SEARCH_WORD_ON_WEB, word);
       wordActions.searchWordAction(word, config.SEARCH_TYPE_WEB);
     } else if (actionType.includes('add')) {
-      this.onClickAddNew(word);
+      this.onClickAddNew(wordObj);
     } else if (actionType.includes('delete')) {
       EventTracker.raise(Events.REMOVE_BOOKMARKED_WORD, word);
       wordActions.deleteWordAction(word);

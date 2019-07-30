@@ -1,6 +1,5 @@
 const axios = require('axios');
 const logger = require('../../util/logger');
-const mockData = require('../../mock-data/wordList');
 const WordModel = require('./WordModel');
 const helper = require('../../util/helper');
 
@@ -23,8 +22,11 @@ const synthesizeWordDefinition = (resp) => {
   const origins = [];
   const shortDefinitions = [];
   const longDefinitions = [];
+  const synonyms = [];
 
   resp.forEach((respObj) => {
+    const examples = [];
+
     if (respObj.origins) {
       origins.push(respObj.origins);
     }
@@ -33,11 +35,16 @@ const synthesizeWordDefinition = (resp) => {
       if (meaning[1] && meaning[1].length) {
         meaning[1].forEach((defObj) => {
           shortDefinitions.push(defObj.definition);
+          if (defObj.synonyms && defObj.synonyms.length > 0) {
+            synonyms.push(...defObj.synonyms);
+          }
+          examples.push({ definition: defObj.definition, example: defObj.example });
         });
       }
+
       longDefinitions.push({
         type: meaning[0],
-        examples: meaning[1] || []
+        examples
       });
     });
   });
@@ -47,7 +54,8 @@ const synthesizeWordDefinition = (resp) => {
     phonetic: resp[0].phonetic,
     origins,
     shortDefinitions,
-    longDefinitions
+    longDefinitions,
+    synonyms
   });
 };
 
@@ -69,42 +77,50 @@ const searchWord = (searchText, searchType) => (new Promise((resolve) => {
   const text = (searchText && decodeURI(searchText).toLowerCase()) || '';
 
   if (searchType === 'bookmark') {
-    const bookmarkedWords = mockData.filter(({ word }) => (word.includes(text)));
+    // DB text contains search with mongoose $regex
+    WordModel.find({ word: { $regex: text, $options: 'i' } }, (error, bookmarkedWords) => {
+      if (bookmarkedWords && bookmarkedWords.length) {
+        logger.success(`WordService | searchWord | searched word "${text}" is found in the bookmarked list`);
 
-    if (bookmarkedWords.length === 0 && text.length > 1) {
-      logger.info('WordService | searchWord | searched word is not found in the bookmarked list. Searching on the web is initiated');
-      axios.get(`https://api.datamuse.com/words?sp=${text}&max=5&md=d`).then(({ data }) => {
-        logger.success('Word search api have found the defeinition');
-        const webResult = synthesizeWordSuggestions(text, data);
         resolve({
-          bookmarkedWords: [],
-          wordsOnWeb: webResult
+          bookmarkedWords,
+          wordsOnWeb: []
         });
-      }, () => {
-        logger.error('Error occurred in word search api');
-        resolve({
-          bookmarkedWords: [],
-          wordsOnWeb: null
+      } else if (bookmarkedWords.length === 0 && text.length > 1) {
+        logger.info(`WordService | searchWord | searched word "${text}" is not found in the bookmarked list. Searching on the web is initiated`);
+
+        axios.get(`https://api.datamuse.com/words?sp=${text}&max=5&md=d`).then(({ data }) => {
+          logger.success(`Word search api have found the defeinition for "${text}"`);
+          const webResult = synthesizeWordSuggestions(text, data);
+
+          resolve({
+            bookmarkedWords: [],
+            wordsOnWeb: webResult
+          });
+        }, () => {
+          logger.error(`Error occurred in word search api for "${text}"`);
+
+          resolve({
+            bookmarkedWords: [],
+            wordsOnWeb: null
+          });
         });
-      });
-    } else {
-      logger.success('WordService | searchWord | searched word is found in the bookmarked list');
-      resolve({
-        bookmarkedWords,
-        wordsOnWeb: []
-      });
-    }
+      }
+    });
   } else if (searchType === 'web') {
-    logger.info('WordService | searchWord | searching word definition on the web');
+    logger.info(`WordService | searchWord | searching word definition on the web for "${text}"`);
+
     axios.get(`https://googledictionaryapi.eu-gb.mybluemix.net?define=${text}`).then(({ data }) => {
-      logger.success('WordService | searchWord | searched word definition is found successfully');
+      logger.success(`WordService | searchWord | searched word definition is found successfully for "${text}"`);
+
       resolve({
         bookmarkedWords: [],
         wordsOnWeb: [],
         wordDetails: synthesizeWordDefinition(data)
       });
     }, () => {
-      logger.error('WordService | searchWord | searched word definition is not found');
+      logger.error(`WordService | searchWord | searched word definition is not found for "${text}"`);
+
       resolve({
         bookmarkedWords: [],
         wordsOnWeb: [],
@@ -115,7 +131,47 @@ const searchWord = (searchText, searchType) => (new Promise((resolve) => {
 }));
 
 const addWord = (wordDetails) => {
-  return wordDetails;
+  return new Promise((resolve, reject) => {
+    if (wordDetails.longDefinitions && wordDetails.longDefinitions.length) {
+      const data = new WordModel(wordDetails);
+      data.save((err) => {
+        if (!err) {
+          logger.success(`WordService | addWord | word definition is added successfully for "${wordDetails.word}"`);
+
+          resolve({
+            wordDetails: data
+          });
+        } else {
+          logger.error(`WordService | searchWord | Failed to save word definition for "${wordDetails.word}"`);
+
+          reject(false);
+        }
+      });
+    } else {
+      const text = wordDetails.word.toLowerCase();
+
+      axios.get(`https://googledictionaryapi.eu-gb.mybluemix.net?define=${text}`).then(({ data }) => {
+        logger.success(`WordService | addWord | word definition is added successfully for "${text}"`);
+
+        const synthesizedData = synthesizeWordDefinition(data);
+        synthesizedData.save((err) => {
+          if (!err) {
+            resolve({
+              wordDetails: synthesizedData
+            });
+          } else {
+            logger.error(`WordService | searchWord | Failed to save word definition for "${text}"`);
+
+            reject(false);
+          }
+        });
+      }, () => {
+        logger.error(`WordService | searchWord | word definition is not added for "${text}"`);
+
+        reject(false);
+      });
+    }
+  });
 };
 
 const deleteWord = (word) => {

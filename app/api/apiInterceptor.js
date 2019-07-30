@@ -10,6 +10,7 @@ const fireRequest = async (method, fullUrl, data) => {
     method,
     data: JSON.stringify(data),
     mode: 'same-origin',
+    timeout: 5000, // after this api request will be auto-cancelled
     headers: {
       'Content-Type': 'application/json'
     }

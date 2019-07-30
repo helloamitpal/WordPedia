@@ -69,13 +69,17 @@ class CardList extends React.Component {
     }
   }
 
-  onFocusAction = (word, actionType, cardRef) => {
+  onFocusAction = (wordObj, actionType, cardRef) => {
     const { onAction } = this.props;
+    const { word } = wordObj;
+    const selectedCard = this.containerRef.current.querySelector(`#card-${word}`);
 
-    this.containerRef.current.querySelector(`#card-${word}`).scrollIntoView({ behavior: 'smooth' });
+    if (selectedCard) {
+      selectedCard.scrollIntoView({ behavior: 'smooth' });
+    }
     this.setState({ selectedCard: word });
     if (onAction) {
-      onAction.call(null, word, actionType, cardRef);
+      onAction.call(null, wordObj, actionType, cardRef);
     }
   }
 

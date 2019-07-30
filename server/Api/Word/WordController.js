@@ -5,7 +5,7 @@ class WordController {
   getAllWords(req, res) {
     logger.info('WordController | getAllWords');
     WordService.getAllWords().then((data) => {
-      logger.success('WordController | getAllWords | sending success response');
+      logger.success(`WordController | getAllWords | sending success response | result count: ${data.length}`);
       res.send(data);
     }, () => {
       logger.error('WordController | getAllWords | Sending error response');
@@ -15,26 +15,33 @@ class WordController {
 
   searchWord(req, res) {
     const { searchText, searchType } = req.params;
-    logger.info(`WordController | searchWord | ${searchText}`);
+    logger.info(`WordController | searchWord | Search text: "${searchText}"`);
 
     WordService.searchWord(searchText, searchType).then((data) => {
-      logger.success('WordController | searchWord | Sending success response');
+      logger.success(`WordController | searchWord | Sending success response | Search text: "${searchText}"`);
       res.send(data);
     }, () => {
-      logger.error('WordController | searchWord | Sending error response');
+      logger.error(`WordController | searchWord | Sending error response | Search text: "${searchText}"`);
       res.status(500).send('Failed to search given word');
     });
   }
 
   addWord(req, res) {
-    logger.info('WordController | addWord');
-    WordService.addWord(req.body).then((data) => {
-      logger.success('WordController | addWord | Sending success response');
-      res.send(data);
-    }, () => {
-      logger.error('WordController | addWord | Sending error response');
+    const payload = req.body;
+
+    if (payload) {
+      logger.info(`WordController | addWord | word: "${payload.word}"`);
+      WordService.addWord(req.body).then((data) => {
+        logger.success(`WordController | addWord | Sending success response | word: "${payload.word}"`);
+        res.send(data);
+      }, () => {
+        logger.error(`WordController | addWord | Sending error response | word: "${payload.word}"`);
+        res.status(500).send('Failed to add word');
+      });
+    } else {
+      logger.error('WordController | addWord | Sending error response because body payload is null');
       res.status(500).send('Failed to add word');
-    });
+    }
   }
 
   deleteWord(req, res) {

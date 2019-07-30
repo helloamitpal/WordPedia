@@ -14,8 +14,8 @@ router.get(`${config.API_BASE}/searchWord/:searchText/:searchType`, (req, res) =
   WordWiring.WordController().searchWord(req, res);
 });
 
-router.post(`${config.API_BASE}/addWord`, (req, res) => {
-  logger.info('/addWord route found');
+router.post(`${config.API_BASE}/addWordToCollection/`, (req, res) => {
+  logger.info('/addWordToCollection route found');
   WordWiring.WordController().addWord(req, res);
 });
 

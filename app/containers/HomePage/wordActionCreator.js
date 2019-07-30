@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 import * as actionTypes from './actionTypes';
 
 export const searchWordAction = (word, searchType) => (dispatch, getState, { api }) => {
@@ -20,7 +22,13 @@ export const addWordAction = (wordDetails) => (dispatch, getState, { api }) => {
   dispatch({
     type: actionTypes.ADD_WORD,
     payload: {},
-    promise: api.post('/api/addWord', wordDetails).then((res) => res.data)
+    promise: api.post('/api/addWordToCollection', wordDetails).then((res) => {
+      toast.success(`${wordDetails.word} has been bookmarked."`);
+      return res.data;
+    }, () => {
+      toast.error('Something went wrong. Please try again!');
+      return null;
+    })
   });
 };
 
@@ -28,6 +36,12 @@ export const deleteWordAction = (word) => (dispatch, getState, { api }) => {
   dispatch({
     type: actionTypes.DELETE_WORD,
     payload: {},
-    promise: api.delete(`/api/deleteWord/${encodeURI(word)}`).then((res) => res.data)
+    promise: api.delete(`/api/deleteWord/${encodeURI(word)}`).then((res) => {
+      toast.success(`${word} has been removed from bookmark."`);
+      return res.data;
+    }, () => {
+      toast.error('Something went wrong. Please try again!');
+      return null;
+    })
   });
 };

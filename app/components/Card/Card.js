@@ -56,11 +56,11 @@ class Card extends React.Component {
   }
 
   onCardAction = (evt, button) => {
-    const { onAction, details: { word } } = this.props;
+    const { onAction, details } = this.props;
 
     evt.stopPropagation();
     evt.nativeEvent.stopImmediatePropagation();
-    onAction(word, ['focus', button], this.cardRef.current);
+    onAction(details, ['focus', button], this.cardRef.current);
   }
 
   getButtonList = (buttons) => (

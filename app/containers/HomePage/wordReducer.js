@@ -6,7 +6,6 @@ const initialState = {
   wordsOnWeb: [],
   isError: false,
   searchType: '',
-  updated: false,
   isLoading: false,
   isNoInitWords: false
 };
@@ -15,20 +14,24 @@ const wordReducer = (state = initialState, action = '') => {
   const { type, payload } = action;
 
   switch (type) {
-    case actionTypes.ADD_WORD:
     case actionTypes.DELETE_WORD:
+    case actionTypes.ADD_WORD:
       return handle(state, action, {
         start: (defaultState) => ({
           ...defaultState,
           isError: false,
-          updated: false
+          isLoading: true
         }),
-        success: (defaultState) => ({
-          ...defaultState,
-          updated: payload
-        }),
+        success: (defaultState) => {
+          defaultState.words.push(payload.wordDetails);
+          return {
+            ...defaultState,
+            isLoading: false
+          };
+        },
         failure: (defaultState) => ({
           ...defaultState,
+          isLoading: false,
           isError: true
         })
       });

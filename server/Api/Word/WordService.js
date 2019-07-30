@@ -34,11 +34,14 @@ const synthesizeWordDefinition = (resp) => {
     Object.entries(respObj.meaning).forEach((meaning) => {
       if (meaning[1] && meaning[1].length) {
         meaning[1].forEach((defObj) => {
-          shortDefinitions.push(defObj.definition);
+          if (defObj.definition && defObj.definition.trim()) {
+            shortDefinitions.push(defObj.definition);
+            examples.push({ definition: defObj.definition, example: defObj.example });
+          }
+
           if (defObj.synonyms && defObj.synonyms.length > 0) {
             synonyms.push(...defObj.synonyms);
           }
-          examples.push({ definition: defObj.definition, example: defObj.example });
         });
       }
 

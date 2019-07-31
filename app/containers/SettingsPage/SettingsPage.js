@@ -50,7 +50,7 @@ class FeaturePage extends React.Component {
     } else {
       section = {
         icon: shareIcon,
-        component: <Input value={window.location.href} readOnly copy onClick={this.copiedLink} />
+        component: <Input type="copy" value={window.location.href} readOnly onClick={this.copiedLink} />
       };
     }
 

@@ -89,12 +89,13 @@ const wordReducer = (state = initialState, action = '') => {
         start: (defaultState) => ({
           ...defaultState,
           isError: false,
-          isLoading: (payload.searchType !== 'web'),
-          searchType: payload.searchType
+          isLoading: (payload.searchType !== 'web' || payload.isSynonym),
+          searchType: payload.searchType,
+          isSynonym: payload.isSynonym
         }),
         success: (defaultState) => {
           let wordsOnWeb;
-          if (payload.wordDetails) {
+          if (!defaultState.isSynonym && payload.wordDetails) {
             wordsOnWeb = [];
             defaultState.wordsOnWeb.forEach((obj) => {
               wordsOnWeb.push((obj.word === payload.wordDetails.word) ? payload.wordDetails : obj);
@@ -104,8 +105,8 @@ const wordReducer = (state = initialState, action = '') => {
           return {
             ...defaultState,
             isLoading: false,
-            words: payload.bookmarkedWords,
-            wordsOnWeb: wordsOnWeb || payload.wordsOnWeb
+            words: defaultState.isSynonym ? [payload.wordDetails] : payload.bookmarkedWords,
+            wordsOnWeb: wordsOnWeb || (!defaultState.isSynonym && payload.wordsOnWeb)
           };
         },
         failure: (defaultState) => ({

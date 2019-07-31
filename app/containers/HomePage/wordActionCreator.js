@@ -2,10 +2,10 @@ import { toast } from 'react-toastify';
 
 import * as actionTypes from './actionTypes';
 
-export const searchWordAction = (word, searchType) => (dispatch, getState, { api }) => {
+export const searchWordAction = (word, searchType, synonym) => (dispatch, getState, { api }) => {
   dispatch({
     type: actionTypes.SEARCH_WORD,
-    payload: { searchText: word, searchType },
+    payload: { searchText: word, searchType, isSynonym: !!synonym },
     promise: api.get(`/api/searchWord/${encodeURI(word)}/${searchType}`).then((res) => res.data)
   });
 };

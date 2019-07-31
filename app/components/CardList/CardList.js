@@ -69,7 +69,7 @@ class CardList extends React.Component {
     }
   }
 
-  onFocusAction = (wordObj, actionType, cardRef) => {
+  onFocusAction = (wordObj, actionType, cardRef, synonymWord) => {
     const { onAction } = this.props;
     const { word } = wordObj;
     const selectedCard = this.containerRef.current.querySelector(`#card-${word}`);
@@ -79,7 +79,7 @@ class CardList extends React.Component {
     }
     this.setState({ selectedCard: word });
     if (onAction) {
-      onAction.call(null, wordObj, actionType, cardRef);
+      onAction.call(null, wordObj, actionType, cardRef, synonymWord);
     }
   }
 

@@ -75,7 +75,9 @@ class HomePage extends React.Component {
     history.push(config.ADD_WORD_PAGE);
   }
 
-  onClickMenu = (path) => {
+  onClickMenu = (evt, path) => {
+    evt.stopPropagation();
+
     const { history } = this.props;
     history.push(path);
   }

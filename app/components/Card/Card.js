@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import LoadingIndicator from '../LoadingIndicator';
 import Button from '../Button';
+import ToggleMenu from '../ToggleMenu';
 
 import speakerIcon from '../../images/SVG/296-volume-medium.svg';
 import arrowDown from '../../images/SVG/324-circle-down.svg';
@@ -11,6 +12,7 @@ import addIcon from '../../images/SVG/050-folder-plus.svg';
 import deleteIcon from '../../images/SVG/174-bin2.svg';
 import shareIcon from '../../images/SVG/387-share2.svg';
 import copyIcon from '../../images/SVG/039-file-text2.svg';
+import verticalDotsIcon from '../../images/SVG/000-dots-vertical-triple.svg';
 import './Card.scss';
 
 class Card extends React.Component {
@@ -21,6 +23,12 @@ class Card extends React.Component {
       delete: deleteIcon,
       share: shareIcon,
       copy: copyIcon
+    };
+    this.menuLabels = {
+      add: 'Bookmark',
+      delete: 'Remove',
+      share: 'Share',
+      copy: 'Copy'
     };
     this.cardRef = React.createRef();
     this.state = {
@@ -47,8 +55,8 @@ class Card extends React.Component {
   }
 
   onSelectCard = () => {
-    const { onAction, details: { word } } = this.props;
-    onAction(word, ['focus']);
+    const { onAction, details } = this.props;
+    onAction(details, ['focus']);
   }
 
   textToSpeech = () => {
@@ -63,25 +71,22 @@ class Card extends React.Component {
     onAction(details, ['focus', button], this.cardRef.current);
   }
 
-  getButtonList = (buttons) => (
-    <div className="card-button-set">
-      {
-        buttons.map((btn, index) => (<Button key={`card-btn-${index.toString()}`} className="card-button" onClick={(evt) => this.onCardAction(evt, btn)} icon={this.icons[btn]} />))
-      }
-    </div>
-  );
+  getMenuButtonList = (buttons) => {
+    return buttons && buttons.sort().map((val) => ({ label: this.menuLabels[val], path: val }));
+  }
 
   render() {
     const { className, button } = this.props;
     const { showAll, details } = this.state;
     const isDetailAvialable = (details.longDefinitions && details.longDefinitions.length) || (details.origins && details.origins.length);
+    const menus = this.getMenuButtonList(button);
 
     return (
       <div className={`card ${className}`} onClick={this.onSelectCard} ref={this.cardRef}>
         <div className="card-header">
           <div className="row">
             <h3 className="title">{details.word}</h3>
-            {button && this.getButtonList(button)}
+            {button && <ToggleMenu icon={verticalDotsIcon} className="card-menu-list-btn" menus={menus} onClick={this.onCardAction} />}
           </div>
           <div className="row sub-title-section">
             {details.phonetic && <div className="sub-title">{details.phonetic}</div>}

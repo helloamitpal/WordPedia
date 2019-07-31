@@ -9,6 +9,23 @@
   .card-header {
     padding: 0.8em;
     padding-bottom: 0;
+
+    .card-menu-list-btn {
+      margin: 4px 0;
+
+      .menu-list {
+        min-width: 100px;
+        top: 20px;
+
+        li {
+          text-align: right;
+        }
+      }
+    }
+
+    .menu-toggle-container .icon {
+      transform: scale(1);
+    }
   }
 
   .synonym-container {
@@ -55,7 +72,7 @@
 
   .title {
     margin: 0;
-    font-size: 1em;
+    font-size: 1.2em;
     text-transform: capitalize;
     padding-right: 10px;
   }

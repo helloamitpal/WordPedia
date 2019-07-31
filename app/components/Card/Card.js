@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import LoadingIndicator from '../LoadingIndicator';
 import Button from '../Button';
 import ToggleMenu from '../ToggleMenu';
+import ShowMore from '../ShowMore';
 
 import speakerIcon from '../../images/SVG/296-volume-medium.svg';
 import arrowDown from '../../images/SVG/324-circle-down.svg';
@@ -96,18 +97,20 @@ class Card extends React.Component {
           <React.Fragment>
             <section>Synonyms</section>
             <div className="synonym-container">
-              {
-                details.synonyms.map((synonym, synIndex) => (
-                  <a
-                    href="javascript:void(0)"
-                    onClick={(evt) => this.onCardAction(evt, 'synonym', synonym)}
-                    className={`${synonym.includes(' ') ? 'no-anchor' : ''}`}
-                    key={`synonym-${synIndex.toString()}`}
-                  >
-                    {synonym}
-                  </a>
-                ))
-              }
+              <ShowMore>
+                {
+                  details.synonyms.map((synonym, synIndex) => (
+                    <a
+                      href="javascript:void(0)"
+                      onClick={(evt) => this.onCardAction(evt, 'synonym', synonym)}
+                      className={`${synonym.includes(' ') ? 'no-anchor' : ''}`}
+                      key={`synonym-${synIndex.toString()}`}
+                    >
+                      {synonym}
+                    </a>
+                  ))
+                }
+              </ShowMore>
             </div>
           </React.Fragment>
         )}

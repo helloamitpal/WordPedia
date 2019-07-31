@@ -1,0 +1,10 @@
+.show-more-container {
+  // hide all element after 5th elements
+  &:not(.show-all) > :not(.show-more-link):nth-child(n+6) {
+    display: none;
+  }
+
+  .show-more-link {
+    font-size: 0.8em;
+  }
+}

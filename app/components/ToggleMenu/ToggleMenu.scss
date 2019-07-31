@@ -15,11 +15,17 @@
     font-size: 1em;
     box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.75);
     z-index: 999;
-    cursor: pointer;
 
     li {
       padding: 0.5em 1em;
       text-align: center;
+      margin: 0;
+      cursor: pointer;
+      color: $font-color;
+
+      &:hover {
+        background-color: $card-btn-background;
+      }
     }
   }
 

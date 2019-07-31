@@ -10,7 +10,7 @@ class EventTracker {
   static raise(eventName, val) {
     const pages = [Events.SETTINGS_PAGE, Events.HOME_PAGE, Events.ADD_WORD_PAGE];
     const apps = [Events.INSTALLED, Events.INSTALL_REJECTED, Events.SHARE_APP, Events.SHARE_APP_FAILED, Events.COPIED_APP_LINK];
-    const words = [Events.SEARCH_WORD, Events.BOOKMARK_WORD, Events.SEARCH_WORD_ON_WEB, Events.REMOVE_BOOKMARKED_WORD, Events.COPY_WORD, Events.SHARE_WORD];
+    const words = [Events.SEARCH_WORD, Events.BOOKMARK_WORD, Events.SEARCH_WORD_ON_WEB, Events.REMOVE_BOOKMARKED_WORD, Events.COPY_WORD, Events.SHARE_WORD, Events.FIND_SYNONYM];
 
     if (apps.includes(eventName)) {
       ReactGA.event({

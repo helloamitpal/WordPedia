@@ -8,22 +8,12 @@ import ToggleMenu from '../ToggleMenu';
 import speakerIcon from '../../images/SVG/296-volume-medium.svg';
 import arrowDown from '../../images/SVG/324-circle-down.svg';
 import arrowUp from '../../images/SVG/322-circle-up.svg';
-import addIcon from '../../images/SVG/050-folder-plus.svg';
-import deleteIcon from '../../images/SVG/174-bin2.svg';
-import shareIcon from '../../images/SVG/387-share2.svg';
-import copyIcon from '../../images/SVG/039-file-text2.svg';
 import verticalDotsIcon from '../../images/SVG/000-dots-vertical-triple.svg';
 import './Card.scss';
 
 class Card extends React.Component {
   constructor(props) {
     super();
-    this.icons = {
-      add: addIcon,
-      delete: deleteIcon,
-      share: shareIcon,
-      copy: copyIcon
-    };
     this.menuLabels = {
       add: 'Bookmark',
       delete: 'Remove',
@@ -63,12 +53,12 @@ class Card extends React.Component {
 
   }
 
-  onCardAction = (evt, button) => {
+  onCardAction = (evt, button, word) => {
     const { onAction, details } = this.props;
 
     evt.stopPropagation();
     evt.nativeEvent.stopImmediatePropagation();
-    onAction(details, ['focus', button], this.cardRef.current);
+    onAction(details, ['focus', button], this.cardRef.current, word);
   }
 
   getMenuButtonList = (buttons) => {
@@ -108,7 +98,14 @@ class Card extends React.Component {
             <div className="synonym-container">
               {
                 details.synonyms.map((synonym, synIndex) => (
-                  <a href="javascript:void(0)" className={`${synonym.includes(' ') ? 'no-anchor' : ''}`} key={`synonym-${synIndex.toString()}`}>{synonym}</a>
+                  <a
+                    href="javascript:void(0)"
+                    onClick={(evt) => this.onCardAction(evt, 'synonym', synonym)}
+                    className={`${synonym.includes(' ') ? 'no-anchor' : ''}`}
+                    key={`synonym-${synIndex.toString()}`}
+                  >
+                    {synonym}
+                  </a>
                 ))
               }
             </div>

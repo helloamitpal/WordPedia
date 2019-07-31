@@ -82,7 +82,7 @@ class HomePage extends React.Component {
     history.push(path);
   }
 
-  onCardAction = (wordObj, actionType, cardRef) => {
+  onCardAction = (wordObj, actionType, cardRef, synonymWord) => {
     const { wordActions, wordState: { wordsOnWeb } } = this.props;
     const { word } = wordObj;
 
@@ -100,6 +100,10 @@ class HomePage extends React.Component {
       EventTracker.raise(Events.COPY_WORD, word);
       const cardTitle = cardRef.querySelector('.card-header .title');
       helper.copyToClipboard(cardTitle);
+    } else if (actionType.includes('synonym')) {
+      EventTracker.raise(Events.FIND_SYNONYM, synonymWord);
+      this.setState({ searchText: synonymWord });
+      wordActions.searchWordAction(synonymWord, config.SEARCH_TYPE_WEB, 'synonym');
     }
   }
 

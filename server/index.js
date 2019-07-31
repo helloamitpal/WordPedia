@@ -11,7 +11,7 @@ const dotenv = require('dotenv');
 const logger = require('./util//logger');
 const argv = require('./util/argv');
 const port = require('./util/port');
-const DBSetup = require('./DBSetup/connection');
+const DB = require('./DB/connection');
 const setup = require('./middlewares/frontendMiddleware');
 
 const app = express();
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 });
 
 // initialize DB connection
-DBSetup.initialize();
+DB.initialize();
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

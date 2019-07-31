@@ -72,11 +72,7 @@ class CardList extends React.Component {
   onFocusAction = (wordObj, actionType, cardRef, synonymWord) => {
     const { onAction } = this.props;
     const { word } = wordObj;
-    const selectedCard = this.containerRef.current.querySelector(`#card-${word}`);
 
-    if (selectedCard) {
-      selectedCard.scrollIntoView({ behavior: 'smooth' });
-    }
     this.setState({ selectedCard: word });
     if (onAction) {
       onAction.call(null, wordObj, actionType, cardRef, synonymWord);

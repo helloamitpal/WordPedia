@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { debounce } from 'lodash';
 
-import Search from '../../components/Search';
+import Input from '../../components/Input';
 import Header from '../../components/Header';
 import * as wordActionCreator from './wordActionCreator';
 import CardList from '../../components/CardList';
@@ -132,7 +132,7 @@ class HomePage extends React.Component {
         </Helmet>
         <Header>
           <div className="header-section">
-            <Search onChange={this.onChangeSearch} value={searchText} />
+            <Input type="search" onChange={this.onChangeSearch} placeholder="Search word" value={searchText} />
             <Button icon={addIcon} className="add-word-btn" onClick={this.gotoAddNewWord} />
             <ToggleMenu icon={verticalDotsIcon} className="menu-list-custom" menus={this.menus} onClick={this.onClickMenu} />
           </div>

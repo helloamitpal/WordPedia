@@ -1,14 +1,43 @@
 @import '../../styles/colors.scss';
 
 .input-container {
+  width: 100%;
+
   input {
     font-size: 1em;
+    outline: 0 none;
+  }
+
+  &.search {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .search-icon-placeholder {
+      position: absolute;
+      background-color: #aaa;
+      left: 10px;
+    }
+
+    input {
+      padding: 10px 30px;
+      width: 100%;
+      margin: 10px 0;
+      border-radius: 15px;
+      border: 1px solid $border-color;
+    }
+
+    .mic-icon {
+      position: absolute;
+      right: 10px;
+      background-color: $font-color;
+    }
   }
 
   &.copy {
     background-color: $card-btn-background;
     padding: 0.5em;
-    width: 100%;
     max-width: 400px;
     display: flex;
     border-radius: 4px;
@@ -17,7 +46,6 @@
     input {
       background: transparent;
       border: 0;
-      outline: 0 none;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -33,10 +61,5 @@
       border-radius: 4px;
       outline: 0 none;
     }
-  }
-
-  &:not(.copy) input {
-    border: 0 none;
-    border-bottom: 1px solid $border-color;
   }
 }

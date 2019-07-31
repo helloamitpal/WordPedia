@@ -24,8 +24,7 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   // Since webpackDevMiddleware uses memory-fs internally to store build
   // artifacts, we use it instead
   const fs = middleware.fileSystem;
-
-  app.get('/^((?!api).)*$', (req, res) => {
+  const servingPage = (res) => {
     // this will serve all the pages except including the text 'api'
     fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
       if (err) {
@@ -34,7 +33,10 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
         res.send(file.toString());
       }
     });
-  });
+  };
+
+  // If the url is not containing /api then it should serve index.html
+  app.get(/^((?!api).)*$/, (req, res) => (servingPage(res)));
 
   app.all(`${config.API_BASE}/*`, ApiRouter);
 };

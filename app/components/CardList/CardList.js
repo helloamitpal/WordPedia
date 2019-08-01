@@ -79,6 +79,13 @@ class CardList extends React.Component {
     }
   }
 
+  scrollToCard = (word) => {
+    const selectedCard = this.containerRef.current.querySelector(`#card-${word}`);
+    if (selectedCard) {
+      selectedCard.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   render() {
     const { className, button } = this.props;
     const { selectedCard, list, loading } = this.state;
@@ -88,7 +95,7 @@ class CardList extends React.Component {
         {
           list.map((item) => (
             <div id={`card-${item.word}`} key={item.word}>
-              <Card onAction={this.onFocusAction} button={button} details={item} className={selectedCard === item.word ? 'selected' : ''} />
+              <Card scrollTo={this.scrollToCard} onAction={this.onFocusAction} button={button} details={item} className={selectedCard === item.word ? 'selected' : ''} />
             </div>
           ))
         }

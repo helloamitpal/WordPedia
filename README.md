@@ -38,9 +38,10 @@ hellowordpedia@gmail.com
 2. Move to the appropriate directory: `cd LearnNewWords`.<br />
 3. Run `npm install` to install dependencies.<br />
 4. Create a .env file to the root folder and add these mapping to it. E.g.
-DB_USERNAME=xyz
-DB_PASSWORD=abc
-DB_NAME=blabla
+    - DB_USERNAME=xyz
+    - DB_PASSWORD=abc
+    - DB_NAME=blabla
+    - CLUSTER_NAME=pqr.mongodb.net
 5. Run `sudo npm install workbox-cli -g`
 6. Run `npm start` to see the example app at `http://localhost:7009` in DEV mode.
 7. Run `npm start:production` to see the example app at `http://localhost:7009` in PROD mode.

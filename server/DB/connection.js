@@ -3,8 +3,10 @@ const mongoose = require('mongoose');
 const logger = require('../util/logger');
 
 const initialize = () => {
-  const connectionStr = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@wordpediacluster-epz4o.mongodb.net/${process.env.DB_NAME}?ssl=true&authSource=admin&w=majority`;
-  mongoose.connect(connectionStr, { useNewUrlParser: true });
+  const { DB_USERNAME, DB_PASSWORD, CLUSTER_NAME, DB_NAME } = process.env;
+  const connectionStr = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${CLUSTER_NAME}/${DB_NAME}?ssl=true&authSource=admin&w=majority`;
+
+  mongoose.connect(connectionStr, { useNewUrlParser: true, useCreateIndex: true });
 
   const db = mongoose.connection;
   db.once('open', () => {

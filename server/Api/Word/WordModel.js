@@ -9,7 +9,7 @@ const WordModelSchema = new Schema({
   shortDefinitions: { type: Array, default: [] },
   longDefinitions: { type: Array, default: [] },
   synonyms: { type: Array, default: [] },
-  createdDate: { type: Date, default: Date.now }
+  createdDate: { type: String, default: new Date().toISOString() }
 });
 
 module.exports = mongoose.model('WordModel', WordModelSchema);

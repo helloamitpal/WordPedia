@@ -58,8 +58,12 @@ class HomePage extends React.Component {
   }
 
   onChangeSearch = ({ target: { value } }) => {
-    this.setState({ searchText: value.trim() });
-    this.debouncedSearch();
+    const text = value.trim();
+    this.setState({ searchText: text });
+
+    if (text.length > 1 || text.length === 0) {
+      this.debouncedSearch();
+    }
   }
 
   onClickAddNew = (wordObj) => {
@@ -83,10 +87,10 @@ class HomePage extends React.Component {
   }
 
   onCardAction = (wordObj, actionType, cardRef, synonymWord) => {
-    const { wordActions, wordState: { wordsOnWeb } } = this.props;
+    const { wordActions } = this.props;
     const { word } = wordObj;
 
-    if (actionType.includes('expand') && wordsOnWeb.length && wordsOnWeb.filter((obj) => (obj.word === word)).length) {
+    if (actionType.includes('expand')) {
       EventTracker.raise(Events.SEARCH_WORD_ON_WEB, word);
       wordActions.searchWordAction(word, config.SEARCH_TYPE_WEB);
     } else if (actionType.includes('add')) {
@@ -132,7 +136,7 @@ class HomePage extends React.Component {
         </Helmet>
         <Header>
           <div className="header-section">
-            <Input type="search" onChange={this.onChangeSearch} placeholder="Search word" value={searchText} />
+            <Input type="search" onChange={this.onChangeSearch} placeholder="At least 2 characters" value={searchText} />
             <Button icon={addIcon} className="add-word-btn" onClick={this.gotoAddNewWord} />
             <ToggleMenu icon={verticalDotsIcon} className="menu-list-custom" menus={this.menus} onClick={this.onClickMenu} />
           </div>

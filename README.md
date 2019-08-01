@@ -29,6 +29,8 @@ It includes all the latest tools and practices in the industry.
 - _Cloud_ - AWS (Amazon web service : https://aws.amazon.com/)
 - _Analytics_ - Google analytics (https://analytics.google.com/analytics/web/)
 
+Nodemon and Webpack hot reloading are added to serve the quick development
+
 ## Contact ##
 hellowordpedia@gmail.com
 

@@ -35,14 +35,14 @@ class Card extends React.Component {
   }
 
   toggleExpand = (evt) => {
-    const { onAction, details: { word } } = this.props;
+    const { onAction, details } = this.props;
     const { showAll } = this.state;
     const actions = ['focus', (!showAll) ? 'expand' : 'close'];
 
     evt.stopPropagation();
     evt.nativeEvent.stopImmediatePropagation();
     this.setState({ showAll: !showAll });
-    onAction(word, actions);
+    onAction(details, actions);
   }
 
   onSelectCard = () => {
@@ -69,12 +69,12 @@ class Card extends React.Component {
   render() {
     const { className, button } = this.props;
     const { showAll, details } = this.state;
-    const isDetailAvialable = (details.longDefinitions && details.longDefinitions.length) || (details.origins && details.origins.length);
+    const isDetailAvialable = details.expanded;
     const menus = this.getMenuButtonList(button);
 
     return (
       <div className={`card ${className}`} onClick={this.onSelectCard} ref={this.cardRef}>
-        <div className="card-header">
+        <div className={`card-header ${(details.shortDefinitions.length || details.synonyms.length) ? '' : 'mb-1'}`}>
           <div className="row">
             <h3 className="title">{details.word}</h3>
             {button && <ToggleMenu icon={verticalDotsIcon} className="card-menu-list-btn" menus={menus} onClick={this.onCardAction} />}
@@ -116,7 +116,7 @@ class Card extends React.Component {
         )}
         {!showAll && <Button className="show-all-btn" animation={false} onClick={this.toggleExpand} icon={arrowDown} />}
         {(showAll && isDetailAvialable) ? (
-          <div className="long-details mt-1">
+          <div className={`long-details ${(details.origins.length || details.longDefinitions.length) ? 'mt-1' : ''}`}>
             {details.origins && !!details.origins.length && (
               <React.Fragment>
                 <section>Origin</section>
@@ -129,7 +129,7 @@ class Card extends React.Component {
                 </ul>
               </React.Fragment>
             )}
-            {details.longDefinitions && (
+            {details.longDefinitions && !!details.longDefinitions.length && (
               <div className="examples-section">
                 {
                   details.longDefinitions.map((longDefinitionsObj, index) => (

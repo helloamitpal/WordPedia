@@ -14,7 +14,7 @@ const initialize = () => {
   });
 
   db.on('error', (err) => {
-    logger.error('Error occurred in DB connection.', err);
+    logger.error('Error occurred in DB connection. Please check the internet connection !', err);
     throw Error('Error occurred in DB connection. Hence the build is broken.');
   });
 };

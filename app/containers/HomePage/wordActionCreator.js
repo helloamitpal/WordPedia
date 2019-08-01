@@ -6,7 +6,10 @@ export const searchWordAction = (word, searchType, synonym) => (dispatch, getSta
   dispatch({
     type: actionTypes.SEARCH_WORD,
     payload: { searchText: word, searchType, isSynonym: !!synonym },
-    promise: api.get(`/api/searchWord/${encodeURI(word)}/${searchType}`).then((res) => res.data)
+    promise: api.get(`/api/searchWord/${encodeURI(word)}/${searchType}`).then((res) => res.data, () => {
+      toast.error('Something went wrong. Please try again!');
+      return null;
+    })
   });
 };
 
@@ -14,7 +17,10 @@ export const loadWordAction = () => (dispatch, getState, { api }) => {
   dispatch({
     type: actionTypes.LOAD_WORDS,
     payload: {},
-    promise: api.get('/api/getAllWords').then((res) => res.data)
+    promise: api.get('/api/getAllWords').then((res) => res.data, () => {
+      toast.error('Something went wrong. Please try again!');
+      return null;
+    })
   });
 };
 

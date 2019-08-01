@@ -86,6 +86,11 @@ class HomePage extends React.Component {
     history.push(path);
   }
 
+  onClearInput = () => {
+    this.setState({ searchText: '' });
+    this.debouncedSearch();
+  }
+
   onCardAction = (wordObj, actionType, cardRef, synonymWord) => {
     const { wordActions } = this.props;
     const { word } = wordObj;
@@ -136,7 +141,7 @@ class HomePage extends React.Component {
         </Helmet>
         <Header>
           <div className="header-section">
-            <Input type="search" onChange={this.onChangeSearch} placeholder="At least 2 characters" value={searchText} />
+            <Input type="search" onClearInput={this.onClearInput} onChange={this.onChangeSearch} placeholder="At least 2 characters" value={searchText} />
             <Button icon={addIcon} className="add-word-btn" onClick={this.gotoAddNewWord} />
             <ToggleMenu icon={verticalDotsIcon} className="menu-list-custom" menus={this.menus} onClick={this.onClickMenu} />
           </div>

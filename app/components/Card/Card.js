@@ -35,14 +35,23 @@ class Card extends React.Component {
   }
 
   toggleExpand = (evt) => {
-    const { onAction, details } = this.props;
-    const { showAll } = this.state;
+    const { onAction, details, scrollTo } = this.props;
+    let { showAll } = this.state;
     const actions = ['focus', (!showAll) ? 'expand' : 'close'];
 
     evt.stopPropagation();
     evt.nativeEvent.stopImmediatePropagation();
-    this.setState({ showAll: !showAll });
-    onAction(details, actions);
+    showAll = !showAll;
+    this.setState({ showAll });
+
+    // focus to card once shrinked the details
+    if (!showAll) {
+      scrollTo(details.word);
+    }
+
+    if (!details.origins.length && !details.longDefinitions.length) {
+      onAction(details, actions);
+    }
   }
 
   onSelectCard = () => {
@@ -69,7 +78,7 @@ class Card extends React.Component {
   render() {
     const { className, button } = this.props;
     const { showAll, details } = this.state;
-    const isDetailAvialable = details.expanded;
+    const isDetailAvialable = details.expanded || (details.origins.length || details.longDefinitions.length);
     const menus = this.getMenuButtonList(button);
 
     return (
@@ -166,7 +175,8 @@ Card.propTypes = {
   className: PropTypes.string,
   onAction: PropTypes.func,
   details: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
-  button: PropTypes.arrayOf(PropTypes.oneOf(['add', 'delete', 'share', 'copy']))
+  button: PropTypes.arrayOf(PropTypes.oneOf(['add', 'delete', 'share', 'copy'])),
+  scrollTo: PropTypes.func
 };
 
 export default Card;

@@ -33,6 +33,27 @@
       right: 10px;
       background-color: $font-color;
     }
+
+    .remove-text-icon {
+      display: none;
+      transform: scale(0.7);
+      position: absolute;
+      right: 10px;
+      height: 16px;
+
+      .icon {
+        background-color: $font-color;
+      }
+    }
+
+    &.has-input {
+      .mic-icon {
+        display: none;
+      }
+      .remove-text-icon {
+        display: inline-block;
+      }
+    }
   }
 
   &.copy {

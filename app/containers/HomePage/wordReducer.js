@@ -1,7 +1,7 @@
 import { handle } from 'redux-pack';
 import { remove } from 'lodash';
 
-import * as actionTypes from './actionTypes';
+import * as actionTypes from './wordActionTypes';
 
 const initialState = {
   words: [],

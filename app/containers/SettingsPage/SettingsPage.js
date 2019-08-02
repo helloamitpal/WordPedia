@@ -26,6 +26,7 @@ class FeaturePage extends React.Component {
   constructor() {
     super();
     this.setComponents();
+    this.shareLink = window.location.origin;
     this.state = {
       userData: null
     };
@@ -50,7 +51,7 @@ class FeaturePage extends React.Component {
     } else {
       section = {
         icon: shareIcon,
-        component: <Input type="copy" value={window.location.href} readOnly onClick={this.copiedLink} />
+        component: <Input type="copy" value={this.shareLink} readOnly onClick={this.copiedLink} />
       };
     }
 
@@ -69,7 +70,7 @@ class FeaturePage extends React.Component {
     EventTracker.raise(Events.COPIED_APP_LINK);
   }
 
-  responseFacebook = (response) => {
+  onFacebookLoginCallback = (response) => {
     this.setState({ userData: { ...response } });
   }
 
@@ -84,7 +85,7 @@ class FeaturePage extends React.Component {
   shareApp = () => {
     navigator.share({
       title: 'WordPedia',
-      url: window.location.href
+      url: this.shareLink
     }).then(() => {
       EventTracker.raise(Events.SHARE_APP);
     }).catch((err) => {
@@ -145,10 +146,10 @@ class FeaturePage extends React.Component {
           <div className="login-section">
             {this.getLoginComponent(userData)}
             <FacebookLogin
-              appId={config.FB_APPID}
+              appId={process.env.FB_APPID}
               autoLoad={false}
               fields={config.FB_FIELDS}
-              callback={this.responseFacebook}
+              callback={this.onFacebookLoginCallback}
               render={({ isProcessing, isSdkLoaded, onClick }) => (
                 userData
                   ? <Button raisedButton label="Logout" icon={fbIcon} onClick={this.logoutFacebook} />

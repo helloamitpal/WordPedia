@@ -44,6 +44,7 @@ hellowordpedia@gmail.com
     - DB_PASSWORD=abc
     - DB_NAME=blabla
     - CLUSTER_NAME=pqr.mongodb.net
+    - FB_APPID=12345
 5. Run `sudo npm install workbox-cli -g`
 6. Run `npm start` to see the example app at `http://localhost:7009` in DEV mode.
 7. Run `npm start:production` to see the example app at `http://localhost:7009` in PROD mode.

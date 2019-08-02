@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-import * as actionTypes from './actionTypes';
+import * as actionTypes from './wordActionTypes';
 
 export const searchWordAction = (word, searchType, synonym) => (dispatch, getState, { api }) => {
   dispatch({

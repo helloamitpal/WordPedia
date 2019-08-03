@@ -24,6 +24,15 @@ label {
   background-size: cover;
 }
 
+.Toastify__toast--success,
+.Toastify__toast--error {
+  background: $toast-default-background;
+}
+
+.Toastify__toast--info {
+  background: $toast-info-background;  
+}
+
 .mt-1 {
   margin-top: 1em;
 }

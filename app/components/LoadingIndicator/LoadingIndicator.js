@@ -6,11 +6,6 @@ const LoadingIndicator = () => (
     <div />
     <div />
     <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
   </div>
 );
 

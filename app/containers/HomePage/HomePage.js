@@ -148,7 +148,7 @@ class HomePage extends React.Component {
         </Header>
         <div className="body-container">
           { isLoading && <LoadingIndicator /> }
-          { !isError && words.length === 0 && searchText && <Message text={`${searchText} is not added to your bookmark.`} subInfo={subInfo} /> }
+          { !isError && words.length === 0 && searchText && <Message className="home-message" text={`${searchText} is not added to your bookmark.`} subInfo={subInfo} /> }
           { isNoInitWords && <Button label="Add New Word" raisedButton className="add-word-btn" icon={addIcon} onClick={this.onClickAddNew} /> }
           <CardList cards={data} onAction={this.onCardAction} button={buttons} />
         </div>

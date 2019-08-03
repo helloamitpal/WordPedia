@@ -23,6 +23,26 @@ class UserController {
     }
   }
 
+  updateUserSettings(req, res) {
+    const payload = req.body;
+
+    if (payload) {
+      logger.info('UserController | register');
+      UserService.updateUserSettings(payload)
+        .then((data) => {
+          logger.success('UserController | updateUserSettings | sending success response');
+          res.json(data);
+        })
+        .catch(() => {
+          logger.error('UserController | updateUserSettings | Sending error response');
+          ErrorHandler(500, 'Failed to update user', res);
+        });
+    } else {
+      logger.error('UserController | updateUserSettings | Sending error response because body payload is null');
+      ErrorHandler(500, 'Failed to update user', res);
+    }
+  }
+
   logout(req, res) {
     const payload = req.body;
 

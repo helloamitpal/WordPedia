@@ -85,8 +85,8 @@ const getAllWords = async () => {
 
 /**
  * [searchWord: To search word in the bookmarked word list]
- * @param  {[type]}  searchText [a word to be searched]
- * @param  {[type]}  searchType [to determine, where to search; in the web or the bookmark list]
+ * @param  {String}  searchText [a word to be searched]
+ * @param  {String}  searchType [to determine, where to search; in the web or the bookmark list]
  * @return {Promise}            [WordModel object of found word definition]
  */
 const searchWord = async (searchText, searchType) => {

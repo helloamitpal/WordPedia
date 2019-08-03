@@ -4,6 +4,7 @@ export default {
   PAGE_SIZE: 20,
   FB_FIELDS: 'name,email,picture',
   VERSION: '1.0.0',
+  FB_APPID: 627352254438819,
   CONTACT_EMAIL: 'hellowordpedia@gmail.com',
   CONTACT_EMAIL_TITLE: '!WordPedia Feedback!',
   LANGUAGES: [{

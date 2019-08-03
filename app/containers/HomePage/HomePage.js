@@ -7,7 +7,7 @@ import { debounce } from 'lodash';
 
 import Input from '../../components/Input';
 import Header from '../../components/Header';
-import * as wordActionCreator from './wordActionCreator';
+import * as userActionCreator from './userActionCreator';
 import CardList from '../../components/CardList';
 import Button from '../../components/Button';
 import LoadingIndicator from '../../components/LoadingIndicator';
@@ -38,22 +38,22 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    const { wordActions, wordState: { words } } = this.props;
+    const { userActions, userState: { words } } = this.props;
     EventTracker.raise(Events.HOME_PAGE);
     if (!words || !words.length) {
-      wordActions.loadWordAction();
+      userActions.loadWordAction();
     }
   }
 
   searchAPICall = () => {
-    const { wordActions } = this.props;
+    const { userActions } = this.props;
     const { searchText } = this.state;
 
     if (searchText) {
       EventTracker.raise(Events.SEARCH_WORD, searchText);
-      wordActions.searchWordAction(searchText, config.SEARCH_TYPE_BOOKMARK);
+      userActions.searchWordAction(searchText, config.SEARCH_TYPE_BOOKMARK);
     } else {
-      wordActions.loadWordAction();
+      userActions.loadWordAction();
     }
   }
 
@@ -67,11 +67,11 @@ class HomePage extends React.Component {
   }
 
   onClickAddNew = (wordObj) => {
-    const { wordActions } = this.props;
+    const { userActions } = this.props;
     const { word } = wordObj;
 
     EventTracker.raise(Events.BOOKMARK_WORD, word);
-    wordActions.addWordAction(wordObj);
+    userActions.addWordAction(wordObj);
   }
 
   gotoAddNewWord = () => {
@@ -92,17 +92,17 @@ class HomePage extends React.Component {
   }
 
   onCardAction = (wordObj, actionType, cardRef, synonymWord) => {
-    const { wordActions } = this.props;
+    const { userActions } = this.props;
     const { word } = wordObj;
 
     if (actionType.includes('expand')) {
       EventTracker.raise(Events.SEARCH_WORD_ON_WEB, word);
-      wordActions.searchWordAction(word, config.SEARCH_TYPE_WEB);
+      userActions.searchWordAction(word, config.SEARCH_TYPE_WEB);
     } else if (actionType.includes('add')) {
       this.onClickAddNew(wordObj);
     } else if (actionType.includes('delete')) {
       EventTracker.raise(Events.REMOVE_BOOKMARKED_WORD, word);
-      wordActions.deleteWordAction(word);
+      userActions.deleteWordAction(word);
     } else if (actionType.includes('share')) {
       EventTracker.raise(Events.SHARE_WORD, word);
     } else if (actionType.includes('copy')) {
@@ -112,13 +112,13 @@ class HomePage extends React.Component {
     } else if (actionType.includes('synonym')) {
       EventTracker.raise(Events.FIND_SYNONYM, synonymWord);
       this.setState({ searchText: synonymWord });
-      wordActions.searchWordAction(synonymWord, config.SEARCH_TYPE_WEB, 'synonym');
+      userActions.searchWordAction(synonymWord, config.SEARCH_TYPE_WEB, 'synonym');
     }
   }
 
   render() {
     const { searchText } = this.state;
-    const { wordState: { words, isError, wordsOnWeb, isLoading, isNoInitWords } } = this.props;
+    const { userState: { words, isError, wordsOnWeb, isLoading, isNoInitWords } } = this.props;
     let data = [];
     let buttonType;
 
@@ -158,16 +158,16 @@ class HomePage extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  wordActions: bindActionCreators(wordActionCreator, dispatch)
+  userActions: bindActionCreators(userActionCreator, dispatch)
 });
 
 const mapStateToProps = (state) => ({
-  wordState: state.words
+  userState: state.user
 });
 
 HomePage.propTypes = {
-  wordState: PropTypes.object,
-  wordActions: PropTypes.object,
+  userState: PropTypes.object,
+  userActions: PropTypes.object,
   history: PropTypes.object
 };
 

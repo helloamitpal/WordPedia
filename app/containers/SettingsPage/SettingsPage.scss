@@ -7,6 +7,20 @@
     color: $icon-color;
   }
 
+  .feedback-btn {
+    margin-left: -7px;
+  }
+
+  .aboume-me-container {
+    display: flex;
+    flex-direction: column;
+
+    .button {
+      margin-left: -7px;
+      max-width: 150px;
+    }
+  }
+
   .select-box {
     min-width: 150px;
   }

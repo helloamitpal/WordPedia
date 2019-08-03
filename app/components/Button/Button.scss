@@ -1,7 +1,6 @@
 @import '../../styles/colors.scss';
 
 .button {
-  padding: 0;
   border: 0;
   background-color: transparent;
   cursor: pointer;
@@ -9,10 +8,11 @@
   font-size: 1em;
   display: flex;
   color: $font-color;
+  padding: 7px;
+  overflow: hidden;
 
   &.raised {
     align-items: center;
-    padding: 10px;
     border: 1px solid $border-color;
     border-radius: 5px;
     box-shadow: 0 0px 5px 0 rgba(0,0,0,0.35);
@@ -32,8 +32,29 @@
     margin-left: 0.5em;
   }
 
-  &:not(.no-anim):hover {
-    animation: ripple 0.3s linear;
+  &:not(.no-anim) {
+    position: relative;
+    transition-duration: 0.4s;
+
+    &:after {
+	    content: "";
+	    position: absolute;
+      display: block;
+      background: $card-btn-background;
+      padding-top: 300%;
+      padding-left: 350%;
+      margin-left: -20px!important;
+      margin-top: -120%;
+      transition: all 0.8s;
+      opacity: 0;
+    }
+
+    &:active:after {
+      padding: 0;
+      margin: 0;
+      opacity: 1;
+      transition: 0s;
+    }
   }
 
   &:not(.raised):disabled {
@@ -44,10 +65,4 @@
       background-color: $disabled-color !important;
     }
   }
-}
-
-@keyframes ripple {
-	100% {
-		transform: scale(1.8);
-	}
 }

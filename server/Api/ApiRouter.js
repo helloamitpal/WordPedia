@@ -36,4 +36,9 @@ router.post(`${config.API_BASE}/register`, (req, res) => {
   UserWiring.UserController().register(req, res);
 });
 
+router.put(`${config.API_BASE}/updateUser`, (req, res) => {
+  logger.info('/updateUser route found');
+  UserWiring.UserController().updateUserSettings(req, res);
+});
+
 module.exports = router;

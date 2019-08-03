@@ -5,11 +5,6 @@
     display: flex;
   }
 
-  .add-word-btn {
-    align-self: center;
-    margin: 30px 0;
-  }
-
   .header-section {
     display: flex;
     align-items: center;
@@ -18,8 +13,9 @@
     padding-left: 1em;
 
     .add-word-btn {
-      margin: 0.5em;
-      margin-right: 0;
+      margin-left: 10px;
+      align-self: center;
+      width: 36px;
     }
 
     .menu-list-custom .menu-list {

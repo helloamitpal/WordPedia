@@ -8,7 +8,10 @@ const UserModelSchema = new Schema({
   name: { type: String, default: '' },
   createdOn: { type: String, default: new Date().toISOString() },
   lastUpdatedOn: { type: String, default: new Date().toISOString() },
-  email: { type: String, default: '' }
+  email: { type: String, default: '', unique: true },
+  quiz: { type: Boolean, default: false },
+  language: { type: String, default: 'en' },
+  words: { type: Array, default: [] }
 });
 
 module.exports = mongoose.model('UserModel', UserModelSchema);

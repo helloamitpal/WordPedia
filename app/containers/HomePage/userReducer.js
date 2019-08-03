@@ -1,10 +1,11 @@
 import { handle } from 'redux-pack';
 import { remove } from 'lodash';
 
-import * as actionTypes from './wordActionTypes';
+import * as actionTypes from './userActionTypes';
 
 const initialState = {
   words: [],
+  user: {},
   wordsOnWeb: [],
   isError: false,
   searchType: '',
@@ -12,10 +13,71 @@ const initialState = {
   isNoInitWords: false
 };
 
-const wordReducer = (state = initialState, action = '') => {
+const userReducer = (state = initialState, action = '') => {
   const { type, payload } = action;
 
   switch (type) {
+    case actionTypes.UPDATE_USER:
+      return handle(state, action, {
+        start: (defaultState) => ({
+          ...defaultState,
+          isError: false,
+          isLoading: true
+        }),
+        success: (defaultState) => ({
+          ...defaultState,
+          isLoading: false
+        }),
+        failure: (defaultState) => ({
+          ...defaultState,
+          isLoading: false
+        })
+      });
+
+    case actionTypes.REGISTER_USER:
+      return handle(state, action, {
+        start: (defaultState) => ({
+          ...defaultState,
+          isError: false,
+          isLoading: true,
+          userDetails: payload.userDetails
+        }),
+        success: (defaultState) => {
+          Object.assign(defaultState.user, defaultState.userDetails);
+
+          return {
+            ...defaultState,
+            isLoading: false
+          };
+        },
+        failure: (defaultState) => ({
+          ...defaultState,
+          isError: true,
+          isLoading: false
+        })
+      });
+
+    case actionTypes.LOGOUT_USER:
+      return handle(state, action, {
+        start: (defaultState) => ({
+          ...defaultState,
+          isError: false,
+          isLoading: true
+        }),
+        success: (defaultState) => {
+          Object.assign(defaultState.user, {});
+
+          return {
+            ...defaultState,
+            isLoading: false
+          };
+        },
+        failure: (defaultState) => ({
+          ...defaultState,
+          isLoading: false
+        })
+      });
+
     case actionTypes.DELETE_WORD:
       return handle(state, action, {
         start: (defaultState) => ({
@@ -124,4 +186,4 @@ const wordReducer = (state = initialState, action = '') => {
   }
 };
 
-export default wordReducer;
+export default userReducer;

@@ -9,14 +9,25 @@ const UserModel = require('./UserModel');
 const register = async (userDetails) => {
   // wrapping the object with UserModel
   const user = new UserModel(userDetails);
-  // DB save
-  const savedUser = await user.save();
+  const { email } = userDetails;
+  const checkUser = await user.find({ email });
 
-  // if data is saved successfully
-  if (user && savedUser) {
-    logger.success('UserController | register | saved user successfully');
+  if (!checkUser) {
+    // DB save
+    const savedUser = await user.save();
 
-    return true;
+    // if data is saved successfully
+    if (user && savedUser) {
+      logger.success('UserController | register | saved user successfully');
+
+      return true;
+    }
+  } else {
+    logger.success('UserController | register | user is already saved');
+
+    return {
+      Status: 'USER_REGISTERED'
+    };
   }
 
   // in case of error response during DB save
@@ -44,7 +55,23 @@ const logout = async (userId) => {
   throw new Error();
 };
 
+const updateUserSettings = async (userDetails) => {
+  const data = await UserModel.updateOne(userDetails);
+
+  // user data has been updated successfully
+  if (data) {
+    logger.success('UserController | updateUserSettings | user data has been updated successfully');
+
+    return true;
+  }
+
+  // in case of any error, throwing error
+  logger.error('UserController | updateUserSettings | Failed to update user in DB');
+  throw new Error();
+};
+
 module.exports = {
   logout,
-  register
+  register,
+  updateUserSettings
 };

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import wordReducer from '../containers/HomePage/wordReducer';
+import userReducer from '../containers/HomePage/userReducer';
 
 // this is the root reducer to combine module wise reducers
 const rootReducer = combineReducers({
-  words: wordReducer
+  user: userReducer
 });
 
 export default rootReducer;

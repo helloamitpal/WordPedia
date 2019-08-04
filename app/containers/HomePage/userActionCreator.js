@@ -8,7 +8,7 @@ export const searchWordAction = (word, searchType, synonym) => (dispatch, getSta
     payload: { searchText: word, searchType, isSynonym: !!synonym },
     promise: api.get(`/api/searchWord/${encodeURI(word)}/${searchType}`).then((res) => res.data, () => {
       toast.error('Something went wrong. Please try again!');
-      return null;
+      throw new Error();
     })
   });
 };
@@ -19,7 +19,7 @@ export const loadWordAction = () => (dispatch, getState, { api }) => {
     payload: {},
     promise: api.get('/api/getAllWords').then((res) => res.data, () => {
       toast.error('Something went wrong. Please try again!');
-      return null;
+      throw new Error();
     })
   });
 };
@@ -33,7 +33,7 @@ export const addWordAction = (wordDetails) => (dispatch, getState, { api }) => {
       return res.data;
     }, () => {
       toast.error('Something went wrong. Please try again!');
-      return null;
+      throw new Error();
     })
   });
 };
@@ -47,7 +47,7 @@ export const deleteWordAction = (word) => (dispatch, getState, { api }) => {
       return res.data;
     }, () => {
       toast.error('Something went wrong. Please try again!');
-      return null;
+      throw new Error();
     })
   });
 };
@@ -65,7 +65,7 @@ export const registerUser = (userDetails) => (dispatch, getState, { api }) => {
       return res.data;
     }, () => {
       toast.error('Something went wrong. Please try again!');
-      return null;
+      throw new Error();
     })
   });
 };
@@ -79,7 +79,7 @@ export const logoutUser = (userDetails) => (dispatch, getState, { api }) => {
       return res.data;
     }, () => {
       toast.error('Something went wrong. Please try again!');
-      return null;
+      throw new Error();
     })
   });
 };
@@ -93,7 +93,7 @@ export const updateUser = (userDetails) => (dispatch, getState, { api }) => {
       return res.data;
     }, () => {
       toast.error('Something went wrong. Please try again!');
-      return null;
+      throw new Error();
     })
   });
 };

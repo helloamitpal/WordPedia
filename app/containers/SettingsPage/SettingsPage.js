@@ -40,50 +40,6 @@ class SettingsPage extends React.Component {
     this.shareLink = window.location.origin;
   }
 
-  setComponents = () => {
-    const { language, showAboutMe } = this.state;
-
-    this.personalizeSections = [{
-      icon: bookIcon,
-      label: 'Learning mode',
-      component: <Toggle onToggle={this.onToggleQuiz} />
-    }, {
-      icon: langIcon,
-      label: 'Default language',
-      component: <Select name="language" className="select-box" value={language} options={config.LANGUAGES} onChange={this.onChangeLang} />
-    }];
-
-    let section;
-    if (Features.shareable) {
-      section = {
-        component: <Button label="Share" icon={shareIcon} onClick={this.shareApp} />
-      };
-    } else {
-      section = {
-        icon: shareIcon,
-        component: <Input type="copy" value={this.shareLink} readOnly onClick={this.copiedLink} />
-      };
-    }
-
-    this.supportSections = [section, {
-      icon: feedbackIcon,
-      component: <Button label="Feedback" className="feedback-btn" onClick={this.sendFeedback} />
-    }];
-
-    this.infoSections = [{
-      component: (
-        <div className="aboume-me-container">
-          <Button label="About WordPedia" onClick={this.toggleAboutMe} />
-          {showAboutMe && (
-            <p>WordPedia helps to improve the vocabulary and learn new words and storing them and learn by quiz. For more details drop a mail to Feedback email hellowordpedia@gmail.com</p>
-          )}
-        </div>
-      )
-    }, {
-      component: <div>{`Version: ${config.VERSION}`}</div>
-    }];
-  }
-
   copiedLink = () => {
     EventTracker.raise(Events.COPIED_APP_LINK);
   }
@@ -106,7 +62,6 @@ class SettingsPage extends React.Component {
 
   logoutFacebook = () => {
     const { userActions, userState: { user } } = this.props;
-    window.FB.logout();
     EventTracker.raise(Events.USER_LOG_OUT);
     userActions.logoutUser(user);
   }
@@ -182,9 +137,59 @@ class SettingsPage extends React.Component {
     return component;
   }
 
+  getPersonalizeSections = () => {
+    const { language } = this.state;
+
+    return [{
+      icon: bookIcon,
+      label: 'Learning mode',
+      component: <Toggle onToggle={this.onToggleQuiz} />
+    }, {
+      icon: langIcon,
+      label: 'Default language',
+      component: <Select name="language" className="select-box" value={language} options={config.LANGUAGES} onChange={this.onChangeLang} />
+    }];
+  }
+
+  getSupportSections = () => {
+    let section;
+
+    if (Features.shareable) {
+      section = {
+        component: <Button label="Share" icon={shareIcon} onClick={this.shareApp} />
+      };
+    } else {
+      section = {
+        icon: shareIcon,
+        component: <Input type="copy" value={this.shareLink} readOnly onClick={this.copiedLink} />
+      };
+    }
+
+    return [section, {
+      icon: feedbackIcon,
+      component: <Button label="Feedback" className="feedback-btn" onClick={this.sendFeedback} />
+    }];
+  }
+
+  getInfoSections = () => {
+    const { showAboutMe } = this.state;
+
+    return [{
+      component: (
+        <div className="aboume-me-container">
+          <Button label="About WordPedia" onClick={this.toggleAboutMe} />
+          {showAboutMe && (
+            <p>WordPedia helps to improve the vocabulary and learn new words and storing them and learn by quiz. For more details drop a mail to Feedback email hellowordpedia@gmail.com</p>
+          )}
+        </div>
+      )
+    }, {
+      component: <div>{`Version: ${config.VERSION}`}</div>
+    }];
+  }
+
   render() {
     const { userState: { user } } = this.props;
-    this.setComponents();
 
     return (
       <div className="settings-page container">
@@ -211,9 +216,9 @@ class SettingsPage extends React.Component {
         </Header>
         <div className="setting-page-container body-container">
           <PWAInstaller button />
-          <Section title="Personalize" rows={this.personalizeSections} />
-          <Section title="Support" rows={this.supportSections} />
-          <Section title="Information" rows={this.infoSections} />
+          <Section title="Personalize" rows={this.getPersonalizeSections()} />
+          <Section title="Support" rows={this.getSupportSections()} />
+          <Section title="Information" rows={this.getInfoSections()} />
         </div>
       </div>
     );

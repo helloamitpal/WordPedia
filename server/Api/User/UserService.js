@@ -9,8 +9,8 @@ const UserModel = require('./UserModel');
 const register = async (userDetails) => {
   // wrapping the object with UserModel
   const user = new UserModel(userDetails);
-  const { email } = userDetails;
-  const checkUser = await user.find({ email });
+  const { userId } = userDetails;
+  const checkUser = await UserModel.findOne({ userId });
 
   if (!checkUser) {
     // DB save
@@ -22,6 +22,10 @@ const register = async (userDetails) => {
 
       return true;
     }
+
+    // in case of error response during DB save
+    logger.error('UserController | register | Failed to save user in DB');
+    throw new Error();
   } else {
     logger.success('UserController | register | user is already saved');
 
@@ -29,10 +33,6 @@ const register = async (userDetails) => {
       Status: 'USER_REGISTERED'
     };
   }
-
-  // in case of error response during DB save
-  logger.error('UserController | register | Failed to save user in DB');
-  throw new Error();
 };
 
 /**
@@ -44,7 +44,7 @@ const logout = async (userId) => {
   const data = await UserModel.deleteOne({ userId });
 
   // user has been deleted successfully
-  if (data) {
+  if (data && data.deletedCount) {
     logger.success('UserController | logout | user has been logged out successfully');
 
     return true;

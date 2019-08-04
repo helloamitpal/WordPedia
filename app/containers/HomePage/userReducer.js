@@ -64,14 +64,11 @@ const userReducer = (state = initialState, action = '') => {
           isError: false,
           isLoading: true
         }),
-        success: (defaultState) => {
-          Object.assign(defaultState.user, {});
-
-          return {
-            ...defaultState,
-            isLoading: false
-          };
-        },
+        success: (defaultState) => ({
+          ...defaultState,
+          user: {},
+          isLoading: false
+        }),
         failure: (defaultState) => ({
           ...defaultState,
           isLoading: false

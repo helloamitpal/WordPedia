@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -17,8 +16,8 @@ import Features from '../../util/features';
 import EventTracker from '../../event-tracker';
 import Events from '../../event-tracker/events';
 import Input from '../../components/Input';
+import Registration from './Registration';
 
-import fbIcon from '../../images/SVG/402-facebook2.svg';
 import shareIcon from '../../images/SVG/387-share2.svg';
 import feedbackIcon from '../../images/SVG/390-mail3.svg';
 import bookIcon from '../../images/SVG/032-book.svg';
@@ -44,7 +43,7 @@ class SettingsPage extends React.Component {
     EventTracker.raise(Events.COPIED_APP_LINK);
   }
 
-  onFacebookLoginCallback = (response) => {
+  onRegisterCallback = (response) => {
     const { userActions } = this.props;
     const { quiz, language } = this.state;
     const { userID, name, email, picture: { data: { url } } } = response;
@@ -60,7 +59,7 @@ class SettingsPage extends React.Component {
     });
   }
 
-  logoutFacebook = () => {
+  onDeRegisterCallback = () => {
     const { userActions, userState: { user } } = this.props;
     EventTracker.raise(Events.USER_LOG_OUT);
     userActions.logoutUser(user);
@@ -105,36 +104,6 @@ class SettingsPage extends React.Component {
 
   sendFeedback = () => {
     window.location.href = `mailto:${config.CONTACT_EMAIL}?subject=${config.CONTACT_EMAIL_TITLE}`;
-  }
-
-  getLoginComponent = (userState) => {
-    let component;
-
-    if (!userState || (userState && !userState.userId)) {
-      component = (
-        <React.Fragment>
-          <h4>You are not signed in</h4>
-          <p>Login to bookmark searched words and improve your vocabulary.</p>
-        </React.Fragment>
-      );
-    } else {
-      const { name, email, profilePicture } = userState;
-
-      component = (
-        <React.Fragment>
-          <div className="loggedin-user-details">
-            {profilePicture && <img src={profilePicture} width={50} height={50} alt="user profile" />}
-            <div>
-              {name && <h4>{name}</h4>}
-              {email && <p>{email}</p>}
-            </div>
-          </div>
-          <Button raisedButton label="Logout" icon={fbIcon} onClick={this.logoutFacebook} />
-        </React.Fragment>
-      );
-    }
-
-    return component;
   }
 
   getPersonalizeSections = () => {
@@ -200,18 +169,7 @@ class SettingsPage extends React.Component {
         <Header>
           <h2>Personalize</h2>
           <div className="login-section">
-            {this.getLoginComponent(user)}
-            {(!user || (user && !user.userId)) && (
-              <FacebookLogin
-                appId={config.FB_APPID}
-                autoLoad={false}
-                fields={config.FB_FIELDS}
-                callback={this.onFacebookLoginCallback}
-                render={({ isProcessing, isSdkLoaded, onClick }) => (
-                  <Button raisedButton isDisabled={isProcessing || !isSdkLoaded} label="Login or Register" icon={fbIcon} onClick={onClick} />
-                )}
-              />
-            )}
+            <Registration details={user} onRegister={this.onRegisterCallback} onDeRegister={this.onDeRegisterCallback} />
           </div>
         </Header>
         <div className="setting-page-container body-container">

@@ -43,10 +43,9 @@ const userReducer = (state = initialState, action = '') => {
           userDetails: payload.userDetails
         }),
         success: (defaultState) => {
-          Object.assign(defaultState.user, defaultState.userDetails);
-
           return {
             ...defaultState,
+            user: { ...defaultState.userDetails },
             isLoading: false
           };
         },
@@ -67,6 +66,7 @@ const userReducer = (state = initialState, action = '') => {
         success: (defaultState) => ({
           ...defaultState,
           user: {},
+          words: [],
           isLoading: false
         }),
         failure: (defaultState) => ({

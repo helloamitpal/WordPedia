@@ -32,7 +32,7 @@ class SettingsPage extends React.Component {
       quiz: false,
       showAboutMe: false,
       language: {
-        key: 'en',
+        value: 'en',
         label: 'English'
       }
     };
@@ -46,11 +46,11 @@ class SettingsPage extends React.Component {
   onRegisterCallback = (response) => {
     const { userActions } = this.props;
     const { quiz, language } = this.state;
-    const { userID, name, email, picture: { data: { url } } } = response;
+    const { name, email, picture: { data: { url } } } = response;
 
     EventTracker.raise(Events.USER_REGISTRATION);
     userActions.registerUser({
-      userId: userID,
+      userId: response.id,
       profilePicture: url,
       email,
       name,
@@ -68,7 +68,7 @@ class SettingsPage extends React.Component {
   onChangeLang = (val) => {
     const { userActions, userState: { user } } = this.props;
 
-    user.language = val.key;
+    user.language = val.value;
     this.setState({ language: val });
 
     EventTracker.raise(Events.CHANGE_LANGUAGE);

@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import { handle } from 'redux-pack';
 import { remove } from 'lodash';
 
@@ -43,6 +45,7 @@ const userReducer = (state = initialState, action = '') => {
           userDetails: payload.userDetails
         }),
         success: (defaultState) => {
+          delete defaultState.userDetails;
           return {
             ...defaultState,
             user: { ...defaultState.userDetails },
@@ -63,12 +66,14 @@ const userReducer = (state = initialState, action = '') => {
           isError: false,
           isLoading: true
         }),
-        success: (defaultState) => ({
-          ...defaultState,
-          user: {},
-          words: [],
-          isLoading: false
-        }),
+        success: (defaultState) => {
+          delete defaultState.user;
+          return {
+            ...defaultState,
+            user: {},
+            isLoading: false
+          };
+        },
         failure: (defaultState) => ({
           ...defaultState,
           isLoading: false

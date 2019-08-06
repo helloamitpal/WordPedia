@@ -44,20 +44,23 @@ class ToggleMenu extends React.Component {
   }
 
   render() {
-    const { className, icon, menus } = this.props;
+    const { className, icon, menus, hasArrow } = this.props;
     const { show } = this.state;
 
     return (
       <div className={`menu-toggle-container ${className}`} ref={(node) => { this.menuRef = node; }}>
         <Button animation={false} className="menu-toggle-btn" icon={icon} onClick={this.toggleMenu} />
         { show && (
-          <ul className="menu-list">
-            {
-              menus.map(({ label, path }, index) => (
-                <li key={`menu-index-${index.toString()}`} onClick={(evt) => this.closeMenu(evt, path)}>{label}</li>
-              ))
-            }
-          </ul>
+          <div className="menu-list">
+            {hasArrow && <div className="arrow-up" />}
+            <ul>
+              {
+                menus.map(({ label, path }, index) => (
+                  <li key={`menu-index-${index.toString()}`} onClick={(evt) => this.closeMenu(evt, path)}>{label}</li>
+                ))
+              }
+            </ul>
+          </div>
         )}
       </div>
     );
@@ -71,11 +74,13 @@ ToggleMenu.propTypes = {
     label: PropTypes.string.isRequired,
     path: PropTypes.string
   })).isRequired,
+  hasArrow: PropTypes.bool,
   onClick: PropTypes.func.isRequired
 };
 
 ToggleMenu.defaultProps = {
-  className: ''
+  className: '',
+  hasArrow: true
 };
 
 export default ToggleMenu;

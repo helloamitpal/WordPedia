@@ -86,7 +86,7 @@ class Card extends React.Component {
         <div className={`card-header ${(details.shortDefinitions.length || details.synonyms.length) ? '' : 'mb-1'}`}>
           <div className="row">
             <h3 className="title">{details.word}</h3>
-            {button && <ToggleMenu icon={verticalDotsIcon} className="card-menu-list-btn" menus={menus} onClick={this.onCardAction} />}
+            {button && <ToggleMenu hasArrow={false} icon={verticalDotsIcon} className="card-menu-list-btn" menus={menus} onClick={this.onCardAction} />}
           </div>
           <div className="row sub-title-section">
             {details.phonetic && <div className="sub-title">{details.phonetic}</div>}

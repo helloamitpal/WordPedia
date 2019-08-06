@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { debounce } from 'lodash';
+import { toast } from 'react-toastify';
 
 import Input from '../../components/Input';
 import Header from '../../components/Header';
@@ -67,11 +68,15 @@ class HomePage extends React.Component {
   }
 
   onClickAddNew = (wordObj) => {
-    const { userActions } = this.props;
+    const { userActions, userState: { user } } = this.props;
     const { word } = wordObj;
 
-    EventTracker.raise(Events.BOOKMARK_WORD, word);
-    userActions.addWordAction(wordObj);
+    if (user && user.userId) {
+      EventTracker.raise(Events.BOOKMARK_WORD, word);
+      userActions.addWordAction(wordObj);
+    } else {
+      toast.info('Please register yourself to add this word.');
+    }
   }
 
   gotoAddNewWord = () => {
@@ -118,11 +123,11 @@ class HomePage extends React.Component {
 
   render() {
     const { searchText } = this.state;
-    const { userState: { words, isError, wordsOnWeb, isLoading, isNoInitWords } } = this.props;
+    const { userState: { words, isError, wordsOnWeb, isLoading, isNoInitWords, user } } = this.props;
     let data = [];
     let buttonType;
 
-    if (words && words.length) {
+    if (words && words.length && user && user.userId) {
       data = words;
       buttonType = 'delete';
     } else if (wordsOnWeb && wordsOnWeb.length) {
@@ -130,7 +135,7 @@ class HomePage extends React.Component {
       buttonType = 'add';
     }
 
-    const buttons = [buttonType, this.userFeature];
+    const buttons = buttonType ? [buttonType, this.userFeature] : [this.userFeature];
     const subInfo = (wordsOnWeb && wordsOnWeb.length) ? 'Following defeinitions are found.' : 'No definitions found for this word. Please recheck.';
 
     return (
@@ -149,7 +154,7 @@ class HomePage extends React.Component {
         <div className="body-container">
           { isLoading && <LoadingIndicator /> }
           { !isError && words.length === 0 && searchText && <Message className="home-message" text={`${searchText} is not added to your bookmark.`} subInfo={subInfo} /> }
-          { isNoInitWords && <Button label="Add New Word" raisedButton className="add-word-btn" icon={addIcon} onClick={this.onClickAddNew} /> }
+          { isNoInitWords && <Button label="Add New Word" raisedButton className="add-word-btn" icon={addIcon} onClick={this.gotoAddNewWord} /> }
           <CardList cards={data} onAction={this.onCardAction} button={buttons} />
         </div>
       </div>

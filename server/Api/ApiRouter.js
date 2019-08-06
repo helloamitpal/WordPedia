@@ -4,7 +4,7 @@ const UserWiring = require('./User/UserWiring');
 const config = require('../util/config');
 const logger = require('../util/logger');
 
-/* route related to words */
+/* these routes are related to words */
 router.get(`${config.API_BASE}/getAllWords/`, (req, res) => {
   logger.info('/getAllWords route found');
   WordWiring.WordController().getAllWords(req, res);
@@ -25,7 +25,7 @@ router.delete(`${config.API_BASE}/deleteWord/:word`, (req, res) => {
   WordWiring.WordController().deleteWord(req, res);
 });
 
-/* route related to user authentication */
+/* these routes are related to user authentication */
 router.post(`${config.API_BASE}/logout`, (req, res) => {
   logger.info('/logout route found');
   UserWiring.UserController().logout(req, res);

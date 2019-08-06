@@ -10,6 +10,7 @@ import configureStore from './stores/configureStores';
 import Features from './util/features';
 import PWAInstaller from './components/PWAInstaller';
 import EventTracker from './event-tracker';
+import { FBinit } from './components/FBLogin';
 
 import './styles/theme.scss';
 
@@ -28,6 +29,7 @@ class App extends React.Component {
 
   componentDidMount() {
     EventTracker.init();
+    FBinit();
     toast.configure({
       draggable: false,
       autoClose: 3000,

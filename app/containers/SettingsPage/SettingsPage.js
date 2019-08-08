@@ -158,7 +158,7 @@ class SettingsPage extends React.Component {
   }
 
   render() {
-    const { userState: { user } } = this.props;
+    const { userState: { user, isLoading } } = this.props;
 
     return (
       <div className="settings-page container">
@@ -169,7 +169,7 @@ class SettingsPage extends React.Component {
         <Header>
           <h2>Personalize</h2>
           <div className="login-section">
-            <Registration details={user} onRegister={this.onRegisterCallback} onDeRegister={this.onDeRegisterCallback} />
+            <Registration disabled={isLoading} details={user} onRegister={this.onRegisterCallback} onDeRegister={this.onDeRegisterCallback} />
           </div>
         </Header>
         <div className="setting-page-container body-container">

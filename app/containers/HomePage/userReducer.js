@@ -45,10 +45,11 @@ const userReducer = (state = initialState, action = '') => {
           userDetails: payload.userDetails
         }),
         success: (defaultState) => {
+          const userDetails = { ...defaultState.userDetails };
           delete defaultState.userDetails;
           return {
             ...defaultState,
-            user: { ...defaultState.userDetails },
+            user: userDetails,
             isLoading: false
           };
         },

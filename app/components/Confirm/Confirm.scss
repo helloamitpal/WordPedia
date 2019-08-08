@@ -1,0 +1,15 @@
+@import '../../styles/colors.scss';
+
+.confirm-toast-container {
+  box-shadow: 0 0px 5px 0 rgba(0,0,0,0.35);
+
+  .confirm-container {
+    color: $font-color;
+    font-size: 1.2em;
+
+    & > div {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

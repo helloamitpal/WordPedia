@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import Button from '../Button';
 import fbIcon from '../../images/SVG/402-facebook2.svg';
 
-const FBLogin = ({ onLogout, buttonType, onLogin }) => {
+const FBLogin = ({ onLogout, buttonType, onLogin, disabled }) => {
   const getLoginDetails = () => {
     window.FB.login((response) => {
       if (response.authResponse) {
@@ -23,15 +23,20 @@ const FBLogin = ({ onLogout, buttonType, onLogin }) => {
 
   return (
     buttonType === 'login'
-      ? <Button raisedButton label="Register" icon={fbIcon} onClick={getLoginDetails} />
-      : <Button raisedButton label="Deregister" icon={fbIcon} onClick={onLogout} />
+      ? <Button disabled={disabled} raisedButton label="Register" icon={fbIcon} onClick={getLoginDetails} />
+      : <Button disabled={disabled} raisedButton label="Deregister" icon={fbIcon} onClick={onLogout} />
   );
+};
+
+FBLogin.defaultProps = {
+  disabled: false
 };
 
 FBLogin.propTypes = {
   onLogin: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
-  buttonType: PropTypes.oneOf(['login', 'logout']).isRequired
+  buttonType: PropTypes.oneOf(['login', 'logout']).isRequired,
+  disabled: PropTypes.bool
 };
 
 export default FBLogin;

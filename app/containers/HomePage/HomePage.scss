@@ -9,6 +9,14 @@
     box-shadow: 0 0px 5px 0 rgba(0,0,0,0.35);
   }
 
+  .no-word-found {
+    max-width: 250px;
+    display: flex;
+    align-self: center;
+    text-align: center;
+    margin: 2em 0;
+  }
+
   .header-section {
     display: flex;
     align-items: center;

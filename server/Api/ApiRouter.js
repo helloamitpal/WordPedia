@@ -5,12 +5,12 @@ const config = require('../util/config');
 const logger = require('../util/logger');
 
 /* these routes are related to words */
-router.get(`${config.API_BASE}/getAllWords/`, (req, res) => {
+router.get(`${config.API_BASE}/getAllWords/:userId`, (req, res) => {
   logger.info('/getAllWords route found');
   WordWiring.WordController().getAllWords(req, res);
 });
 
-router.get(`${config.API_BASE}/searchWord/:searchText/:searchType`, (req, res) => {
+router.get(`${config.API_BASE}/searchWord/:searchText/:searchType/:userId`, (req, res) => {
   logger.info('/searchWord route found');
   WordWiring.WordController().searchWord(req, res);
 });

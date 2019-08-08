@@ -12,7 +12,7 @@ const initialState = {
   isError: false,
   searchType: '',
   isLoading: false,
-  isNoInitWords: false
+  isNoInitWords: true
 };
 
 const userReducer = (state = initialState, action = '') => {

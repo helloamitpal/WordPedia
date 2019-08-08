@@ -1,24 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { toast } from 'react-toastify';
 
 import { FBLogin } from '../../components/FBLogin';
-import Confirm from './Confirm';
+import { askConfirmation } from '../../components/Confirm';
 
-const Registration = ({ details, onRegister, onDeRegister }) => {
+const Registration = ({ details, onRegister, onDeRegister, disabled }) => {
   let component;
   const hasUserDetails = details && details.userId;
 
   const showConfirmDeregistration = (evt) => {
-    toast(<Confirm onAccept={() => onDeRegister(evt)} />, {
-      autoClose: false,
-      draggable: false,
-      hideProgressBar: true,
-      closeOnClick: false,
-      position: 'bottom-center',
-      closeButton: false,
-      className: 'confirm-toast-container'
-    });
+    askConfirmation()
+      .then(() => onDeRegister(evt))
+      .catch(() => console.log('Not confirmed'));
   };
 
   if (hasUserDetails) {
@@ -45,15 +38,20 @@ const Registration = ({ details, onRegister, onDeRegister }) => {
   return (
     <React.Fragment>
       {component}
-      <FBLogin buttonType={hasUserDetails ? 'logout' : 'login'} onLogin={onRegister} onLogout={showConfirmDeregistration} />
+      <FBLogin disabled={disabled} buttonType={hasUserDetails ? 'logout' : 'login'} onLogin={onRegister} onLogout={showConfirmDeregistration} />
     </React.Fragment>
   );
+};
+
+Registration.defaultProps = {
+  disabled: false
 };
 
 Registration.propTypes = {
   details: PropTypes.object.isRequired,
   onRegister: PropTypes.func.isRequired,
-  onDeRegister: PropTypes.func.isRequired
+  onDeRegister: PropTypes.func.isRequired,
+  disabled: PropTypes.bool
 };
 
 export default Registration;

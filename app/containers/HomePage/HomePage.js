@@ -39,22 +39,23 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    const { userActions, userState: { words } } = this.props;
+    const { userActions, userState: { words, user: { userId } } } = this.props;
+
     EventTracker.raise(Events.HOME_PAGE);
     if (!words || !words.length) {
-      userActions.loadWordAction();
+      userActions.loadWordAction(userId);
     }
   }
 
   searchAPICall = () => {
-    const { userActions } = this.props;
+    const { userActions, userState: { user: { userId } } } = this.props;
     const { searchText } = this.state;
 
     if (searchText) {
       EventTracker.raise(Events.SEARCH_WORD, searchText);
-      userActions.searchWordAction(searchText, config.SEARCH_TYPE_BOOKMARK);
+      userActions.searchWordAction(searchText, config.SEARCH_TYPE_BOOKMARK, null, userId);
     } else {
-      userActions.loadWordAction();
+      userActions.loadWordAction(userId);
     }
   }
 
@@ -67,13 +68,12 @@ class HomePage extends React.Component {
     }
   }
 
-  onClickAddNew = (wordObj) => {
-    const { userActions, userState: { user } } = this.props;
+  onClickAddNew = (userActions, wordObj, userId) => {
     const { word } = wordObj;
 
-    if (user && user.userId) {
+    if (userId) {
       EventTracker.raise(Events.BOOKMARK_WORD, word);
-      userActions.addWordAction(wordObj);
+      userActions.addWordAction(wordObj, userId);
     } else {
       toast.info('Please register yourself to add this word.');
     }
@@ -97,17 +97,17 @@ class HomePage extends React.Component {
   }
 
   onCardAction = (wordObj, actionType, cardRef, synonymWord) => {
-    const { userActions } = this.props;
+    const { userActions, userState: { user: { userId } } } = this.props;
     const { word } = wordObj;
 
     if (actionType.includes('expand')) {
       EventTracker.raise(Events.SEARCH_WORD_ON_WEB, word);
       userActions.searchWordAction(word, config.SEARCH_TYPE_WEB);
     } else if (actionType.includes('add')) {
-      this.onClickAddNew(wordObj);
+      this.onClickAddNew(userActions, wordObj, userId);
     } else if (actionType.includes('delete')) {
       EventTracker.raise(Events.REMOVE_BOOKMARKED_WORD, word);
-      userActions.deleteWordAction(word);
+      userActions.deleteWordAction(word, userId);
     } else if (actionType.includes('share')) {
       EventTracker.raise(Events.SHARE_WORD, word);
     } else if (actionType.includes('copy')) {
@@ -127,9 +127,9 @@ class HomePage extends React.Component {
     let data = [];
     let buttonType;
 
-    if (words && words.length && user && user.userId) {
+    if (words && words.length) {
       data = words;
-      buttonType = 'delete';
+      buttonType = ((user && user.userId) ? 'delete' : null); // delete button would appear only if user is registered
     } else if (wordsOnWeb && wordsOnWeb.length) {
       data = wordsOnWeb;
       buttonType = 'add';
@@ -153,8 +153,12 @@ class HomePage extends React.Component {
         </Header>
         <div className="body-container">
           { isLoading && <LoadingIndicator /> }
-          { !isError && words.length === 0 && searchText && <Message className="home-message" text={`${searchText} is not added to your bookmark.`} subInfo={subInfo} /> }
-          { isNoInitWords && <Button label="Add New Word" raisedButton className="add-word-btn" icon={addIcon} onClick={this.gotoAddNewWord} /> }
+          { !isError && words && words.length === 0 && searchText && <Message className="home-message" text={`${searchText} is not added to your bookmark.`} subInfo={subInfo} /> }
+          { (isNoInitWords && wordsOnWeb.length === 0 && words.length === 0)
+            && (
+              <div className="no-word-found">Register yourself to bookmark your first word and more to improve your vocabulary. </div>
+            )
+          }
           <CardList cards={data} onAction={this.onCardAction} button={buttons} />
         </div>
       </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { FBLogin } from '../../components/FBLogin';
+import ProfilePic from '../../components/ProfilePic';
 import { askConfirmation } from '../../components/Confirm';
 
 const Registration = ({ details, onRegister, onDeRegister, disabled }) => {
@@ -19,11 +20,11 @@ const Registration = ({ details, onRegister, onDeRegister, disabled }) => {
 
     component = (
       <div className="loggedin-user-details">
-        {profilePicture && <img src={profilePicture} width={50} height={50} alt="user profile" />}
+        <ProfilePic path={profilePicture} width={50} height={50} />
         <div>
           {name && <h4>{name}</h4>}
           {email && <p>{email}</p>}
-          {wordCount >= 0 && <p>{`Bookmarked words: ${wordCount}`}</p>}
+          {wordCount >= 0 && <p>{`${wordCount} Bookmarked words`}</p>}
         </div>
       </div>
     );

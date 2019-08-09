@@ -22,17 +22,19 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding-left: 1em;
 
-    .add-word-btn {
-      margin-left: 10px;
-      align-self: center;
-      width: 36px;
+    .profile-pic {
+      margin-right: 0.5em;
     }
 
-    .menu-list-custom .menu-list {
-      right: -0.5em;
-      top: 43px;
+    .add-word-btn {
+      padding-right: 6px;
+      padding-left: 12px;
+    }
+
+    .search {
+      width: auto;
+      flex: 1;
     }
   }
 

@@ -12,7 +12,7 @@ import * as userActionCreator from './userActionCreator';
 import CardList from '../../components/CardList';
 import Button from '../../components/Button';
 import LoadingIndicator from '../../components/LoadingIndicator';
-import ToggleMenu from '../../components/ToggleMenu';
+import ProfilePic from '../../components/ProfilePic';
 import Message from '../../components/Message';
 import config from '../../config';
 import Events from '../../event-tracker/events';
@@ -21,7 +21,6 @@ import Features from '../../util/features';
 import * as helper from '../../util/helper';
 
 import addIcon from '../../images/SVG/267-plus.svg';
-import verticalDotsIcon from '../../images/SVG/000-dots-vertical-triple.svg';
 import './HomePage.scss';
 
 class HomePage extends React.Component {
@@ -32,10 +31,6 @@ class HomePage extends React.Component {
     };
     this.userFeature = Features.sharable ? 'share' : 'copy';
     this.debouncedSearch = debounce(this.searchAPICall, 300);
-    this.menus = [{
-      label: 'Personalize',
-      path: config.SETTINGS_PAGE
-    }];
   }
 
   componentDidMount() {
@@ -79,14 +74,7 @@ class HomePage extends React.Component {
     }
   }
 
-  gotoAddNewWord = () => {
-    const { history } = this.props;
-    history.push(config.ADD_WORD_PAGE);
-  }
-
-  onClickMenu = (evt, path) => {
-    evt.stopPropagation();
-
+  navigateTo = (path) => {
     const { history } = this.props;
     history.push(path);
   }
@@ -123,13 +111,13 @@ class HomePage extends React.Component {
 
   render() {
     const { searchText } = this.state;
-    const { userState: { words, isError, wordsOnWeb, isLoading, isNoInitWords, user } } = this.props;
+    const { userState: { words, isError, wordsOnWeb, isLoading, isNoInitWords, user: { userId, profilePicture } } } = this.props;
     let data = [];
     let buttonType;
 
     if (words && words.length) {
       data = words;
-      buttonType = ((user && user.userId) ? 'delete' : null); // delete button would appear only if user is registered
+      buttonType = ((userId) ? 'delete' : null); // delete button would appear only if user is registered
     } else if (wordsOnWeb && wordsOnWeb.length) {
       data = wordsOnWeb;
       buttonType = 'add';
@@ -146,9 +134,9 @@ class HomePage extends React.Component {
         </Helmet>
         <Header>
           <div className="header-section">
+            <ProfilePic path={profilePicture} onClick={() => this.navigateTo(config.SETTINGS_PAGE)} />
             <Input type="search" onClearInput={this.onClearInput} onChange={this.onChangeSearch} placeholder="At least 2 characters" value={searchText} />
-            <Button icon={addIcon} className="add-word-btn" onClick={this.gotoAddNewWord} />
-            <ToggleMenu icon={verticalDotsIcon} className="menu-list-custom" menus={this.menus} onClick={this.onClickMenu} />
+            <Button icon={addIcon} className="add-word-btn" onClick={() => this.navigateTo(config.ADD_WORD_PAGE)} />
           </div>
         </Header>
         <div className="body-container">

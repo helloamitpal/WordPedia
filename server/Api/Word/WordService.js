@@ -17,7 +17,7 @@ const synthesizeWordSuggestions = (searchText, resp) => {
       exactMatch = (searchText === word);
     }
   });
-  return arr;
+  return helper.sort(arr, 'word');
 };
 
 // private function: To synthesize word definition response to convert WordModel object
@@ -67,24 +67,30 @@ const synthesizeWordDefinition = (resp) => {
 
 /**
  * [getAllWords: It returns all bookmarked words]
+ * @param  {String}  userId [userId to search in the list]
  * @return {Promise} [A list of WordModel objects]
  */
 const getAllWords = async (userId) => {
-  const user = await UserModel.findOne({ userId });
+  const user = await UserModel.findOne({ userId, enabled: true });
 
   if (user) {
-    const wordList = await WordModel.find({ word: { $in: user.words } });
+    if (user.words.length > 0) {
+      const wordList = await WordModel.find({ word: { $in: user.words } });
 
-    // all bookmarked words found
-    if (wordList && wordList.length > 0) {
-      logger.success('WordService | getAllWords | all bookmarked words are fetched successfully');
-      // const sortedData = helper.sort(wordList, 'createdDate', true);
-      return wordList;
+      // all bookmarked words found
+      if (wordList && wordList.length > 0) {
+        logger.success('WordService | getAllWords | all bookmarked words are fetched successfully');
+        const sortedData = helper.sort(wordList, 'word');
+        return sortedData;
+      }
+
+      // in case of any error, throwing the error
+      logger.error('WordService | getAllWords | Error occurred in fetching all bookmarked words');
+      throw new Error();
     }
 
-    // in case of any error, throwing the error
-    logger.error('WordService | getAllWords | Error occurred in fetching all bookmarked words');
-    throw new Error();
+    logger.success('WordService | getAllWords | word bookmark list is empty but sending empty word list successfully');
+    return [];
   }
 
   // in case of any error, throwing the error
@@ -137,7 +143,7 @@ const searchWordOnWeb = async (text) => {
 const searchBookmarkedWord = async (text, userId) => {
   logger.info(`WordService | searchBookmarkedWord | searching "${text}" definition in the bookmarked list"`);
 
-  const user = (Number(userId) > 0) ? await UserModel.findOne({ userId }) : null;
+  const user = (Number(userId) > 0) ? await UserModel.findOne({ userId, enabled: true }) : null;
 
   // if user is found then search for bookmarked words
   if (user) {
@@ -150,7 +156,7 @@ const searchBookmarkedWord = async (text, userId) => {
       logger.success(`WordService | searchBookmarkedWord | searched word "${text}" is found in the bookmarked list`);
 
       return {
-        bookmarkedWords,
+        bookmarkedWords: helper.sort(bookmarkedWords, 'word'),
         wordsOnWeb: []
       };
     }
@@ -197,17 +203,18 @@ const searchWordDefinitionOnWeb = async (text) => {
 const saveWordToUser = async (userId, details) => {
   const { word } = details;
 
-  const user = await UserModel.findOne({ userId });
+  const user = await UserModel.findOne({ userId, enabled: true });
 
   if (user) {
-    user.words.push(word);
+    user.words.push(word); // adding new word as the first element of the user's bookmarked word list
     const savedUser = await user.save();
 
     if (savedUser) {
       logger.success(`${word} has been saved to the user's word list successfully`);
 
       return {
-        wordDetails: details
+        wordDetails: details,
+        wordCount: user.words.length
       };
     }
 
@@ -282,18 +289,18 @@ const addWord = async (wordDetails) => {
  * @return {Promise}      [success or error promise response]
  */
 const deleteWord = async (word, userId) => {
-  const userData = await UserModel.findOne({ userId });
+  const userData = await UserModel.findOne({ userId, enabled: true });
 
   // user data has been found successfully
   if (userData) {
     const { words } = userData;
     const updatedWordList = words.filter((val) => (val !== word));
-    const updatedUser = new WordModel({ words: updatedWordList });
-    const user = await updatedUser.save();
+    userData.words = updatedWordList;
+    const user = await userData.save();
 
     if (user) {
       logger.success(`WordService | deleteWord | "${word}" definition is deleted successfully for the user`);
-      return true;
+      return { wordCount: updatedWordList.length };
     }
 
     logger.error(`WordService | deleteWord | failed to save user with deleted word definition of "${word}"`);

@@ -15,7 +15,7 @@ const Registration = ({ details, onRegister, onDeRegister, disabled }) => {
   };
 
   if (hasUserDetails) {
-    const { name, email, profilePicture } = details;
+    const { name, email, profilePicture, wordCount } = details;
 
     component = (
       <div className="loggedin-user-details">
@@ -23,6 +23,7 @@ const Registration = ({ details, onRegister, onDeRegister, disabled }) => {
         <div>
           {name && <h4>{name}</h4>}
           {email && <p>{email}</p>}
+          {wordCount >= 0 && <p>{`Bookmarked words: ${wordCount}`}</p>}
         </div>
       </div>
     );

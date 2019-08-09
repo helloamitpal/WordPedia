@@ -20,7 +20,7 @@ router.post(`${config.API_BASE}/addWordToCollection/`, (req, res) => {
   WordWiring.WordController().addWord(req, res);
 });
 
-router.delete(`${config.API_BASE}/deleteWord/:word`, (req, res) => {
+router.delete(`${config.API_BASE}/deleteWord/:word/:userId`, (req, res) => {
   logger.info('/deleteWord route found');
   WordWiring.WordController().deleteWord(req, res);
 });

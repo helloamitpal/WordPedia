@@ -45,7 +45,7 @@ const userReducer = (state = initialState, action = '') => {
           userDetails: payload.userDetails
         }),
         success: (defaultState) => {
-          const userDetails = { ...defaultState.userDetails };
+          const userDetails = { ...defaultState.userDetails, wordCount: (payload.wordCount || 0) };
           delete defaultState.userDetails;
           return {
             ...defaultState,
@@ -92,6 +92,7 @@ const userReducer = (state = initialState, action = '') => {
         success: (defaultState) => {
           if (payload) {
             remove(defaultState.words, { word: defaultState.word });
+            defaultState.user.wordCount = payload.wordCount || 0;
           }
 
           return {
@@ -114,7 +115,9 @@ const userReducer = (state = initialState, action = '') => {
           isLoading: true
         }),
         success: (defaultState) => {
-          defaultState.words.push(payload.wordDetails);
+          defaultState.user.wordCount = payload.wordCount || 0;
+          defaultState.words.unshift(payload.wordDetails);
+
           return {
             ...defaultState,
             isLoading: false,

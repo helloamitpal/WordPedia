@@ -67,8 +67,7 @@ class WordController {
 
   deleteWord(req, res) {
     logger.info('WordController | deleteWord');
-    const { word } = req.params;
-    const { userId } = req.body;
+    const { word, userId } = req.params;
 
     if (word && userId) {
       WordService.deleteWord(word, userId)

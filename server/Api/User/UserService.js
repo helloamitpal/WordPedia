@@ -7,32 +7,35 @@ const UserModel = require('./UserModel');
  * @return {Promise}             [success or error promise response]
  */
 const register = async (userDetails) => {
+  const { userId } = userDetails;
+  const existingUser = await UserModel.findOne({ userId });
+
+  if (existingUser) {
+    existingUser.enabled = true;
+    // DB save
+    const savedUser = await existingUser.save();
+
+    if (savedUser) {
+      logger.success('UserController | register | user is already saved. Activated successfully');
+
+      return { wordCount: existingUser.words.length };
+    }
+  }
   // wrapping the object with UserModel
   const user = new UserModel(userDetails);
-  const { userId } = userDetails;
-  const checkUser = await UserModel.findOne({ userId });
+  // DB save
+  const savedUser = await user.save();
 
-  if (!checkUser) {
-    // DB save
-    const savedUser = await user.save();
+  // if data is saved successfully
+  if (savedUser) {
+    logger.success('UserController | register | saved user successfully');
 
-    // if data is saved successfully
-    if (user && savedUser) {
-      logger.success('UserController | register | saved user successfully');
-
-      return true;
-    }
-
-    // in case of error response during DB save
-    logger.error('UserController | register | Failed to save user in DB');
-    throw new Error();
-  } else {
-    logger.success('UserController | register | user is already saved');
-
-    return {
-      Status: 'USER_REGISTERED'
-    };
+    return { wordCount: 0 };
   }
+
+  // in case of error response during DB update
+  logger.error('UserController | register | Failed to activate user in DB');
+  throw new Error();
 };
 
 /**
@@ -41,10 +44,10 @@ const register = async (userDetails) => {
  * @return {Promise}        [success or error promise response]
  */
 const logout = async (userId) => {
-  const data = await UserModel.deleteOne({ userId });
+  const data = await UserModel.updateOne({ userId, enabled: false });
 
   // user has been deleted successfully
-  if (data && data.deletedCount) {
+  if (data && data.nModified === 1) {
     logger.success('UserController | logout | user has been logged out successfully');
 
     return true;
@@ -59,7 +62,7 @@ const updateUserSettings = async (userDetails) => {
   const data = await UserModel.updateOne(userDetails);
 
   // user data has been updated successfully
-  if (data) {
+  if (data && data.nModified === 1) {
     logger.success('UserController | updateUserSettings | user data has been updated successfully');
 
     return true;

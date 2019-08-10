@@ -20,7 +20,7 @@ import EventTracker from '../../event-tracker';
 import Features from '../../util/features';
 import * as helper from '../../util/helper';
 
-import addIcon from '../../images/SVG/267-plus.svg';
+import translateIcon from '../../images/SVG/354-font-size.svg';
 import './HomePage.scss';
 
 class HomePage extends React.Component {
@@ -136,7 +136,7 @@ class HomePage extends React.Component {
           <div className="header-section">
             <ProfilePic path={profilePicture} onClick={() => this.navigateTo(config.SETTINGS_PAGE)} />
             <Input type="search" onClearInput={this.onClearInput} onChange={this.onChangeSearch} placeholder="At least 2 characters" value={searchText} />
-            <Button icon={addIcon} className="add-word-btn" onClick={() => this.navigateTo(config.ADD_WORD_PAGE)} />
+            <Button icon={translateIcon} className="add-word-btn" onClick={() => this.navigateTo(config.ADD_WORD_PAGE)} />
           </div>
         </Header>
         <div className="body-container">

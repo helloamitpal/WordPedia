@@ -153,7 +153,7 @@ class SettingsPage extends React.Component {
         </div>
       )
     }, {
-      component: <div>{`Version: ${config.VERSION}`}</div>
+      component: <div>{`Version ${config.VERSION}`}</div>
     }];
   }
 

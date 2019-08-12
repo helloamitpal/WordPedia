@@ -11,6 +11,7 @@ import Features from './util/features';
 import PWAInstaller from './components/PWAInstaller';
 import EventTracker from './event-tracker';
 import { FBinit } from './components/FBLogin';
+import { subscribeNotification } from './util/notification';
 
 import './styles/theme.scss';
 
@@ -63,13 +64,11 @@ class App extends React.Component {
 
 const render = () => {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./service-worker.js', { scope: '/' }).then(() => {
-      console.log('Service Worker registered successfully.');
-    }).catch((error) => {
-      console.log('Service Worker registration failed:', error);
-    });
+    console.log('Registering service worker');
+    subscribeNotification().catch((error) => console.error(error));
+  } else {
+    console.log('Service worker not supported');
   }
-
   ReactDOM.render(<App />, MOUNT_NODE);
 };
 

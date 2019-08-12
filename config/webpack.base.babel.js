@@ -7,6 +7,7 @@ const webpack = require('webpack');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const BrotliPlugin = require('brotli-webpack-plugin');
 const workboxPlugin = require('workbox-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 process.noDeprecation = true;
 
@@ -88,12 +89,19 @@ module.exports = (options) => ({
       minRatio: 0.8
     }),
 
+    // copying service worker custom files for listening push notifications
+    new CopyWebpackPlugin([
+      { from: 'push-notifications.js', to: 'push-notifications.js', context: 'app/' }
+    ]),
+
+    // service Worker settings
     new workboxPlugin.GenerateSW({
       swDest: 'service-worker.js',
       clientsClaim: true,
       cacheId: 'WordPedia',
       offlineGoogleAnalytics: true,
       cleanupOutdatedCaches: true,
+      importScripts: ['push-notifications.js'],
       skipWaiting: true,
       runtimeCaching: [{
         urlPattern: /\.svg$/,

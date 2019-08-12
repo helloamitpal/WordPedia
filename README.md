@@ -28,6 +28,7 @@ It includes all the latest tools and practices in the industry.
 - _Word definition and translation_  - WordsAPI (https://rapidapi.com/wordsapi/api/wordsapi)
 - _Cloud_ - AWS (Amazon web service : https://aws.amazon.com/)
 - _Analytics_ - Google analytics (https://analytics.google.com/analytics/web/)
+- _Push notification_ - Web push (https://www.npmjs.com/package/web-push)
 
 Nodemon and Webpack hot reloading are added to serve the quick development
 
@@ -39,11 +40,14 @@ hellowordpedia@gmail.com
 1. Clone this repo using `git clone https://github.com/amit040386/LearnNewWords.git`
 2. Move to the appropriate directory: `cd LearnNewWords`.<br />
 3. Run `npm install` to install dependencies.<br />
+4. Run `./node_modules/.bin/web-push generate-vapid-keys)` and keep public (WEB_PUSH_PUBLIC_VAPID_KEY) and private key (WEB_PUSH_PRIVATE_VAPID_KEY) in the below .env file
 4. Create a .env file to the root folder and add these mapping to it. E.g.
     - DB_USERNAME=xyz
     - DB_PASSWORD=abc
     - DB_NAME=blabla
     - CLUSTER_NAME=pqr.mongodb.net
+    - WEB_PUSH_PUBLIC_VAPID_KEY=abcdefg
+    - WEB_PUSH_PRIVATE_VAPID_KEY=wert
 5. Run `sudo npm install workbox-cli -g`
 6. Run `npm start` to see the example app at `http://localhost:7009` in DEV mode.
 7. Run `npm start:production` to see the example app at `http://localhost:7009` in PROD mode.

@@ -13,9 +13,14 @@ const argv = require('./util/argv');
 const port = require('./util/port');
 const DB = require('./DB/connection');
 const setup = require('./middlewares/frontendMiddleware');
+const PushNotification = require('./PushNotification/setup');
 
 const app = express();
-dotenv.config(); // making .env file to process.env
+
+// making .env file to process.env
+dotenv.config();
+
+// server configuration
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
@@ -38,6 +43,9 @@ app.use((req, res, next) => {
 
 // initialize DB connection
 DB.initialize();
+
+// initialize push notification
+PushNotification.setup(app);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

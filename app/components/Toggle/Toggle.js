@@ -11,6 +11,10 @@ class Toggle extends React.Component {
     };
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({ toggle: newProps.on });
+  }
+
   toggle = () => {
     const { onToggle } = this.props;
     let { toggle } = this.state;

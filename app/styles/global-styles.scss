@@ -24,6 +24,14 @@ label {
   background-size: cover;
 }
 
+.small-font {
+  font-size: 0.8em;
+}
+
+.center-aligned {
+  text-align: center;
+}
+
 .Toastify__toast--success {
   background: $toast-default-background;
 }

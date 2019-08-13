@@ -14,7 +14,7 @@
     "rules": {
       "arrow-parens": ["error", "always"],
       "arrow-body-style": ["off"],
-      "max-len": ["error", { "code": 200 }],
+      "max-len": ["error", { "code": 350 }],
       "react/prefer-stateless-function": ["off"],
       "class-methods-use-this": ["off"],
       "no-script-url": ["off"],

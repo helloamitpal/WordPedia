@@ -17,10 +17,9 @@ self.addEventListener('push', (ev) => {
 
 // notification action listener
 self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
-
   if (event.action === 'forget' || event.action === 'remember') {
     const { title, body } = event.notification.data[event.action];
     self.registration.showNotification(title, { body });
+    event.notification.close();
   }
 }, false);

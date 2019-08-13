@@ -9,39 +9,62 @@ import crossIcon from '../../images/SVG/272-cross.svg';
 
 import './Input.scss';
 
-const Input = ({ disabled, className, readOnly, onClick, onChange, value, type, placeholder, onClearInput }) => {
-  let inputRef;
+class Input extends React.Component {
+  constructor() {
+    super();
+    this.inputRef = null;
+    this.state = {
+      expanded: false
+    };
+  }
 
-  const copyText = () => {
-    helper.copyToClipboard(inputRef);
+  onFocusChange = (expanded) => {
+    const { type } = this.props;
+
+    if (type === 'search') {
+      this.setState({ expanded });
+    }
+  }
+
+  copyText = () => {
+    const { onClick } = this.props;
+
+    helper.copyToClipboard(this.inputRef);
     if (onClick) {
       onClick();
     }
-  };
+  }
 
-  return (
-    <div className={`input-container ${className} ${type} ${value ? 'has-input' : ''}`}>
-      <input
-        placeholder={placeholder}
-        ref={(node) => { inputRef = node; }}
-        readOnly={readOnly}
-        disabled={disabled}
-        onChange={onChange}
-        value={value}
-      />
-      {type === 'search' && (
-        <React.Fragment>
-          <Icon className="search-icon-placeholder" path={searchIcon} />
-          <Icon className="mic-icon" path={micIcon} />
-          <a href="javascript:void(0)" onClick={onClearInput} className="remove-text-icon">
-            <Icon path={crossIcon} />
-          </a>
-        </React.Fragment>)
-      }
-      {type === 'copy' && <button type="button" onClick={copyText}>Copy Link</button>}
-    </div>
-  );
-};
+  render() {
+    const { disabled, className, readOnly, onChange, value, type, placeholder, onClearInput } = this.props;
+    const { expanded } = this.state;
+
+    return (
+      <div className={`input-container ${expanded && type === 'search' ? 'focused' : ''} ${className} ${type} ${value ? 'has-input' : ''}`}>
+        <input
+          placeholder={placeholder}
+          ref={(node) => { this.inputRef = node; }}
+          readOnly={readOnly}
+          disabled={disabled}
+          onChange={onChange}
+          value={value}
+          onFocus={() => this.onFocusChange(true)}
+          onBlur={() => this.onFocusChange(false)}
+        />
+        {type === 'search' && (
+          <React.Fragment>
+            <Icon className="search-icon-placeholder" path={searchIcon} />
+            <Icon className="mic-icon" path={micIcon} />
+            <a href="javascript:void(0)" onClick={onClearInput} className="remove-text-icon">
+              <Icon path={crossIcon} />
+            </a>
+          </React.Fragment>)
+        }
+        {type === 'copy' && <button type="button" onClick={this.copyText}>Copy Link</button>}
+      </div>
+    );
+  }
+}
 
 Input.propTypes = {
   value: PropTypes.string.isRequired,

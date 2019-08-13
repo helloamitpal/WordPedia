@@ -23,7 +23,6 @@
     input {
       padding: 10px 30px;
       width: 100%;
-      margin: 6px 0;
       border-radius: 20px;
       border: 1px solid $border-color;
     }
@@ -82,5 +81,16 @@
       border-radius: 4px;
       outline: 0 none;
     }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .input-container.search.focused {
+    position: absolute;
+    width: calc(100% - 16px);
+    left: 0;
+    right: 0;
+    z-index: 999;
+    margin: 0 8px;
   }
 }

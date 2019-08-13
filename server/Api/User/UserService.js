@@ -1,5 +1,6 @@
 const logger = require('../../util/logger');
 const UserModel = require('./UserModel');
+const Scheduler = require('../../PushNotification/scheduler');
 
 /**
  * [register: To register logged in user details]
@@ -18,7 +19,7 @@ const register = async (userDetails) => {
     if (savedUser) {
       logger.success('UserController | register | user is already saved. Activated successfully');
 
-      return { wordCount: existingUser.words.length };
+      return { details: existingUser, wordCount: existingUser.words.length };
     }
   }
   // wrapping the object with UserModel
@@ -59,17 +60,38 @@ const logout = async (userId) => {
 };
 
 const updateUserSettings = async (userDetails) => {
-  const data = await UserModel.updateOne(userDetails);
+  const data = await UserModel.findOne({ userId: userDetails.userId });
 
   // user data has been updated successfully
-  if (data && data.nModified === 1) {
-    logger.success('UserController | updateUserSettings | user data has been updated successfully');
+  if (data) {
+    // if previous quiz setup was disabled and user has asked for enabling the same
+    if (userDetails.quiz && !data.quiz) {
+      // starting nottification scheduler
+      Scheduler.start(data.words);
+    }
 
-    return true;
+    if (!userDetails.quiz) {
+      // stopping nottification scheduler
+      Scheduler.stop();
+    }
+
+    // updating existing details with requested user details
+    Object.assign(data, userDetails);
+    const savedData = await data.save();
+
+    if (savedData) {
+      logger.success('UserController | updateUserSettings | user data has been updated successfully');
+
+      return true;
+    }
+
+    // in case of any error during save, throwing error
+    logger.error('UserController | updateUserSettings | Failed to update user details in DB');
+    throw new Error();
   }
 
   // in case of any error, throwing error
-  logger.error('UserController | updateUserSettings | Failed to update user in DB');
+  logger.error('UserController | updateUserSettings | Failed to fetch user in DB for updating the user details');
   throw new Error();
 };
 

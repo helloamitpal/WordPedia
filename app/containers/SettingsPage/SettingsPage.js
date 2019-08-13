@@ -28,15 +28,28 @@ import './SettingsPage.scss';
 class SettingsPage extends React.Component {
   constructor() {
     super();
+    this.prevLanguage = {
+      value: 'en',
+      label: 'English'
+    };
     this.state = {
       quiz: false,
       showAboutMe: false,
-      language: {
-        value: 'en',
-        label: 'English'
-      }
+      language: { ...this.prevLanguage }
     };
     this.shareLink = window.location.origin;
+  }
+
+  componentWillReceiveProps(newProps) {
+    const { userState: { isError } } = newProps;
+    const { userState: { user } } = this.props;
+
+    if (isError) {
+      this.setState({
+        quiz: !user.quiz,
+        language: this.prevLanguage
+      });
+    }
   }
 
   copiedLink = () => {
@@ -67,8 +80,10 @@ class SettingsPage extends React.Component {
 
   onChangeLang = (val) => {
     const { userActions, userState: { user } } = this.props;
+    const { language } = this.state;
 
     user.language = val.value;
+    this.prevLanguage = language;
     this.setState({ language: val });
 
     EventTracker.raise(Events.CHANGE_LANGUAGE);
@@ -107,12 +122,14 @@ class SettingsPage extends React.Component {
   }
 
   getPersonalizeSections = () => {
-    const { language } = this.state;
+    const { language, quiz } = this.state;
 
     return [{
       icon: bookIcon,
       label: 'Learning mode',
-      component: <Toggle onToggle={this.onToggleQuiz} />
+      component: <Toggle on={quiz} onToggle={this.onToggleQuiz} />
+    }, {
+      component: quiz && <div className="small-font center-aligned">Any random word will be picked up from your bookmarked words and a nottification will be popped up to remind you at every 3rd hour from 8AM through 6PM on every day. It may help you to memorize all the definitions of the bookmarked words.</div>
     }, {
       icon: langIcon,
       label: 'Default language',

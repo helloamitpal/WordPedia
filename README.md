@@ -14,6 +14,18 @@
   <sub>Created by <a href="https://www.linkedin.com/in/amit-pal-0241423a/">Amit Pal</a></sub>
 </div>
 
+## Features
+
+- Facebook login for registration
+- Word definition can be searched and bookmarked once after user register him/herself
+- Bookmarked word can be removed. Though an accidental delete operation can be reverted within 3 seconds
+- Enabling quiz mode, the user will be prompted with a notification containing word from the bookmarked word list at every 3rd hour from 8AM through 6PM on every day
+- Supporting multiple languages (**TODO**)
+- Taking user input in the form of text along with image, voice (**TODO**)
+- Understanding the text from voice and image input and translating them to the target language (**TODO**)
+- Keeping the website as a mobile app in the device as it has been powered by PWA
+- Interesting words can be copied, shared in the social networking
+
 ## Tech-stack
 
 It includes all the latest tools and practices in the industry.

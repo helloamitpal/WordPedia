@@ -9,6 +9,7 @@ import Router from './router/Router';
 import configureStore from './stores/configureStores';
 import Features from './util/features';
 import PWAInstaller from './components/PWAInstaller';
+import config from './config';
 import EventTracker from './event-tracker';
 import { FBinit } from './components/FBLogin';
 import { subscribeNotification } from './util/notification';
@@ -33,7 +34,7 @@ class App extends React.Component {
     FBinit();
     toast.configure({
       draggable: false,
-      autoClose: 3000,
+      autoClose: config.TOAST_AUTO_CLOSE_DURATION,
       hideProgressBar: true,
       closeOnClick: true,
       position: (Features.isMobile ? 'bottom-right' : 'top-right')

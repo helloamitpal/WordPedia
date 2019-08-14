@@ -5,17 +5,15 @@ import Button from '../Button';
 
 import './Confirm.scss';
 
-const Confirm = ({ onAccept, onDecline, content }) => {
+const Confirm = ({ onAccept, onDecline, buttonLabel, confirmText }) => {
   return (
-    <div className="confirm-container">
-      {content || (
-        <React.Fragment>
-          <p>If you deregister, no new words can be added to bookmark list. Do you wish to deregister yourself?</p>
-          <div>
-            <Button raisedButton label="Yes" onClick={onAccept} />
-            <Button raisedButton label="No" onClick={onDecline} />
-          </div>
-        </React.Fragment>
+    <div className={`confirm-container ${buttonLabel ? 'inline' : ''}`}>
+      <p>{confirmText || 'If you deregister, no new words can be added to bookmark list. Do you wish to deregister yourself?'}</p>
+      {buttonLabel ? <Button raisedButton label={buttonLabel} onClick={onAccept} /> : (
+        <div>
+          <Button raisedButton label="Yes" onClick={onAccept} />
+          <Button raisedButton label="No" onClick={onDecline} />
+        </div>
       )}
     </div>
   );
@@ -23,7 +21,8 @@ const Confirm = ({ onAccept, onDecline, content }) => {
 
 Confirm.propTypes = {
   onAccept: PropTypes.func,
-  content: PropTypes.node,
+  buttonLabel: PropTypes.string,
+  confirmText: PropTypes.string,
   onDecline: PropTypes.func
 };
 

@@ -18,11 +18,14 @@
       border: 0 none;
     }
 
-    & > div {
+    & > div, &.inline {
       display: flex;
       justify-content: space-between;
-      color: $alternate-font-color;
       align-items: center;
+    }
+
+    &.inline p {
+      margin: 0;
     }
   }
 }

@@ -44,28 +44,23 @@ class HomePage extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const { userState: { deleted, word } } = newProps;
+    const { userActions, userState: { deleted, word, user: { userId } } } = newProps;
 
     if (deleted) {
       const toastId = `toast-${word}ID`;
       askConfirmation({
-        content: (
-          <div>
-            <span>{`${word} deleted`}</span>
-            <Button label="Undo" raisedButton onClick={() => this.undoDelete(word, toastId)} />
-          </div>
-        ),
+        confirmText: `${word} deleted`,
+        buttonLabel: 'Undo',
         toastId,
-        autoClose: 5000
-      });
+        autoClose: config.TOAST_AUTO_CLOSE_DURATION
+      })
+        .then(() => {
+          userActions.addWordAction({ word }, userId, `${word} is added back to bookmark`);
+        })
+        .catch(() => {
+          toast.success(`${word} has been removed from bookmark`);
+        });
     }
-  }
-
-  undoDelete = (word, toastId) => {
-    const { userActions, userState: { user: { userId } } } = this.props;
-
-    toast.dismiss(toastId);
-    userActions.addWordAction({ word }, userId);
   }
 
   searchAPICall = () => {
@@ -96,7 +91,7 @@ class HomePage extends React.Component {
       EventTracker.raise(Events.BOOKMARK_WORD, word);
       userActions.addWordAction(wordObj, userId);
     } else {
-      toast.info('Please register yourself to add this word.');
+      toast.info('Please register yourself to add this word');
     }
   }
 

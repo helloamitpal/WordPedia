@@ -25,6 +25,20 @@ const helper = {
 
       return comparison;
     });
+  },
+  arrangeOrder: (targetList, sourceList, attr) => {
+    const arr = [];
+    const map = {};
+
+    targetList.forEach((obj) => {
+      map[obj[attr]] = obj;
+    });
+
+    sourceList.forEach((val) => {
+      arr.push(map[val]);
+    });
+
+    return arr;
   }
 };
 

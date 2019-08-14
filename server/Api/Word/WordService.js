@@ -80,7 +80,7 @@ const getAllWords = async (userId) => {
       // all bookmarked words found
       if (wordList && wordList.length > 0) {
         logger.success('WordService | getAllWords | all bookmarked words are fetched successfully');
-        const sortedData = helper.sort(wordList, 'word');
+        const sortedData = helper.arrangeOrder(wordList, user.words, 'word');
         return sortedData;
       }
 
@@ -206,7 +206,7 @@ const saveWordToUser = async (userId, details) => {
   const user = await UserModel.findOne({ userId, enabled: true });
 
   if (user) {
-    user.words.push(word); // adding new word as the first element of the user's bookmarked word list
+    user.words.unshift(word); // adding new word as the first element of the user's bookmarked word list
     const savedUser = await user.save();
 
     if (savedUser) {

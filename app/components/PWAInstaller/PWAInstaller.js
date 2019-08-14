@@ -15,7 +15,7 @@ class PWAInstaller extends React.Component {
   constructor() {
     super();
     this.message = {
-      online: 'You are online now.',
+      online: 'You are online now',
       offline: 'There is no network. Please check!'
     };
     this.state = {

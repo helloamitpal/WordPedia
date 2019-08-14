@@ -22,8 +22,15 @@
       }
     }
 
-    .menu-toggle-container .icon {
-      transform: scale(1);
+    .menu-toggle-container {
+      .icon {
+        transform: scale(1);
+      }      
+
+      .menu-toggle-btn {
+        padding-left: 0;
+        padding-right: 0;
+      }
     }
   }
 

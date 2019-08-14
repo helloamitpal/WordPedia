@@ -11,14 +11,5 @@ export default {
   LANGUAGES: [{
     value: 'en',
     label: 'English'
-  }, {
-    value: 'ar',
-    label: 'Arabic'
-  }, {
-    value: 'cs',
-    label: 'Czech'
-  }, {
-    value: 'fr',
-    label: 'French'
   }]
 };

@@ -2,12 +2,12 @@
 
 .icon {
   cursor: pointer;
-  background-color: $icon-hover-color;
+  background-color: $default-icon-color;
   width: 16px;
   height: 16px;
   display: inline-block;
 
   &:not(.no-anim):hover {
-    background-color: $icon-color;
+    background-color: $alternate-font-color;
   }
 }

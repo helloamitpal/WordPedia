@@ -6,10 +6,9 @@
 
   .toggler {
     font-size: 2rem;
-    color: $toggle-color;
     width: 50px;
     height: 20px;
-    background: $toggle-inactive;
+    background: $disabled-color;
     border: 1px solid $toggle-box-shadow;
     position: relative;
     border-radius: 10px;
@@ -31,7 +30,7 @@
       right: 50%;
       height: 26px;
       width: 26px;
-      background: $border-color;
+      background: $toggle-default-color;
       box-shadow: 0 0 5px $toggle-box-shadow;
       border-radius: 50%;
       transition: right 0.3s;

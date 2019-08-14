@@ -2,14 +2,27 @@
 
 .confirm-toast-container {
   box-shadow: 0 0px 5px 0 rgba(0,0,0,0.35);
+  background-color: $toast-default-background;
 
   .confirm-container {
     color: $font-color;
     font-size: 1.2em;
 
+    p, button {
+      color: $alternate-font-color;
+    }
+
+    button {
+      background: $primary-btn-color;
+      color: $alternate-font-color;
+      border: 0 none;
+    }
+
     & > div {
       display: flex;
       justify-content: space-between;
+      color: $alternate-font-color;
+      align-items: center;
     }
   }
 }

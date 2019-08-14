@@ -19,7 +19,7 @@
 
     &:disabled {
       background-color: $disabled-color !important;
-      color: $icon-color;
+      color: $alternate-font-color;
       pointer-events: none;
 
       .icon {
@@ -40,7 +40,7 @@
 	    content: "";
 	    position: absolute;
       display: block;
-      background: $card-btn-background;
+      background: $btn-background;
       padding-top: 300%;
       padding-left: 350%;
       margin-left: -20px!important;

@@ -50,22 +50,22 @@
 
   &.selected {
     .card-header {
-      background: $icon-hover-color;
-      color: $icon-color;
+      background: $alternate-background-color;
+      color: $alternate-font-color;
       padding-bottom: 0.8em;
     }
 
     .card-button,
     .speaker {
-      background-color: $icon-hover-color;
+      background-color: $alternate-background-color;
 
       .icon {
-        background-color: $icon-color;
+        background-color: $alternate-font-color;
       }
     }
 
     .icon {
-      background-color: $icon-color;
+      background-color: $alternate-font-color;
     }
   }
 
@@ -117,7 +117,7 @@
     margin-top: 2px;
 
     .icon {
-      background-color: $icon-hover-color;
+      background-color: $default-icon-color;
     }
   }
 
@@ -126,11 +126,11 @@
     justify-content: center;
     width: 100%;
     padding: 10px;
-    background: $card-btn-background;
-    border-top: 1px solid $card-btn-background;
+    background: $btn-background;
+    border-top: 1px solid $border-color;
 
     .icon {
-      background-color: $icon-hover-color;
+      background-color: $default-icon-color;
     }
   }
 

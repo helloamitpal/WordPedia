@@ -3,7 +3,8 @@ import { toast } from 'react-toastify';
 import Confirm from './Confirm';
 
 const askConfirmation = (config) => {
-  const { autoClose, draggable, closeOnClick, closeButton, className } = config || {};
+  const { autoClose, toastId, draggable, closeOnClick, closeButton, className, content } = config || {};
+  const customToastId = toastId || 'confirm';
   const baseConfig = {
     autoClose: autoClose || false,
     draggable: draggable || false,
@@ -12,19 +13,25 @@ const askConfirmation = (config) => {
     position: 'bottom-center',
     closeButton: closeButton || false,
     className: `confirm-toast-container ${className}`,
-    toastId: 'confirm'
+    toastId: customToastId
   };
 
   const onCloseConfirm = (promiseCallback, val) => {
-    toast.dismiss('confirm');
+    toast.dismiss(customToastId);
     promiseCallback(val);
   };
 
-  return new Promise((resolve, reject) => {
-    if (!toast.isActive('confirm')) {
-      toast(<Confirm onAccept={() => onCloseConfirm(resolve, true)} onDecline={() => onCloseConfirm(reject, false)} />, baseConfig);
-    }
-  });
+  if (!autoClose) {
+    return new Promise((resolve, reject) => {
+      if (!toast.isActive(customToastId)) {
+        toast(<Confirm content={content} onAccept={() => onCloseConfirm(resolve, true)} onDecline={() => onCloseConfirm(reject, false)} />, baseConfig);
+      }
+    });
+  }
+
+  if (autoClose) {
+    return !toast.isActive(customToastId) && toast(<Confirm content={content} />, baseConfig);
+  }
 };
 
 export {

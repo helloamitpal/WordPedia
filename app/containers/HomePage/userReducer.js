@@ -24,6 +24,7 @@ const userReducer = (state = initialState, action = '') => {
         start: (defaultState) => ({
           ...defaultState,
           isError: false,
+          deleted: false,
           isLoading: true
         }),
         success: (defaultState) => ({
@@ -42,6 +43,7 @@ const userReducer = (state = initialState, action = '') => {
         start: (defaultState) => ({
           ...defaultState,
           isError: false,
+          deleted: false,
           isLoading: true,
           userDetails: payload.userDetails
         }),
@@ -68,6 +70,7 @@ const userReducer = (state = initialState, action = '') => {
         start: (defaultState) => ({
           ...defaultState,
           isError: false,
+          deleted: false,
           isLoading: true
         }),
         success: (defaultState) => {
@@ -90,6 +93,7 @@ const userReducer = (state = initialState, action = '') => {
           ...defaultState,
           isError: false,
           isLoading: true,
+          deleted: false,
           word: payload.word
         }),
         success: (defaultState) => {
@@ -100,7 +104,8 @@ const userReducer = (state = initialState, action = '') => {
 
           return {
             ...defaultState,
-            isLoading: false
+            isLoading: false,
+            deleted: true
           };
         },
         failure: (defaultState) => ({
@@ -115,7 +120,8 @@ const userReducer = (state = initialState, action = '') => {
         start: (defaultState) => ({
           ...defaultState,
           isError: false,
-          isLoading: true
+          isLoading: true,
+          deleted: false
         }),
         success: (defaultState) => {
           defaultState.user.wordCount = payload.wordCount || 0;
@@ -140,7 +146,8 @@ const userReducer = (state = initialState, action = '') => {
           ...defaultState,
           isError: false,
           isLoading: true,
-          isNoInitWords: false
+          isNoInitWords: false,
+          deleted: false
         }),
         success: (defaultState) => ({
           ...defaultState,
@@ -161,6 +168,7 @@ const userReducer = (state = initialState, action = '') => {
         start: (defaultState) => ({
           ...defaultState,
           isError: false,
+          deleted: false,
           isLoading: (payload.searchType !== 'web' || payload.isSynonym),
           searchType: payload.searchType,
           isSynonym: payload.isSynonym

@@ -19,6 +19,7 @@ import Events from '../../event-tracker/events';
 import EventTracker from '../../event-tracker';
 import Features from '../../util/features';
 import * as helper from '../../util/helper';
+import { askConfirmation } from '../../components/Confirm';
 
 import translateIcon from '../../images/SVG/354-font-size.svg';
 import './HomePage.scss';
@@ -40,6 +41,31 @@ class HomePage extends React.Component {
     if (!words || !words.length) {
       userActions.loadWordAction(userId);
     }
+  }
+
+  componentWillReceiveProps(newProps) {
+    const { userState: { deleted, word } } = newProps;
+
+    if (deleted) {
+      const toastId = `toast-${word}ID`;
+      askConfirmation({
+        content: (
+          <div>
+            <span>{`${word} deleted`}</span>
+            <Button label="Undo" raisedButton onClick={() => this.undoDelete(word, toastId)} />
+          </div>
+        ),
+        toastId,
+        autoClose: 5000
+      });
+    }
+  }
+
+  undoDelete = (word, toastId) => {
+    const { userActions, userState: { user: { userId } } } = this.props;
+
+    toast.dismiss(toastId);
+    userActions.addWordAction({ word }, userId);
   }
 
   searchAPICall = () => {

@@ -239,7 +239,7 @@ const addWord = async (wordDetails) => {
 
   if (searchedWord) {
     logger.success(`WordService | addWord | "${text}" definition is already there in the DB`);
-    return saveWordToUser(userId, wordDetails);
+    return saveWordToUser(userId, searchedWord);
   }
 
   // this is a new word to be saved in the DB

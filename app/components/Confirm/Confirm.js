@@ -5,21 +5,26 @@ import Button from '../Button';
 
 import './Confirm.scss';
 
-const Registration = ({ onAccept, onDecline }) => {
+const Confirm = ({ onAccept, onDecline, content }) => {
   return (
     <div className="confirm-container">
-      <p>If you deregister, no new words can be added to bookmark list. Do you wish to deregister yourself?</p>
-      <div>
-        <Button raisedButton label="Yes" onClick={onAccept} />
-        <Button raisedButton label="No" onClick={onDecline} />
-      </div>
+      {content || (
+        <React.Fragment>
+          <p>If you deregister, no new words can be added to bookmark list. Do you wish to deregister yourself?</p>
+          <div>
+            <Button raisedButton label="Yes" onClick={onAccept} />
+            <Button raisedButton label="No" onClick={onDecline} />
+          </div>
+        </React.Fragment>
+      )}
     </div>
   );
 };
 
-Registration.propTypes = {
-  onAccept: PropTypes.func.isRequired,
+Confirm.propTypes = {
+  onAccept: PropTypes.func,
+  content: PropTypes.node,
   onDecline: PropTypes.func
 };
 
-export default Registration;
+export default Confirm;

@@ -4,7 +4,7 @@
   h2 {
     font-size: 1.2em;
     margin: 0 0.5em;
-    color: $icon-color;
+    color: $alternate-font-color;
   }
 
   .feedback-btn {
@@ -28,7 +28,7 @@
   .login-section {
     width: 100%;
     padding: 0.5em;
-    color: $icon-color;
+    color: $alternate-font-color;
 
     h4 {
       margin: 0;
@@ -45,7 +45,7 @@
       font-size: 0.8em;
 
       .icon {
-        background-color: $facebook-color;
+        background-color: $primary-btn-color;
       }
     }
 

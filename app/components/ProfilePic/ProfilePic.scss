@@ -7,10 +7,14 @@
   &.no-pic {
     background: $background;
     border-radius: 50%;
+    position: relative;
 
     .icon {
       background-color: $no-user-color;
-      transform: scale(1.5) translate(8px, 5px);
+      transform: scale(1.5) translate(-35%, -35%);
+      position: absolute;
+      left: 50%;
+      top: 50%;
     }
   }
 

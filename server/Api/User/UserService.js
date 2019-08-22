@@ -19,6 +19,11 @@ const register = async (userDetails) => {
     if (savedUser) {
       logger.success('UserController | register | user is already saved. Activated successfully');
 
+      // if quiz was enabled for existing user then starting the scheduled job
+      if (existingUser.quiz) {
+        Scheduler.start(existingUser.words);
+      }
+
       return { details: existingUser, wordCount: existingUser.words.length };
     }
   }
@@ -50,6 +55,8 @@ const logout = async (userId) => {
   // user has been deleted successfully
   if (data && data.nModified === 1) {
     logger.success('UserController | logout | user has been logged out successfully');
+    // stopping notification scheduler if it was enabled
+    Scheduler.stop();
 
     return true;
   }
@@ -59,6 +66,11 @@ const logout = async (userId) => {
   throw new Error();
 };
 
+/**
+ * [updateUserSettings: To update user preferences]
+ * @param  {Object}  userDetails [containing user preference details]
+ * @return {Promise}             [success or error promise response]
+ */
 const updateUserSettings = async (userDetails) => {
   const data = await UserModel.findOne({ userId: userDetails.userId });
 

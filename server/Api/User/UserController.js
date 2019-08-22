@@ -58,7 +58,7 @@ class UserController {
           ErrorHandler(500, 'Failed to logout user', res);
         });
     } else {
-      logger.error('UserController | logout | Sending error response because body payload is null');
+      logger.error('UserController | logout | Sending error response because body payload is invalid');
       ErrorHandler(500, 'Failed to logout user', res);
     }
   }

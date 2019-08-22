@@ -2,9 +2,15 @@ const mongoose = require('mongoose');
 
 const logger = require('../util/logger');
 
-const initialize = () => {
+const getDBConnection = () => {
   const { DB_USERNAME, DB_PASSWORD, CLUSTER_NAME, DB_NAME } = process.env;
   const connectionStr = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${CLUSTER_NAME}/${DB_NAME}?ssl=true&authSource=admin&w=majority`;
+
+  return connectionStr;
+};
+
+const initialize = () => {
+  const connectionStr = getDBConnection();
 
   mongoose.connect(connectionStr, { useNewUrlParser: true, useCreateIndex: true });
 
@@ -20,5 +26,6 @@ const initialize = () => {
 };
 
 module.exports = {
-  initialize
+  initialize,
+  getDBConnection
 };

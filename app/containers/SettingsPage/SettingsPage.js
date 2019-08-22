@@ -40,13 +40,19 @@ class SettingsPage extends React.Component {
     this.shareLink = window.location.origin;
   }
 
+  componentDidMount() {
+    const { userState: { user: { quiz } } } = this.props;
+
+    this.setState({ quiz });
+  }
+
   componentWillReceiveProps(newProps) {
     const { userState: { isError } } = newProps;
-    const { userState: { user } } = this.props;
+    const { quiz } = this.state;
 
     if (isError) {
       this.setState({
-        quiz: !user.quiz,
+        quiz: !quiz,
         language: this.prevLanguage
       });
     }
@@ -91,10 +97,9 @@ class SettingsPage extends React.Component {
   }
 
   onToggleQuiz = () => {
-    const { quiz } = this.state;
     const { userActions, userState: { user } } = this.props;
+    const { quiz } = this.state;
 
-    user.quiz = !quiz;
     this.setState({ quiz: !quiz });
 
     EventTracker.raise(Events.TOGGLE_QUIZ_MODE);
@@ -123,11 +128,12 @@ class SettingsPage extends React.Component {
 
   getPersonalizeSections = () => {
     const { language, quiz } = this.state;
+    const { userState: { user: { userId } } } = this.props;
 
     return [{
       icon: bookIcon,
       label: 'Learning mode',
-      component: <Toggle on={quiz} onToggle={this.onToggleQuiz} />
+      component: <Toggle on={quiz || false} onToggle={this.onToggleQuiz} disabled={!userId || false} />
     }, {
       component: quiz && <div className="small-font center-aligned">Any random word will be picked up from your bookmarked words and a nottification will be popped up to remind you at every 3rd hour from 8AM through 6PM on every day. It may help you to memorize all the definitions of the bookmarked words.</div>
     }, {

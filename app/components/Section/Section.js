@@ -34,7 +34,7 @@ Section.propTypes = {
   rows: PropTypes.arrayOf(PropTypes.shape({
     icon: PropTypes.string,
     label: PropTypes.string,
-    component: PropTypes.node.isRequired
+    component: PropTypes.node
   })).isRequired
 };
 

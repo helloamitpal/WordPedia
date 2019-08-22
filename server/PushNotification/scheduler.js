@@ -3,35 +3,35 @@ const { random } = require('lodash');
 
 const PushNotification = require('./setup');
 const logger = require('../util/logger');
+const config = require('../util/config');
 
 class Scheduler {
-  constructor() {
-    this.scheduler = null;
-    this.data = null;
-  }
 
-  start(data) {
-    this.data = data;
-
-    if (this.scheduler) {
-      this.scheduler.reschedule();
+  static start(data) {
+    if (Scheduler.job) {
+      logger.info('Scheduler is already running');
       return;
     }
 
-    this.scheduler = schedule.scheduleJob('0 8-18/3 * * 0-6', () => {
-      logger.info('Scheduler started: At minute 0 past every 3rd hour from 8 through 18 on every day-of-week from Sunday through Saturday.');
-      const randVal = random(0, this.data.length - 1);
+    logger.info('Scheduler is initiated to send the nottification at every 3rd hour from 8 through 18 on every day.');
+    const scheduleJobPattern = '*/1 * * * *'; // '0 8-18/3 * * 0-6';
+    // pattern can be here: https://crontab.guru
+    Scheduler.job = schedule.scheduleJob(scheduleJobPattern, (fireDate) => {
+      const randVal = random(0, data.length - 1);
+      const word = data[randVal];
 
-      PushNotification.sendNotification(this.data[randVal]);
+      logger.info(`Scheduler is sending ${word} response: `, fireDate);
+
+      PushNotification.sendNotification(word);
     });
   }
 
-  stop() {
-    if (this.scheduler) {
-      logger.info('Scheduler cancelled');
-      this.scheduler.cancel();
+  static stop() {
+    if (Scheduler.job) {
+      logger.info('Scheduler is either cancelled or stopped');
+      Scheduler.job.cancel();
     }
   }
 }
 
-module.exports = new Scheduler();
+module.exports = Scheduler;

@@ -7,6 +7,11 @@ import fbIcon from '../../images/SVG/402-facebook2.svg';
 
 const FBLogin = ({ onLogout, buttonType, onLogin, disabled }) => {
   const getLoginDetails = () => {
+    if (!window.FB) {
+      toast.error('Please check the network and try again!');
+      return;
+    }
+
     window.FB.login((response) => {
       if (response.authResponse) {
         window.FB.api('/me?fields=email,id,name,picture{url}', (resp) => {

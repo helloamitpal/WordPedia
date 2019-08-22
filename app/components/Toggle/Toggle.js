@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 import './Toggle.scss';
 
@@ -7,16 +8,22 @@ class Toggle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggle: props.on
+      toggle: props.disabled ? false : props.on
     };
   }
 
   componentWillReceiveProps(newProps) {
-    this.setState({ toggle: newProps.on });
+    this.setState({ toggle: newProps.disabled ? false : newProps.on });
   }
 
   toggle = () => {
-    const { onToggle } = this.props;
+    const { onToggle, disabled } = this.props;
+
+    if (disabled) {
+      toast.info('Please register yourself to enable quiz');
+      return;
+    }
+
     let { toggle } = this.state;
     toggle = !toggle;
     this.setState({ toggle });
@@ -40,14 +47,16 @@ class Toggle extends React.Component {
 
 Toggle.defaultProps = {
   on: false,
-  className: ''
+  className: '',
+  disabled: false
 };
 
 Toggle.propTypes = {
   on: PropTypes.bool,
   label: PropTypes.string,
   className: PropTypes.string,
-  onToggle: PropTypes.func.isRequired
+  onToggle: PropTypes.func.isRequired,
+  disabled: PropTypes.bool
 };
 
 export default Toggle;

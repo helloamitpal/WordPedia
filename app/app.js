@@ -32,6 +32,7 @@ class App extends React.Component {
   componentDidMount() {
     EventTracker.init();
     FBinit();
+    subscribeNotification().catch((error) => console.error(error));
     toast.configure({
       draggable: false,
       autoClose: config.TOAST_AUTO_CLOSE_DURATION,
@@ -66,7 +67,6 @@ class App extends React.Component {
 const render = () => {
   if ('serviceWorker' in navigator) {
     console.log('Registering service worker');
-    subscribeNotification().catch((error) => console.error(error));
   } else {
     console.log('Service worker not supported');
   }

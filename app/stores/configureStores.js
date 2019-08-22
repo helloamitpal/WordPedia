@@ -7,9 +7,10 @@ import { default as reduxThunk } from 'redux-thunk';
 
 import rootReducer from './rootReducer';
 import api from '../api/apiInterceptor';
+import config from '../config';
 
 const persistConfig = {
-  key: 'WordPediaStoreKey',
+  key: config.STORAGE_KEY,
   storage,
   stateReconciler: autoMergeLevel1
 };

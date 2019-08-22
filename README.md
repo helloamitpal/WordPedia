@@ -49,8 +49,8 @@ hellowordpedia@gmail.com
 
 ## Quick start
 
-1. Clone this repo using `git clone https://github.com/amit040386/LearnNewWords.git`
-2. Move to the appropriate directory: `cd LearnNewWords`.<br />
+1. Clone this repo using `git clone https://github.com/amit040386/WordPedia.git`
+2. Move to the appropriate directory: `cd WordPedia`.<br />
 3. Run `npm install` to install dependencies.<br />
 4. Run `./node_modules/.bin/web-push generate-vapid-keys)` and keep public (WEB_PUSH_PUBLIC_VAPID_KEY) and private key (WEB_PUSH_PRIVATE_VAPID_KEY) in the below .env file
 4. Create a .env file to the root folder and add these mapping to it. E.g.

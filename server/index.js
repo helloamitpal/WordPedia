@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const events = require('events');
 
 const logger = require('./util//logger');
 const argv = require('./util/argv');
@@ -16,6 +17,7 @@ const setupMiddleware = require('./middlewares/frontendMiddleware');
 const PushNotification = require('./PushNotification/setup');
 
 const app = express();
+const eventEmitter = new events.EventEmitter();
 
 // making .env file to process.env
 dotenv.config();
@@ -42,7 +44,7 @@ app.use((req, res, next) => {
 });
 
 // initialize DB connection
-DB.initialize();
+DB.initialize(eventEmitter);
 
 // initialize push notification
 PushNotification(app);
@@ -63,5 +65,7 @@ app.listen(port, host, (err) => {
   if (err) {
     return logger.error(err.message);
   }
-  logger.appStarted(port, prettyHost);
+  eventEmitter.on('DBConnectSuccess', () => {
+    logger.appStarted(port, prettyHost);
+  });
 });

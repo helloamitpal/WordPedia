@@ -9,7 +9,7 @@ const getDBConnection = () => {
   return connectionStr;
 };
 
-const initialize = () => {
+const initialize = (eventEmitter) => {
   const connectionStr = getDBConnection();
 
   mongoose.connect(connectionStr, { useNewUrlParser: true, useCreateIndex: true });
@@ -17,6 +17,7 @@ const initialize = () => {
   const db = mongoose.connection;
   db.once('open', () => {
     logger.success('DB connection has been established successfully');
+    eventEmitter.emit('DBConnectSuccess');
   });
 
   db.on('error', (err) => {

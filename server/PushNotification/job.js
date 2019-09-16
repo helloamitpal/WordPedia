@@ -1,13 +1,13 @@
 const Agenda = require('agenda');
 
-const { getDBConnection } = require('../DB/connection');
+const { getDBConnectionString } = require('../DB/connection');
 const logger = require('../util/logger');
 const NotificationSender = require('./notificationSender');
 
 module.exports = () => {
   const agenda = new Agenda({
     db: {
-      address: getDBConnection(),
+      address: getDBConnectionString(),
       collection: 'notification'
     }
   });

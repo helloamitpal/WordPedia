@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const logger = require('../util/logger');
 
-const getDBConnection = () => {
+const getDBConnectionString = () => {
   const { DB_USERNAME, DB_PASSWORD, CLUSTER_NAME, DB_NAME } = process.env;
   const connectionStr = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${CLUSTER_NAME}/${DB_NAME}?ssl=true&authSource=admin&w=majority`;
 
@@ -10,7 +10,7 @@ const getDBConnection = () => {
 };
 
 const initialize = (eventEmitter) => {
-  const connectionStr = getDBConnection();
+  const connectionStr = getDBConnectionString();
 
   mongoose.connect(connectionStr, { useNewUrlParser: true, useCreateIndex: true });
 
@@ -28,5 +28,5 @@ const initialize = (eventEmitter) => {
 
 module.exports = {
   initialize,
-  getDBConnection
+  getDBConnectionString
 };

@@ -108,7 +108,7 @@ const updateUserSettings = async (userDetails) => {
 };
 
 const restartNotificationService = async () => {
-  const users = await UserModel.find({ quiz: true });
+  const users = await UserModel.find({ quiz: true, enabled: true });
 
   if (users) {
     logger.success(`UserRouter | restartNotificationService | ${users.length} users found who have registered for quiz`);

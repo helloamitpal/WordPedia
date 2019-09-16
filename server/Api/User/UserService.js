@@ -107,8 +107,26 @@ const updateUserSettings = async (userDetails) => {
   throw new Error();
 };
 
+const restartNotificationService = async () => {
+  const users = await UserModel.find({ quiz: true, enabled: true });
+
+  if (users) {
+    logger.success(`UserRouter | restartNotificationService | ${users.length} users found who have registered for quiz`);
+    users.forEach(({ userId }) => {
+      Scheduler.start(userId);
+      logger.success(`UserRouter | restartNotificationService | Quiz service has been restarted for the userId ${userId}`);
+    });
+
+    return true;
+  }
+
+  logger.error('UserRouter | restartNotificationService | Failed to restart notification service for all registered users');
+  throw new Error();
+};
+
 module.exports = {
   logout,
   register,
-  updateUserSettings
+  updateUserSettings,
+  restartNotificationService
 };

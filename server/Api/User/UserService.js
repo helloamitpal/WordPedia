@@ -21,7 +21,7 @@ const register = async (userDetails) => {
 
       // if quiz was enabled for existing user then starting the scheduled job
       if (existingUser.quiz) {
-        Scheduler.start(existingUser.words);
+        Scheduler.start(userId);
       }
 
       return { details: existingUser, wordCount: existingUser.words.length };
@@ -79,7 +79,7 @@ const updateUserSettings = async (userDetails) => {
     // if previous quiz setup was disabled and user has asked for enabling the same
     if (userDetails.quiz && !data.quiz) {
       // starting nottification scheduler
-      Scheduler.start(data.words);
+      Scheduler.start(userDetails.userId);
     }
 
     if (!userDetails.quiz) {

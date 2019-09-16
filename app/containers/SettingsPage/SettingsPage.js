@@ -47,13 +47,19 @@ class SettingsPage extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const { userState: { isError } } = newProps;
-    const { quiz } = this.state;
+    const { userState: { isError, user } } = newProps;
 
     if (isError) {
+      const { quiz } = this.state;
       this.setState({
         quiz: !quiz,
         language: this.prevLanguage
+      });
+    } else {
+      const { quiz, language } = user;
+      this.setState({
+        quiz,
+        language: config.LANGUAGES[language]
       });
     }
   }
@@ -63,18 +69,17 @@ class SettingsPage extends React.Component {
   }
 
   onRegisterCallback = (response) => {
-    const { userActions } = this.props;
-    const { quiz, language } = this.state;
-    const { name, email, picture: { data: { url } } } = response;
+    const { userActions, userState: { user: { quiz, language } } } = this.props;
+    const { id, name, email, picture: { data: { url } } } = response;
 
     EventTracker.raise(Events.USER_REGISTRATION);
     userActions.registerUser({
-      userId: response.id,
+      userId: id,
       profilePicture: url,
       email,
       name,
       quiz,
-      language: language.value
+      language: config.LANGUAGES[language]
     });
   }
 
@@ -100,6 +105,7 @@ class SettingsPage extends React.Component {
     const { userActions, userState: { user } } = this.props;
     const { quiz } = this.state;
 
+    user.quiz = !quiz;
     this.setState({ quiz: !quiz });
 
     EventTracker.raise(Events.TOGGLE_QUIZ_MODE);

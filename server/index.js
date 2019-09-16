@@ -12,7 +12,7 @@ const logger = require('./util//logger');
 const argv = require('./util/argv');
 const port = require('./util/port');
 const DB = require('./DB/connection');
-const setup = require('./middlewares/frontendMiddleware');
+const setupMiddleware = require('./middlewares/frontendMiddleware');
 const PushNotification = require('./PushNotification/setup');
 
 const app = express();
@@ -45,10 +45,10 @@ app.use((req, res, next) => {
 DB.initialize();
 
 // initialize push notification
-PushNotification.setup(app);
+PushNotification(app);
 
 // In production we need to pass these values in instead of relying on webpack
-setup(app, {
+setupMiddleware(app, {
   outputPath: resolve(process.cwd(), 'build'),
   publicPath: '/'
 });

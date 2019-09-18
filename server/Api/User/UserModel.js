@@ -12,7 +12,8 @@ const UserModelSchema = new Schema({
   quiz: { type: Boolean, default: false },
   language: { type: String, default: 'en' },
   words: { type: Array, default: [] },
-  enabled: { type: Boolean, default: true }
+  enabled: { type: Boolean, default: true },
+  subscription: { type: String, default: '' }
 });
 
 module.exports = mongoose.model('UserModel', UserModelSchema);

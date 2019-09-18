@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 
 import * as userActionCreator from '../HomePage/userActionCreator';
 import Header from '../../components/Header';
@@ -17,6 +18,7 @@ import EventTracker from '../../event-tracker';
 import Events from '../../event-tracker/events';
 import Input from '../../components/Input';
 import Registration from './Registration';
+import { subscribeNotification } from '../../util/notification';
 
 import shareIcon from '../../images/SVG/387-share2.svg';
 import feedbackIcon from '../../images/SVG/390-mail3.svg';
@@ -109,6 +111,13 @@ class SettingsPage extends React.Component {
     this.setState({ quiz: !quiz });
 
     EventTracker.raise(Events.TOGGLE_QUIZ_MODE);
+
+    // if quiz is enabled then subscription api is being called to store the subscription data
+    if (user.quiz) {
+      subscribeNotification(user.userId).catch(() => {
+        toast.error('Failed to subscribe for quiz notification. Please turn it off and on to subscribe again.');
+      });
+    }
     userActions.updateUser(user);
   }
 

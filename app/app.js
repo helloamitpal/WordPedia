@@ -12,7 +12,6 @@ import PWAInstaller from './components/PWAInstaller';
 import config from './config';
 import EventTracker from './event-tracker';
 import { FBinit } from './components/FBLogin';
-import { subscribeNotification } from './util/notification';
 
 import './styles/theme.scss';
 
@@ -32,7 +31,6 @@ class App extends React.Component {
   componentDidMount() {
     EventTracker.init();
     FBinit();
-    subscribeNotification().catch((error) => console.error(error));
     toast.configure({
       draggable: false,
       autoClose: config.TOAST_AUTO_CLOSE_DURATION,

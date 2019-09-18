@@ -5,8 +5,8 @@ import LoadingIndicator from '../LoadingIndicator';
 import Button from '../Button';
 import ToggleMenu from '../ToggleMenu';
 import ShowMore from '../ShowMore';
+import Readalong from '../Readalong';
 
-import speakerIcon from '../../images/SVG/296-volume-medium.svg';
 import arrowDown from '../../images/SVG/324-circle-down.svg';
 import arrowUp from '../../images/SVG/322-circle-up.svg';
 import verticalDotsIcon from '../../images/SVG/000-dots-vertical-triple.svg';
@@ -59,10 +59,6 @@ class Card extends React.Component {
     onAction(details, ['focus']);
   }
 
-  textToSpeech = () => {
-
-  }
-
   onCardAction = (evt, button, word) => {
     const { onAction, details } = this.props;
 
@@ -89,8 +85,12 @@ class Card extends React.Component {
             {button && <ToggleMenu hasArrow={false} icon={verticalDotsIcon} className="card-menu-list-btn" menus={menus} onClick={this.onCardAction} />}
           </div>
           <div className="row sub-title-section">
-            {details.phonetic && <div className="sub-title">{details.phonetic}</div>}
-            {details.phonetic && <Button className="speaker" onClick={this.textToSpeech} icon={speakerIcon} />}
+            {details.phonetic && (
+              <React.Fragment>
+                <div className="sub-title">{details.phonetic}</div>
+                <Readalong className="speaker" text={details.word} />
+              </React.Fragment>
+            )}
           </div>
         </div>
         {details.shortDefinitions && !!details.shortDefinitions.length && (

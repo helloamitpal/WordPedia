@@ -1,13 +1,23 @@
 const webpush = require('web-push');
 
 const logger = require('../util/logger');
+const UserModel = require('../Api/User/UserModel');
 
 class Notification {
 
-  static async send(title, body, actions, data) {
-    if (!Notification.subscription) {
-      logger.error('Notification | Push Notification subscription is not found');
-      return;
+  static async send(userId, title, body, actions, data) {
+    let subscriptionObj;
+    const userData = await UserModel.findOne({ userId });
+    try {
+      if (userData && userData.subscription) {
+        subscriptionObj = JSON.parse(userData.subscription);
+        logger.success(`Notification | notification subscription received for the user ${userId}`);
+      } else {
+        return null;
+      }
+    } catch (err) {
+      logger.error('Notification | Error in Push Notification subscription');
+      return null;
     }
 
     const payload = JSON.stringify({
@@ -15,11 +25,11 @@ class Notification {
       body: body || 'Do you remember the meaning?',
       data: data || {
         forget: {
-          title: 'Sprint',
+          title,
           body: 'Search this word and try to momorize.'
         },
         remember: {
-          title: 'Sprint',
+          title,
           body: 'Well done! Good going.'
         }
       },
@@ -32,20 +42,15 @@ class Notification {
       }]
     });
 
-    const notify = await webpush.sendNotification(Notification.subscription, payload);
+    const notify = await webpush.sendNotification(subscriptionObj, payload);
 
     if (notify) {
       logger.success('Notification | Push Notification is sent successfully');
       return notify;
     }
 
-    logger.error('Notification | Error in sending  Push Notification');
-    throw new Error();
-  }
-
-  static initializeSubscription(val) {
-    logger.success('Notification | notification is successfully subscribed');
-    Notification.subscription = val;
+    logger.error('Notification | Error in sending Push Notification');
+    return false;
   }
 }
 

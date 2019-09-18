@@ -1,23 +1,17 @@
+/* eslint-disable global-require */
+
 const webpush = require('web-push');
 
 const config = require('../util/config');
 const logger = require('../util/logger');
-const Notification = require('./notification');
 
-module.exports = (app) => {
-  const publicVapidKey = process.env.WEB_PUSH_PUBLIC_VAPID_KEY;
-  const privateVapidKey = process.env.WEB_PUSH_PRIVATE_VAPID_KEY;
+const initialize = () => {
+  const { WEB_PUSH_PUBLIC_VAPID_KEY, WEB_PUSH_PRIVATE_VAPID_KEY } = process.env;
 
-  webpush.setVapidDetails(`mailto:${config.CONTACT_EMAIL}`, publicVapidKey, privateVapidKey);
+  webpush.setVapidDetails(`mailto:${config.CONTACT_EMAIL}`, WEB_PUSH_PUBLIC_VAPID_KEY, WEB_PUSH_PRIVATE_VAPID_KEY);
+  logger.info('PushNotification | setup | initialized webpush');
+};
 
-  app.post('/subscribe', (req, res) => {
-    const subscription = req.body;
-    logger.info('Setup | Push Notification is sent for subscription');
-
-    // initializing notification subscription
-    Notification.initializeSubscription(subscription);
-
-    // returning the response back
-    res.status(201).json({});
-  });
+module.exports = {
+  initialize
 };

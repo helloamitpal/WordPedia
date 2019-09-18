@@ -19,11 +19,8 @@ class NotificationSender {
 
         logger.info(`NotificationSender | it is sending "${word}" word response`);
 
-        const notifyConfirm = await Notification.send(word);
-
-        if (notifyConfirm) {
-          done();
-        }
+        await Notification.send(userId, word);
+        done();
       } else {
         logger.error('NotificationSender| During registration of push notification, the user id is not found');
         throw new Error();

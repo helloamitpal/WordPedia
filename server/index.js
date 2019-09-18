@@ -1,5 +1,3 @@
-/* eslint consistent-return:0 */
-
 const express = require('express');
 const { resolve } = require('path');
 const helmet = require('helmet');
@@ -17,10 +15,12 @@ const setupMiddleware = require('./middlewares/frontendMiddleware');
 const PushNotification = require('./PushNotification/setup');
 
 const app = express();
-const eventEmitter = new events.EventEmitter();
 
 // making .env file to process.env
 dotenv.config();
+
+// creating event emitter instance
+const eventEmitter = new events.EventEmitter();
 
 // server configuration
 app.use(bodyParser.json());
@@ -43,11 +43,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// initialize push notification
+PushNotification.initialize();
+
 // initialize DB connection
 DB.initialize(eventEmitter);
-
-// initialize push notification
-PushNotification(app);
 
 // In production we need to pass these values in instead of relying on webpack
 setupMiddleware(app, {

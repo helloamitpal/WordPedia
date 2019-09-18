@@ -1,11 +1,9 @@
 const config = require('../../util/config');
 const logger = require('../../util/logger');
 const UserWiring = require('./UserWiring');
-const UserService = require('./UserService');
 
 const UserRouter = (router) => {
   logger.info('initialized user router');
-  UserService.restartNotificationService();
 
   router.post(`${config.API_BASE}/logout`, (req, res) => {
     logger.info('/logout route found');

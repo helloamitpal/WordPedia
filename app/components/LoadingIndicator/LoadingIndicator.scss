@@ -1,31 +1,78 @@
+@import '../../styles/colors.scss';
+
 .loading-indicator {
-  position: relative;
-  width: 100%;
-  height: 6px;
-  background-color: #fdba2c;
 
-  div {
-    content: "";
-    display: inline;
-    position: absolute;
-    width: 0;
-    height: 100%;
-    left: 50%;
-    text-align: center;
+  &.linear {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background-color: #fdba2c;
 
-    &:nth-child(1) {
-      background-color: #da4733;
-      animation: loading 3s linear infinite;
+    div {
+      content: "";
+      display: inline;
+      position: absolute;
+      width: 0;
+      height: 100%;
+      left: 50%;
+      text-align: center;
+
+      &:nth-child(1) {
+        background-color: $linear-color-1;
+        animation: loading 3s linear infinite;
+      }
+
+      &:nth-child(2) {
+        background-color: $linear-color-2;
+        animation: loading 3s linear 1s infinite;
+      }
+
+      &:nth-child(3) {
+        background-color: $linear-color-3;
+        animation: loading 3s linear 2s infinite;
+      }
     }
+  }
 
-    &:nth-child(2) {
-      background-color: #3b78e7;
-      animation: loading 3s linear 1s infinite;
-    }
+  &.wave {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
 
-    .bar:nth-child(3) {
-      background-color: #fdba2c;
-      animation: loading 3s linear 2s infinite;
+    div {
+      background: $wave-loader-color;
+      bottom: 1px;
+      height: 3px;
+      width: 10px;
+      margin: 0px 4px;
+      border-radius: 5px;
+      animation: sound-wave 0ms -600ms linear infinite alternate;
+
+      &:nth-child(1)  {
+        left: 1px;
+        animation-duration: 474ms;
+      }
+      &:nth-child(2)  {
+        left: 15px;
+        animation-duration: 433ms;
+      }
+      &:nth-child(3)  {
+        left: 29px;
+        animation-duration: 407ms;
+      }
+      &:nth-child(4)  {
+        left: 43px;
+        animation-duration: 458ms;
+      }
+      &:nth-child(5)  {
+        left: 57px;
+        animation-duration: 400ms;
+      }
+      &:nth-child(6)  {
+        left: 71px;
+        animation-duration: 427ms;
+      }
     }
   }
 }
@@ -45,4 +92,15 @@
     left: 0;
     width: 100%;
   }
+}
+
+@keyframes sound-wave {
+    0% {
+       opacity: .35;
+        height: 3px;
+    }
+    100% {
+        opacity: 1;
+        height: 70px;
+    }
 }

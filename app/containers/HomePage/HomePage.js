@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { debounce } from 'lodash';
 import { toast } from 'react-toastify';
+import Modal from 'react-responsive-modal';
 
 import Input from '../../components/Input';
 import Header from '../../components/Header';
@@ -20,6 +21,7 @@ import EventTracker from '../../event-tracker';
 import Features from '../../util/features';
 import * as helper from '../../util/helper';
 import { askConfirmation } from '../../components/Confirm';
+import RichInput from './RichInput';
 
 import translateIcon from '../../images/SVG/354-font-size.svg';
 import './HomePage.scss';
@@ -28,7 +30,8 @@ class HomePage extends React.Component {
   constructor() {
     super();
     this.state = {
-      searchText: ''
+      searchText: '',
+      openModal: false
     };
     this.userFeature = Features.sharable ? 'share' : 'copy';
     this.debouncedSearch = debounce(this.searchAPICall, 300);
@@ -130,8 +133,21 @@ class HomePage extends React.Component {
     }
   }
 
+  onOpenRichInputModal = () => {
+    this.setState({ openModal: true });
+  }
+
+  onAcceptRichInput = (searchText) => {
+    this.setState({ searchText, openModal: false });
+    this.debouncedSearch();
+  }
+
+  onCloseModal = () => {
+    this.setState({ openModal: false });
+  }
+
   render() {
-    const { searchText } = this.state;
+    const { searchText, openModal } = this.state;
     const { userState: { words, isError, wordsOnWeb, isLoading, isNoInitWords, user: { userId, profilePicture } } } = this.props;
     let data = [];
     let buttonType;
@@ -156,8 +172,11 @@ class HomePage extends React.Component {
         <Header>
           <div className="header-section">
             <ProfilePic path={profilePicture} onClick={() => this.navigateTo(config.SETTINGS_PAGE)} />
-            <Input type="search" onClearInput={this.onClearInput} onChange={this.onChangeSearch} placeholder="At least 2 characters" value={searchText} />
-            <Button icon={translateIcon} className="add-word-btn" onClick={() => this.navigateTo(config.ADD_WORD_PAGE)} />
+            <Input type="search" onSecondaryInput={this.onOpenRichInputModal} onClearInput={this.onClearInput} onChange={this.onChangeSearch} placeholder="At least 2 characters" value={searchText} />
+            <Modal open={openModal} onClose={this.onCloseModal} center>
+              <RichInput onAcceptInput={this.onAcceptRichInput} />
+            </Modal>
+            <Button icon={translateIcon} className="hide add-word-btn" onClick={() => this.navigateTo(config.ADD_WORD_PAGE)} />
           </div>
         </Header>
         <div className="body-container">

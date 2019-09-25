@@ -1,10 +1,11 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import * as helper from '../../util/helper';
 import Icon from '../Icon';
 import searchIcon from '../../images/SVG/135-search.svg';
-import micIcon from '../../images/SVG/031-mic.svg';
+import uploadIcon from '../../images/SVG/199-upload2.svg';
 import crossIcon from '../../images/SVG/272-cross.svg';
 
 import './Input.scss';
@@ -36,7 +37,7 @@ class Input extends React.Component {
   }
 
   render() {
-    const { disabled, className, readOnly, onChange, value, type, placeholder, onClearInput } = this.props;
+    const { disabled, className, readOnly, onChange, value, type, placeholder, onClearInput, onSecondaryInput, autoFocus } = this.props;
     const { expanded } = this.state;
 
     return (
@@ -47,6 +48,7 @@ class Input extends React.Component {
           readOnly={readOnly}
           disabled={disabled}
           onChange={onChange}
+          autoFocus={autoFocus}
           value={value}
           onFocus={() => this.onFocusChange(true)}
           onBlur={() => this.onFocusChange(false)}
@@ -54,7 +56,9 @@ class Input extends React.Component {
         {type === 'search' && (
           <React.Fragment>
             <Icon className="search-icon-placeholder" path={searchIcon} />
-            <Icon className="mic-icon" path={micIcon} />
+            <a href="javascript:void(0)" className="rich-input-icon" onClick={onSecondaryInput}>
+              <Icon path={uploadIcon} />
+            </a>
             <a href="javascript:void(0)" onClick={onClearInput} className="remove-text-icon">
               <Icon path={crossIcon} />
             </a>
@@ -74,6 +78,8 @@ Input.propTypes = {
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
   onClearInput: PropTypes.func,
+  onSecondaryInput: PropTypes.func,
+  autoFocus: PropTypes.bool,
   type: PropTypes.oneOf(['search', 'copy', 'text']),
   placeholder: PropTypes.string
 };
@@ -83,6 +89,7 @@ Input.defaultProps = {
   readOnly: false,
   disabled: false,
   type: 'text',
+  autoFocus: false,
   placeholder: 'Search'
 };
 

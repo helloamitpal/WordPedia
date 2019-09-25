@@ -73,3 +73,14 @@ label {
   display: flex;
   flex-direction: column;
 }
+
+.camel-case {
+  text-transform: capitalize;
+}
+
+button[class^='styles_closeButton'] {
+  outline: 0 none;
+  transform: scale(0.7);
+  top: 0;
+  right: 0;
+}

@@ -6,7 +6,7 @@ import Icon from '../Icon';
 
 import './Button.scss';
 
-const Button = ({ icon, onClick, className, label, animation, raisedButton, disabled }) => {
+const Button = ({ icon, onClick, className, label, animation, raisedButton, disabled, primary }) => {
   const delayedClick = debounce((evt) => onClick(evt), 500, { maxWait: 500, leading: true, trailing: false });
 
   const debouncedClick = (evt) => {
@@ -14,7 +14,12 @@ const Button = ({ icon, onClick, className, label, animation, raisedButton, disa
     delayedClick(evt);
   };
   return (
-    <button disabled={disabled} type="button" className={`button ${className} ${!animation ? 'no-anim' : ''} ${raisedButton ? 'raised' : ''}`} onClick={debouncedClick}>
+    <button
+      disabled={disabled}
+      type="button"
+      className={`button ${primary ? 'primary' : ''} ${className} ${!animation ? 'no-anim' : ''} ${raisedButton ? 'raised' : ''}`}
+      onClick={debouncedClick}
+    >
       {icon && <Icon path={icon} animation={animation} />}
       {label && <span>{label}</span>}
     </button>
@@ -26,7 +31,8 @@ Button.defaultProps = {
   className: '',
   animation: true,
   raisedButton: false,
-  disabled: false
+  disabled: false,
+  primary: false
 };
 
 Button.propTypes = {
@@ -36,7 +42,8 @@ Button.propTypes = {
   label: PropTypes.string,
   animation: PropTypes.bool,
   raisedButton: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  primary: PropTypes.bool
 };
 
 export default Button;

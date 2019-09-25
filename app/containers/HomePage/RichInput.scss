@@ -1,0 +1,44 @@
+@import '../../styles/colors.scss';
+
+.rich-input-container {
+  min-height: 220px;
+
+  .edit-icon {
+    display: inline-block;
+    margin-left: 5px;
+  }
+
+  .rich-content {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }
+
+  .input-section {
+    display: flex;
+
+    a {
+      margin: 30px;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      padding: 30px;
+      display: flex;
+
+      &.selected {
+        background: $alternate-background-color;
+
+        .icon {
+          background-color: $alternate-font-color;
+        }
+      }
+
+      .icon {
+        transform: scale(2.5);
+      }
+    }
+  }
+
+  .button-section {
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -16,6 +16,8 @@
     border: 1px solid $border-color;
     border-radius: 5px;
     box-shadow: 0 0px 5px 0 rgba(0,0,0,0.35);
+    background-color: $btn-background;
+    color: $font-color;
 
     &:disabled {
       background-color: $disabled-color !important;
@@ -63,6 +65,16 @@
 
     .icon {
       background-color: $disabled-color !important;
+    }
+  }
+
+  &.primary {
+    background: $primary-btn-color;
+    color: $alternate-font-color;
+    border: 0 none;
+
+    .icon {
+      background-color: $alternate-font-color;
     }
   }
 }

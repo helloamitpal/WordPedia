@@ -12,7 +12,7 @@ const Confirm = ({ onAccept, onDecline, buttonLabel, confirmText }) => {
       {buttonLabel ? <Button raisedButton label={buttonLabel} onClick={onAccept} /> : (
         <div>
           <Button raisedButton label="Yes" onClick={onAccept} />
-          <Button raisedButton label="No" onClick={onDecline} />
+          <Button raisedButton primary label="No" onClick={onDecline} />
         </div>
       )}
     </div>

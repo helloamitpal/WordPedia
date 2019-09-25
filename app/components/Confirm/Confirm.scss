@@ -8,14 +8,8 @@
     color: $font-color;
     font-size: 1.2em;
 
-    p, button {
+    p {
       color: $alternate-font-color;
-    }
-
-    button {
-      background: $primary-btn-color;
-      color: $alternate-font-color;
-      border: 0 none;
     }
 
     & > div, &.inline {

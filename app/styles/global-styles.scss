@@ -32,6 +32,10 @@ label {
   text-align: center;
 }
 
+.center-align-self {
+  align-self: center;
+}
+
 .Toastify__toast--success {
   background: $toast-default-background;
 }
@@ -45,11 +49,11 @@ label {
 }
 
 .mt-1 {
-  margin-top: 1em;
+  margin-top: 1em !important;
 }
 
 .mb-1 {
-  margin-bottom: 1em;
+  margin-bottom: 1em !important;
 }
 
 .Toastify__toast {
@@ -81,6 +85,7 @@ label {
 button[class^='styles_closeButton'] {
   outline: 0 none;
   transform: scale(0.7);
-  top: 0;
-  right: 0;
+  top: 20px;
+  right: 10px;
+  color: $btn-background;
 }

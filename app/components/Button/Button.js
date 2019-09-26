@@ -37,7 +37,7 @@ Button.defaultProps = {
 
 Button.propTypes = {
   icon: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   className: PropTypes.string,
   label: PropTypes.string,
   animation: PropTypes.bool,

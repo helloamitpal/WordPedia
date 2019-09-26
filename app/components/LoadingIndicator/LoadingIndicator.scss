@@ -75,6 +75,70 @@
       }
     }
   }
+
+  &.scan {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    backface-visibility: hidden;
+    margin: 0 auto;
+
+    span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 20px;
+      background-color: $scanner-background;
+      z-index: 1;
+      transform: translateY(135%);
+      animation: scan-move 0.7s cubic-bezier(0.15, 0.44, 0.76, 0.64);
+      animation-iteration-count: infinite;
+    }
+
+    .icon {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(5.5, 6.3);
+      top: 50%;
+      z-index: 1;
+      backface-visibility: hidden;
+    }
+
+    &:before,  &:after, em:after, em:before {
+      border-color: $scanner-border-color;
+      content: "";
+      position: absolute;
+      width: 19px;
+      height: 19px;
+      border-style: solid;
+      border-width: 0px;
+    }
+    &:before {
+      left: 0;
+      top: 0;
+      border-left-width: 1px;
+      border-top-width: 1px;
+    }
+    &:after {
+      right: 0;
+      top: 0;
+      border-right-width: 1px;
+      border-top-width: 1px;
+    }
+    em:before {
+      left: 0;
+      bottom: 0;
+      border-left-width: 1px;
+      border-bottom-width: 1px;
+    }
+    em:after {
+      right: 0;
+      bottom: 0;
+      border-right-width: 1px;
+      border-bottom-width: 1px;
+    }
+  }
 }
 
 @keyframes loading {
@@ -103,4 +167,10 @@
         opacity: 1;
         height: 70px;
     }
+}
+
+@keyframes scan-move {
+  0%, 100% { transform: translateY(135%); }
+  50% { transform: translateY(0%); }
+  75% { transform: translateY(372%); }
 }

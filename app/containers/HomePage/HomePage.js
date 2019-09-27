@@ -11,7 +11,6 @@ import Input from '../../components/Input';
 import Header from '../../components/Header';
 import * as userActionCreator from './userActionCreator';
 import CardList from '../../components/CardList';
-import Button from '../../components/Button';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ProfilePic from '../../components/ProfilePic';
 import Message from '../../components/Message';
@@ -23,7 +22,6 @@ import * as helper from '../../util/helper';
 import { askConfirmation } from '../../components/Confirm';
 import RichInput from './RichInput';
 
-import translateIcon from '../../images/SVG/354-font-size.svg';
 import './HomePage.scss';
 
 class HomePage extends React.Component {

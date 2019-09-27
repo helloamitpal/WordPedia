@@ -176,7 +176,6 @@ class HomePage extends React.Component {
             <Modal open={openModal} onClose={this.onCloseModal} center>
               <RichInput onAcceptInput={this.onAcceptRichInput} />
             </Modal>
-            <Button icon={translateIcon} className="hide add-word-btn" onClick={() => this.navigateTo(config.ADD_WORD_PAGE)} />
           </div>
         </Header>
         <div className="body-container">

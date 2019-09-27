@@ -1,4 +1,5 @@
 /* eslint-disable no-plusplus */
+/* eslint-disable no-useless-escape */
 
 const copyToClipboard = (element) => {
   if ('select' in element) {
@@ -28,7 +29,16 @@ const urlBase64ToUint8Array = (base64String) => {
   return outputArray;
 };
 
+const getCleanedWords = (text) => {
+  // Ignoring certain characters
+  let str = text.replace(/[↵\n\r\t!?#;*]/g, '');
+  // considering few characters as space and eventually replaced by the same
+  str = str.replace(/[+-.,{(\[\])}]/g, ' ');
+  return str.toLowerCase().split(' ').filter((word) => (word && word.length > 1 && word[0] !== word[1] && word.search(/^[a-z]+$/g) === 0));
+};
+
 export {
   copyToClipboard,
-  urlBase64ToUint8Array
+  urlBase64ToUint8Array,
+  getCleanedWords
 };

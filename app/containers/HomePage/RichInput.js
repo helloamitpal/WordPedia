@@ -20,8 +20,12 @@ class RichInput extends React.Component {
     };
   }
 
-  onMessageReceive = (message, animation = false) => {
-    this.setState({ message, messageAnimation: animation });
+  onMessageReceive = (message, type, animation = false) => {
+    const { inputType } = this.state;
+
+    if (type === inputType) {
+      this.setState({ message, messageAnimation: animation });
+    }
   }
 
   onClickInput = (inputType) => {

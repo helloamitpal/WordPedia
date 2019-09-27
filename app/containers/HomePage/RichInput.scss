@@ -12,8 +12,8 @@
   }
 
   .rich-input-container {
-    min-height: 220px;
-    margin-top: 60px;
+    min-height: 200px;
+    margin-top: 80px;
 
     .voice-input-container,
     .image-input-container {
@@ -124,6 +124,25 @@
     .button-section {
       display: flex;
       justify-content: space-between;
+    }
+
+    .word-container {
+      display: flex;
+      margin-bottom: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      .word {
+        padding: 5px 8px;
+        border: 1px solid $border-color;
+        border-radius: 3px;
+        margin: 3px;
+
+        &.selected-word {
+          background-color: $selected-word-background;
+          color: $alternate-font-color;
+        }
+      }
     }
   }
 }

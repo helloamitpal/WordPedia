@@ -32,7 +32,8 @@ Button.defaultProps = {
   animation: true,
   raisedButton: false,
   disabled: false,
-  primary: false
+  primary: false,
+  onClick: () => {}
 };
 
 Button.propTypes = {

@@ -44,7 +44,7 @@ class VoiceInput extends React.Component {
       }
       this.timer = (Date.now() - this.timer);
       this.setState({ status: 'ended' });
-      onMessage(message);
+      onMessage(message, 'voice');
     }
   }
 
@@ -62,13 +62,13 @@ class VoiceInput extends React.Component {
 
       this.recognition.stop();
       this.setState({ richText, status: 'ended' });
-      onMessage('');
+      onMessage('', 'voice');
     }
   }
 
   onVoiceStart = () => {
     const { onMessage } = this.props;
-    onMessage('Listening', true);
+    onMessage('Listening', 'voice', true);
   }
 
   onClickVoiceInput = () => {
@@ -86,7 +86,7 @@ class VoiceInput extends React.Component {
     this.recognition.start();
     this.timer = Date.now();
     this.setState({ edited: false, status: 'started' });
-    onMessage('Search word with your voice. \n Speak clearly.');
+    onMessage('Search word with your voice. \n Speak clearly.', 'voice');
   }
 
   onEditRichText = () => {
@@ -116,7 +116,7 @@ class VoiceInput extends React.Component {
               {edited && <Input autoFocus type="text" value={richText} onChange={this.onChangeRichText} />}
             </div>
             <div className="button-section">
-              <Button raisedButton label="Start New" onClick={this.onClickVoiceInput} />
+              <Button raisedButton label="Try Again" onClick={this.onClickVoiceInput} />
               <Button raisedButton primary disabled={!richText} label="Accept" onClick={() => onFoundWord(richText)} />
             </div>
           </React.Fragment>

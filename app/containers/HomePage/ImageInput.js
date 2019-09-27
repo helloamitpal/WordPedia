@@ -5,6 +5,7 @@ import { TesseractWorker } from 'tesseract.js';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import { getCleanedWords } from '../../util/helper';
 
 import uploadIcon from '../../images/SVG/199-upload2.svg';
 
@@ -15,7 +16,8 @@ class ImageInput extends React.Component {
       imgURL: '',
       richText: '',
       status: '',
-      imageUploadType: 'upload'
+      imageUploadType: 'upload',
+      words: null
     };
   }
 
@@ -29,9 +31,10 @@ class ImageInput extends React.Component {
       imgURL: '',
       richText: '',
       status: '',
-      imageUploadType: 'upload'
+      imageUploadType: 'upload',
+      words: null
     });
-    onMessage('Search word with an image containing text(s).');
+    onMessage('Search word with an image containing text(s).', 'image');
   }
 
   onGetImgURL = ({ target: { value } }) => {
@@ -39,16 +42,32 @@ class ImageInput extends React.Component {
     this.setState({ imgURL });
   }
 
-  onCompleteImageProcessing = (richText) => {
+  onCompleteImageProcessing = (text) => {
     const { onMessage } = this.props;
-    this.setState({ status: 'ended', richText });
-    onMessage('');
+    const words = getCleanedWords(text);
+    let message = '';
+
+    if (words.length === 1) {
+      this.setState({ status: 'ended', richText: words[0], words: false });
+      message = '';
+    } else if (words.length > 1) {
+      this.setState({ status: 'ended', richText: '', words });
+      message = 'Multiple words found. \n Please pick your word.';
+    } else if (words.length > 10) {
+      this.setState({ status: 'ended', richText: '', words: words.slice(0, 10) });
+      message = `Too many words (${words.length}) found. \n Showing maximum 10 words only.`;
+    } else {
+      this.setState({ status: 'ended', richText: '', words: false });
+      message = 'No meaningful word found. \n Please try again.';
+    }
+
+    onMessage(message, 'image');
   }
 
   onErrorImageProcessing = () => {
     const { onMessage } = this.props;
-    this.setState({ status: 'ended' });
-    onMessage('Something went wrong. \n Please try again.');
+    this.setState({ status: 'ended', richText: '', words: false });
+    onMessage('Something went wrong. \n Please try again.', 'image');
   }
 
   onProcessImg = () => {
@@ -57,14 +76,18 @@ class ImageInput extends React.Component {
     const worker = new TesseractWorker();
     const image = imgURL || (this.fileUpload && this.fileUpload.files[0]);
 
-    worker.recognize(image)
-      .then(({ text }) => {
-        worker.terminate();
-        this.onCompleteImageProcessing(text);
-      })
-      .catch(this.onErrorImageProcessing);
+    try {
+      worker.recognize(image)
+        .then(({ text }) => {
+          worker.terminate();
+          this.onCompleteImageProcessing(text);
+        })
+        .catch(this.onErrorImageProcessing);
+    } catch (err) {
+      this.onErrorImageProcessing();
+    }
 
-    onMessage('Processing', true);
+    onMessage('Processing', 'image', true);
     this.setState({ status: 'started' });
   }
 
@@ -72,8 +95,20 @@ class ImageInput extends React.Component {
     this.setState({ imageUploadType, imgURL: '' });
   }
 
+  selectWord = (word) => {
+    this.setState({ richText: word });
+  }
+
+  getWordList = (list) => {
+    const { richText } = this.state;
+
+    return list.map((word, index) => (
+      <span key={`word-${index.toString()}`} className={`word ${richText === word ? 'selected-word' : ''}`} onClick={() => this.selectWord(word)}>{word}</span>
+    ));
+  }
+
   render() {
-    const { status, richText, imgURL, imageUploadType } = this.state;
+    const { status, richText, imgURL, imageUploadType, words } = this.state;
     const isImgLinkSelected = (imageUploadType === 'link');
     const { onFoundWord } = this.props;
 
@@ -96,19 +131,20 @@ class ImageInput extends React.Component {
                 </div>
               )
             }
-            <Button raisedButton primary className="process-btn mt-1" label="Process Image" onClick={this.onProcessImg} />
+            {imageUploadType === 'link' && <Button raisedButton primary className="process-btn mt-1" label="Process Image" onClick={this.onProcessImg} />}
           </React.Fragment>
         )}
-        {status === 'ended' && richText && (
+        {status === 'ended' && (richText || words) && (
           <React.Fragment>
-            <div className="center-aligned camel-case rich-content">{richText}</div>
+            {(words.length === 1 || richText) ? <div className="center-aligned camel-case rich-content">{richText}</div> : null}
+            {status === 'ended' && words ? <div className="word-container">{this.getWordList(words)}</div> : null}
             <div className="button-section">
-              <Button raisedButton label="Start New" onClick={this.onClickImageInput} />
-              <Button raisedButton primary label="Accept" onClick={() => onFoundWord(richText)} />
+              <Button raisedButton label="Try Another" onClick={this.onClickImageInput} />
+              <Button raisedButton primary disabled={!richText} label="Accept" onClick={() => onFoundWord(richText)} />
             </div>
           </React.Fragment>
         )}
-        {!richText && status === 'ended' ? <Button raisedButton label="Retry" className="center-align-self" onClick={this.onClickImageInput} /> : null}
+        {!richText && status === 'ended' && !words ? <Button raisedButton label="Retry" className="center-align-self" onClick={this.onClickImageInput} /> : null}
       </div>
     );
   }

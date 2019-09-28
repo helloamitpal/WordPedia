@@ -13,6 +13,7 @@ const port = require('./util/port');
 const DB = require('./DB/connection');
 const setupMiddleware = require('./middlewares/frontendMiddleware');
 const PushNotification = require('./PushNotification/setup');
+const Swagger = require('./swagger');
 
 const app = express();
 
@@ -43,22 +44,25 @@ app.use((req, res, next) => {
   next();
 });
 
+// get the intended host and port number, use localhost and port 3000 if not provided
+const customHost = argv.host || process.env.HOST;
+const host = customHost || null; // Let http.Server use its default IPv6/4 host
+const prettyHost = customHost || 'localhost';
+
 // initialize push notification
 PushNotification.initialize();
 
 // initialize DB connection
 DB.initialize(eventEmitter);
 
+// initialize swagger UI for API documentation
+Swagger.initialize(app);
+
 // In production we need to pass these values in instead of relying on webpack
 setupMiddleware(app, {
   outputPath: resolve(process.cwd(), 'build'),
   publicPath: '/'
 });
-
-// get the intended host and port number, use localhost and port 3000 if not provided
-const customHost = argv.host || process.env.HOST;
-const host = customHost || null; // Let http.Server use its default IPv6/4 host
-const prettyHost = customHost || 'localhost';
 
 // Start your app.
 app.listen(port, host, (err) => {

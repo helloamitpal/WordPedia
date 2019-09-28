@@ -58,6 +58,8 @@
     "redux-persist": "5.10.0",
     "redux-thunk": "^2.3.0",
     "sanitize.css": "^11.0.0",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui-express": "^4.1.1",
     "tesseract.js": "^2.0.0-alpha.15",
     "web-push": "^3.3.5"
   },

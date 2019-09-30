@@ -109,14 +109,13 @@ class Card extends React.Component {
               <ShowMore>
                 {
                   details.synonyms.map((synonym, synIndex) => (
-                    <a
-                      href="javascript:void(0)"
+                    <span
                       onClick={(evt) => this.onCardAction(evt, 'synonym', synonym)}
-                      className={`${synonym.includes(' ') ? 'no-anchor' : ''}`}
+                      className={`${synonym.includes(' ') ? 'no-anchor' : 'anchor'}`}
                       key={`synonym-${synIndex.toString()}`}
                     >
                       {synonym}
-                    </a>
+                    </span>
                   ))
                 }
               </ShowMore>

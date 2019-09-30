@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import * as helper from '../../util/helper';
 import Icon from '../Icon';
+import Button from '../Button';
 import searchIcon from '../../images/SVG/135-search.svg';
 import uploadIcon from '../../images/SVG/199-upload2.svg';
 import crossIcon from '../../images/SVG/272-cross.svg';
@@ -56,12 +57,8 @@ class Input extends React.Component {
         {type === 'search' && (
           <React.Fragment>
             <Icon className="search-icon-placeholder" path={searchIcon} />
-            <a href="javascript:void(0)" className="rich-input-icon" onClick={onSecondaryInput}>
-              <Icon path={uploadIcon} />
-            </a>
-            <a href="javascript:void(0)" onClick={onClearInput} className="remove-text-icon">
-              <Icon path={crossIcon} />
-            </a>
+            <Button href="!#" className="rich-input-icon" animation={false} onClick={onSecondaryInput} icon={uploadIcon} />
+            <Button onClick={onClearInput} animation={false} className="remove-text-icon" icon={crossIcon} />
           </React.Fragment>)
         }
         {type === 'copy' && <button type="button" onClick={this.copyText}>Copy Link</button>}

@@ -29,7 +29,7 @@ class ShowMore extends React.Component {
           ? (
             <React.Fragment>
               ...
-              <a href="javascript:void(0)" className="show-more-link" onClick={this.toggleShow}>{showAll ? 'Show less' : `Show ${childrenSet.length - maxChildren} more` }</a>
+              <span className="anchor show-more-link" onClick={this.toggleShow}>{showAll ? 'Show less' : `Show ${childrenSet.length - maxChildren} more` }</span>
             </React.Fragment>
           )
           : null

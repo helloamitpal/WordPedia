@@ -30,6 +30,7 @@ class Container extends React.Component {
       autoClose: config.TOAST_AUTO_CLOSE_DURATION,
       hideProgressBar: true,
       closeOnClick: true,
+      pauseOnHover: true,
       position: (Features.isMobile ? 'bottom-right' : 'top-right')
     });
   }

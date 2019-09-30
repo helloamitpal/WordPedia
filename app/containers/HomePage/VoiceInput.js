@@ -69,6 +69,16 @@ class VoiceInput extends React.Component {
   onVoiceStart = () => {
     const { onMessage } = this.props;
     onMessage('Listening', 'voice', true);
+
+    setTimeout(() => {
+      const { status } = this.state;
+
+      // in case renseponse is not received within 20 seconds then the error will be shown
+      if (status !== 'ended') {
+        this.setState({ status: 'ended' });
+        onMessage('Something went wrong. \n Please speak again.', 'voice');
+      }
+    }, 20000);
   }
 
   onClickVoiceInput = () => {

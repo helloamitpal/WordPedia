@@ -78,11 +78,14 @@ class ImageInput extends React.Component {
 
     try {
       worker.recognize(image)
+        .catch(this.onErrorImageProcessing)
+        .progress((progress) => {
+          onMessage(`Processing ${progress}%`, 'image', true);
+        })
         .then(({ text }) => {
           worker.terminate();
           this.onCompleteImageProcessing(text);
-        })
-        .catch(this.onErrorImageProcessing);
+        });
     } catch (err) {
       this.onErrorImageProcessing();
     }
@@ -118,12 +121,12 @@ class ImageInput extends React.Component {
         {status === '' && (
           <React.Fragment>
             <div className="menu-links">
-              <a href="javascript:void(0)" className={!isImgLinkSelected ? 'selected' : ''} onClick={() => this.onChangeImageInputType('upload')}>Upload an image</a>
+              <span className={!isImgLinkSelected ? 'selected' : ''} onClick={() => this.onChangeImageInputType('upload')}>Upload an image</span>
               <i className="divider" />
-              <a href="javascript:void(0)" className={isImgLinkSelected ? 'selected' : ''} onClick={() => this.onChangeImageInputType('link')}>Paste image URL</a>
+              <span className={isImgLinkSelected ? 'selected' : ''} onClick={() => this.onChangeImageInputType('link')}>Paste image URL</span>
             </div>
             {isImgLinkSelected
-              ? <Input type="text" value={imgURL} className="url-text" placeholder="http(s)://" onChange={this.onGetImgURL} />
+              ? <Input autoFocus type="text" value={imgURL} className="url-text" placeholder="http(s)://" onChange={this.onGetImgURL} />
               : (
                 <div className="upload-btn-section">
                   <Button animation={false} className="upload-btn" icon={uploadIcon} />

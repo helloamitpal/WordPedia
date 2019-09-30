@@ -19,6 +19,7 @@ import Events from '../../event-tracker/events';
 import EventTracker from '../../event-tracker';
 import Features from '../../util/features';
 import * as helper from '../../util/helper';
+import RegistrationToastContent from './registrationToastContent';
 import { askConfirmation } from '../../components/Confirm';
 import RichInput from './RichInput';
 
@@ -92,7 +93,9 @@ class HomePage extends React.Component {
       EventTracker.raise(Events.BOOKMARK_WORD, word);
       userActions.addWordAction(wordObj, userId);
     } else {
-      toast.info('Please register yourself to add this word');
+      toast.info(<RegistrationToastContent onClick={() => this.navigateTo(config.SETTINGS_PAGE)} />, {
+        autoClose: 5000
+      });
     }
   }
 

@@ -45,12 +45,12 @@ class RichInput extends React.Component {
         <div className="modal-header gradient-background" />
         <div className="rich-input-container">
           <div className="input-section">
-            <a href="javascript:void(0)" className={`${inputType === 'image' && 'selected'}`} onClick={() => this.onClickInput('image')}>
+            <span className={`${inputType === 'image' && 'selected'}`} onClick={() => this.onClickInput('image')}>
               <Icon animation={false} path={cameraIcon} />
-            </a>
-            <a href="javascript:void(0)" className={`${inputType === 'voice' && 'selected'}`} onClick={() => this.onClickInput('voice')}>
+            </span>
+            <span className={`${inputType === 'voice' && 'selected'}`} onClick={() => this.onClickInput('voice')}>
               <Icon animation={false} path={micIcon} />
-            </a>
+            </span>
           </div>
           {message && <div className={`${messageAnimation ? 'animation' : ''} message-section center-aligned mt-1`}>{message}</div>}
           {inputType === 'voice' && <VoiceInput onFoundWord={this.onAcceptInput} onMessage={this.onMessageReceive} />}

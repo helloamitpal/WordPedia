@@ -8,7 +8,6 @@
     left: 0;
     top: 0;
     background-repeat: round;
-    background-position: center;
   }
 
   .rich-input-container {
@@ -39,7 +38,7 @@
           border-left: 2px solid $divider-color;
         }
 
-        a {
+        span {
           text-decoration: none;
           color: $font-color;
           padding-bottom: 5px;
@@ -75,8 +74,9 @@
 
     .input-section {
       display: flex;
+      justify-content: center;
 
-      a {
+      span {
         margin: 10px 30px;
         border: 1px solid transparent;
         border-radius: 50%;

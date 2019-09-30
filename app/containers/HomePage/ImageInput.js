@@ -79,8 +79,8 @@ class ImageInput extends React.Component {
     try {
       worker.recognize(image)
         .catch(this.onErrorImageProcessing)
-        .progress((progress) => {
-          onMessage(`Processing ${progress}%`, 'image', true);
+        .progress(({ progress }) => {
+          onMessage(`Processing ${Math.min(Math.ceil(progress), 100)}%`, 'image', true);
         })
         .then(({ text }) => {
           worker.terminate();
@@ -90,7 +90,7 @@ class ImageInput extends React.Component {
       this.onErrorImageProcessing();
     }
 
-    onMessage('Processing', 'image', true);
+    onMessage('Uploading', 'image', true);
     this.setState({ status: 'started' });
   }
 

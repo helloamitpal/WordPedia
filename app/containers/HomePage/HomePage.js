@@ -187,7 +187,7 @@ class HomePage extends React.Component {
             && (
               <div className="no-word-found">
                 Register yourself to bookmark your first word and more to improve your vocabulary.
-                <Button label="Register" primary riasedButton onClick={() => this.navigateTo(config.SETTINGS_PAGE)} />
+                <Button label="Register" className="mt-1" primary riasedButton onClick={() => this.navigateTo(config.SETTINGS_PAGE)} />
               </div>
             )
           }

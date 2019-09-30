@@ -16,8 +16,8 @@
 
 ## Demo
 
-UI link: https://wordpedia.herokuapp.com/
-Swagger link: https://wordpedia.herokuapp.com/api-doc/
+- **UI**: https://wordpedia.herokuapp.com/
+- **API Swagger documentation**: https://wordpedia.herokuapp.com/api-doc/
 
 ## Features
 
@@ -31,7 +31,7 @@ Swagger link: https://wordpedia.herokuapp.com/api-doc/
 - **Social sharing**: Words can be copied, shared in the social medias
 - **API documentation**: Swagger is available for API documentation
 - **Multi lingual support**: It will support multiple languages (**TODO**)
-- **Transalation**: It will support mutltiple language translation (**TODO**)
+- **Translation**: It will support multiple language translation (**TODO**)
 
 ## Tech-stack
 
@@ -63,7 +63,7 @@ The secondary tech-stack is as follows:
 - _SpeechSynthesis_ - Working with voice input (https://developer.mozilla.org/en-US/docs/Web/API/Window/speechSynthesis)
 - _Swagger_ - Adding API documentation (https://www.npmjs.com/package/swagger-ui-express)
 
-## Contact ##
+## Contact
 Feel free to contact me.
 Developer: <a href="mailto:hellowordpedia@gmail.com">Amit Pal</a>
 
@@ -84,18 +84,18 @@ Developer: <a href="mailto:hellowordpedia@gmail.com">Amit Pal</a>
 6. Run `npm start` to see the example app at `http://localhost:7009` in DEV mode.
 7. Run `npm start:production` to see the example app at `http://localhost:7009` in PROD mode.
 
-## Disabling service worker for localhost development ##
+## Disabling service worker for localhost development
 
 1. Go to developer's toolbar
 2. Application tab, select Service worker
 3. Uncheck "Update on reload" and check "Bypass for network"
 4. Clear cache and refresh browser
 
-## Known bugs ##
+## Known bugs
 
 A KanBan board has been maintained throughout this development. I'm still working on few open bugs which can be found here: https://github.com/amit040386/WordPedia/projects/1
 
-## Future development plans ##
+## Future development plans
 
 1. Multi lingual support as it currently supports only English.
 2. Instant translation Feature

@@ -86,6 +86,12 @@ class ImageInput extends React.Component {
           worker.terminate();
           this.onCompleteImageProcessing(text);
         });
+
+      // terminating worker process if it takes more than 1.5 minute
+      setTimeout(() => {
+        worker.terminate();
+        this.onErrorImageProcessing();
+      }, 90000);
     } catch (err) {
       this.onErrorImageProcessing();
     }

@@ -104,7 +104,7 @@ class VoiceInput extends React.Component {
   }
 
   onChangeRichText = ({ target: { value } }) => {
-    this.setState({ richText: value.trim() });
+    this.setState({ richText: value });
   }
 
   render() {

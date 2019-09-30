@@ -9,6 +9,7 @@ import Modal from 'react-responsive-modal';
 
 import Input from '../../components/Input';
 import Header from '../../components/Header';
+import Button from '../../components/Button';
 import * as userActionCreator from './userActionCreator';
 import CardList from '../../components/CardList';
 import LoadingIndicator from '../../components/LoadingIndicator';
@@ -184,7 +185,10 @@ class HomePage extends React.Component {
           { !isError && words && words.length === 0 && searchText && <Message className="home-message" text={`${searchText} is not added to your bookmark.`} subInfo={subInfo} /> }
           { (isNoInitWords && wordsOnWeb.length === 0 && words.length === 0)
             && (
-              <div className="no-word-found">Register yourself to bookmark your first word and more to improve your vocabulary. </div>
+              <div className="no-word-found">
+                Register yourself to bookmark your first word and more to improve your vocabulary.
+                <Button label="Register" primary riasedButton onClick={() => this.navigateTo(config.SETTINGS_PAGE)} />
+              </div>
             )
           }
           <CardList cards={data} onAction={this.onCardAction} button={buttons} />

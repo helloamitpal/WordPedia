@@ -50,10 +50,10 @@ class ImageInput extends React.Component {
     if (words.length === 1) {
       this.setState({ status: 'ended', richText: words[0], words: false });
       message = '';
-    } else if (words.length > 1) {
+    } else if (words.length > 1 && words.length < 10) {
       this.setState({ status: 'ended', richText: '', words });
       message = 'Multiple words found. \n Please pick your word.';
-    } else if (words.length > 10) {
+    } else if (words.length >= 10) {
       this.setState({ status: 'ended', richText: '', words: words.slice(0, 10) });
       message = `Too many words (${words.length}) found. \n Showing maximum 10 words only.`;
     } else {
@@ -79,8 +79,8 @@ class ImageInput extends React.Component {
     try {
       worker.recognize(image)
         .catch(this.onErrorImageProcessing)
-        .progress(({ progress }) => {
-          onMessage(`Processing ${Math.min(Math.ceil(progress), 100)}%`, 'image', true);
+        .progress(() => {
+          onMessage('Processing', 'image', true);
         })
         .then(({ text }) => {
           worker.terminate();
